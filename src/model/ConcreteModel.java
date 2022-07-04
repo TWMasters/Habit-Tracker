@@ -16,6 +16,8 @@ public class ConcreteModel implements Model {
                     "  Unit VARCHAR(255),\n" +
                     "  Target NUMERIC(18,2)\n" +
                     ");";
+    private static final String SELECT_ALL =
+            "SELECT * FROM Habits;";
     private static final String URL = "jdbc:h2:./db/Habits";
 
     private Connection connection = null;
@@ -24,25 +26,25 @@ public class ConcreteModel implements Model {
 
     private ConcreteModel() {
         try {
-            // 1 - Check if DB file exists. If not, set flag to false
             Boolean dbExists = new File("db/Habits.mv.db").exists();
-            // 2 - Connect/ Create DB
-            System.out.println("Connecting to Database");
             connection = DriverManager.getConnection(URL);
-            // 3 - If flag false, create tables
-            if (!dbExists) {
-                Statement stmt = connection.createStatement();
-                stmt.execute(HABIT_TABLE_SQL);
-            }
+            if (!dbExists) createTables();
+
         } catch (SQLException e) {
-            System.out.println("SQL Exception");
+            System.err.println("SQL Exception");
             e.printStackTrace();
         }
     }
 
-    // Run SQL Command to create Habit Table and commit
-    private void createTables() {
+    @Override
+    public void addView(View view) {
+        views.add(view);
+    }
 
+    // Run SQL Command to create Habit Table and commit
+    private void createTables() throws SQLException {
+        Statement stmt = connection.createStatement();
+        stmt.execute(HABIT_TABLE_SQL);
     }
 
     /**
@@ -57,7 +59,15 @@ public class ConcreteModel implements Model {
     }
 
     @Override
-    public void notify(String context) {
-
+    public void notifyViews() {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet context = stmt.executeQuery(SELECT_ALL);
+            for (View v : views)
+                v.update(context);
+        } catch (SQLException e) {
+            System.err.println("SQL Exception");
+            e.printStackTrace();
+        }
     }
 }

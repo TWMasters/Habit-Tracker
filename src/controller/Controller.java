@@ -3,8 +3,7 @@ package controller;
 //
 public interface Controller {
     /**
-     * Connect to Database and retrieve data
-     * Use for when first loading application
+     * Command Model to send latest Data to View
      */
-    void loadDatabase();
+    void getData();
 }

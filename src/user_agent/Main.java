@@ -1,5 +1,7 @@
 package user_agent;
 
+import controller.ConcreteController;
+import controller.Controller;
 import model.ConcreteModel;
 import model.Model;
 import view.TextView;
@@ -8,7 +10,9 @@ import view.View;
 public class Main {
     public static void main(String[] args) {
         Model model = ConcreteModel.getModel();
-        View view = new TextView();
+        Controller controller = new ConcreteController(model);
+        View view = new TextView(controller);
+        model.addView(view);
         view.render();
     }
 }
