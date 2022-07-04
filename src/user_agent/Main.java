@@ -9,10 +9,12 @@ import view.View;
 
 public class Main {
     public static void main(String[] args) {
+        //  Compose Application
         Model model = ConcreteModel.getModel();
         Controller controller = new ConcreteController(model);
         View view = new TextView(controller);
         model.addView(view);
+        // Run
         view.render();
     }
 }

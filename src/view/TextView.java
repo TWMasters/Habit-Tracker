@@ -4,6 +4,7 @@ import controller.Controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class TextView implements View {
     private final Controller controller;
@@ -21,6 +22,29 @@ public class TextView implements View {
     public void render() {
         System.out.println("HABIT TRACKER");
         getData();
+        Scanner in = new Scanner(System.in);
+        while(true)  {
+            System.out.println("Please select one of the following options: ");
+            System.out.println("   a: Add new Habit");
+            System.out.println("   e: Edit existing Habit");
+            System.out.println("   q: Quit");
+            System.out.println("Input: ");
+            String input = in.nextLine().toLowerCase();
+            if (input.equals("q")) {
+                System.out.println("Exiting...");
+                break;
+            }
+            switch (input) {
+                case "a":
+                    System.out.println("Adding new habit");
+                    break;
+                case "e":
+                    System.out.println("Editing existing habit");
+                    break;
+                default:
+                    System.out.println("Invalid command");
+            }
+        }
     }
 
     @Override
