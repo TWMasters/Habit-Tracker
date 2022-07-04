@@ -1,12 +1,11 @@
 package user_agent;
 
+import view.TextView;
+import view.View;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("HABIT TRACKER");
-        loadDatabase();
-    }
-
-    public static void loadDatabase() {
-
+        View view = new TextView();
+        view.render();
     }
 }
