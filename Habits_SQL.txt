@@ -1,0 +1,8 @@
+CREATE TABLE Habits (
+  Habit_ID  INT PRIMARY KEY,
+  Habit_Name VARCHAR(255) NOT NULL,
+  Binary_Habit BOOLEAN,
+  Habit_Question VARCHAR(255) NOT NULL,
+  Unit VARCHAR(255),
+  Target NUMERIC(18,2)
+);

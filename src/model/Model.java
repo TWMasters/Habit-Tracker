@@ -7,13 +7,6 @@ package model;
  */
 public interface Model {
     /**
-     * Singleton pattern so no more than one instance of Database
-     * Please make Constructor private on implementation
-     * @return concrete instance of Model
-     */
-    Model getModel();
-
-    /**
      * Update all Views stored in Model
      * @param context
      */
