@@ -7,12 +7,9 @@ public class ConcreteController implements Controller {
     private final View view;
     private Model model;
 
-    public ConcreteController(View view) {
-        this.view = view;
+    public ConcreteController(View v) {
+        this.view = v;
+        this.view.setCreateHabitListener(e -> view.displayMessage("Creating a Habit"));
     }
 
-    @Override
-    public void render() {
-        view.run();
-    }
 }

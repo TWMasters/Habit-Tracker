@@ -1,20 +1,34 @@
 package twm.habit_tracker.view;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.stage.Stage;
 
 import java.sql.ResultSet;
 
-public abstract class View extends Application {
+public interface View {
     /**
-     * Call to launch application from another Class
+     * Display a messagee
+     * @param text
      */
-    public abstract void run();
+    void displayMessage(String text);
 
-    public abstract void setCreateHabitListener();
+    /**
+     * Set Event Handling for Create Habit button
+     * @param event
+     */
+    void setCreateHabitListener(EventHandler<ActionEvent> event);
 
     /**
      * Update view of Habits
      * @param HabitData
      */
-    public abstract void SetHabitDisplay (ResultSet HabitData);
+    void setHabitDisplay (ResultSet HabitData);
+
+    /**
+     * Set up stage at start
+      * @param primaryStage
+     */
+    void setUp(Stage primaryStage) throws Exception;
 }

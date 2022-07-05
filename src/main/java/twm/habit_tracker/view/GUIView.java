@@ -1,43 +1,47 @@
 package twm.habit_tracker.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+
 import java.sql.ResultSet;
 
-public class GUIView extends View{
-    Button button;
+public class GUIView implements View {
+    private final Button createHabit;
 
-    @Override
-    public void run() {
-        launch();
+    public GUIView() {
+        this.createHabit = new Button("Add Habit");
     }
 
     @Override
-    public void setCreateHabitListener() {
-
+    public void setCreateHabitListener(EventHandler<ActionEvent> onClick) {
+        createHabit.setOnAction(onClick);
     }
 
     @Override
-    public void SetHabitDisplay(ResultSet HabitData) {
-
+    public void displayMessage(String text) {
+        System.out.println(text);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void setHabitDisplay(ResultSet HabitData) {
+
+    }
+
+    // @Override
+    public void setUp(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Habit Tracker");
-        button = new Button("Refresh");
 
         // Layout
         StackPane layout =  new StackPane();
-        layout.getChildren().add(button);
+        layout.getChildren().add(createHabit);
 
         // Contents
         Scene scene = new Scene(layout, 300, 250);
         primaryStage.setScene(scene);
-
-        // Display
-        primaryStage.show();
     }
 }
