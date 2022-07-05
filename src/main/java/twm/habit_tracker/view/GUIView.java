@@ -9,9 +9,14 @@ import java.sql.ResultSet;
 public class GUIView extends View{
     Button button;
 
+    @Override
     public void run() {
-        System.out.println("Launching!");
         launch();
+    }
+
+    @Override
+    public void setCreateHabitListener() {
+
     }
 
     @Override
@@ -34,6 +39,5 @@ public class GUIView extends View{
 
         // Display
         primaryStage.show();
-
     }
 }

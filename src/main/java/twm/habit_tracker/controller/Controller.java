@@ -4,6 +4,6 @@ public interface Controller {
     /**
      * Display UI, updated with latest data
      */
-    void Render();
+    void render();
 }
 
