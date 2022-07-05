@@ -11,8 +11,6 @@ module twm.habit_tracker.habittracker {
     requires eu.hansolo.tilesfx;
     requires java.sql;
 
-    opens twm.habit_tracker to javafx.fxml;
-    exports twm.habit_tracker;
     exports twm.habit_tracker.user_agent;
     opens twm.habit_tracker.user_agent to javafx.fxml;
     exports twm.habit_tracker.zexamples;
