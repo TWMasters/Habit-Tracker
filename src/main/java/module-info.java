@@ -13,6 +13,8 @@ module twm.habit_tracker.habittracker {
 
     exports twm.habit_tracker.user_agent;
     opens twm.habit_tracker.user_agent to javafx.fxml;
+    exports twm.habit_tracker.view;
+    opens twm.habit_tracker.view to javafx.fxml;
     exports twm.habit_tracker.zexamples;
     opens twm.habit_tracker.zexamples to javafx.fxml;
 }
