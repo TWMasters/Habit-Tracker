@@ -1,4 +1,4 @@
-package twm.habit_tracker;
+package twm.habit_tracker.zexamples;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
