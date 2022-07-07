@@ -1,10 +1,13 @@
 package twm.habit_tracker.view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -12,16 +15,38 @@ import javafx.stage.Stage;
 
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class GUIView implements View {
     private final Button createHabit;
-    private ResultSet habitsTableData;
+    private ObservableList<ObservableList> habitsTableData;
+    private ResultSet habitsTableRS;
     private Stage window;
     private Scene scene1,  scene2;
-    private TableView habitTable;
+    private TableView habitsTable;
 
     public GUIView() {
         this.createHabit = new Button("Add Habit");
+
+    }
+
+
+    /**
+     * Create Habits Table
+     * @return
+     */
+    private TableView<ResultSet> buildHabitsTable() throws SQLException {
+        habitsTableData = FXCollections.observableArrayList();
+        TableView<ResultSet> output = new TableView();
+
+        for (int i = 0; i < habitsTableRS.getMetaData().getColumnCount(); i++) {
+            // Create a Dynamic Table
+            final int j = i;
+            TableColumn col = new TableColumn(habitsTableRS.getMetaData().getColumnName(i+1).replace('_', ' '));
+
+            output.getColumns().addAll(col);
+        }
+        return output;
     }
 
     @Override
@@ -31,7 +56,7 @@ public class GUIView implements View {
 
     @Override
     public void setHabitsTableData(ResultSet resultSet) {
-        habitsTableData = resultSet;
+        habitsTableRS = resultSet;
     }
 
     @Override
@@ -39,15 +64,6 @@ public class GUIView implements View {
         createHabit.setOnAction(onClick);
     }
 
-    /*
-    public TableView<ResultSet> setHabitDisplay(ResultSet HabitData) {
-        TableView<ResultSet> output = new TableView();
-
-
-
-    }
-
-     */
 
     @Override
     public void setUp(Stage primaryStage) throws Exception {
@@ -57,10 +73,11 @@ public class GUIView implements View {
         Label label1 = new Label("Welcome to the first scene");
         Button button1 = new Button("Go to scene 2");
         button1.setOnAction(e -> window.setScene(scene2));
+        TableView habitsTable = buildHabitsTable();
 
         // Layout - scene1
         VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1, createHabit, button1);
+        layout1.getChildren().addAll(label1, createHabit, habitsTable, button1);
         scene1 = new Scene(layout1, 200, 200);
 
         // Set up scene 2 Elements
@@ -70,10 +87,11 @@ public class GUIView implements View {
         // Layout - scene2
         StackPane layout2 = new StackPane();
         layout2.getChildren().add(button2);
-        scene2 = new Scene(layout2, 600, 300);
+        scene2 = new Scene(layout2);
 
         // Contents
         window.setTitle("Habit Tracker");
+        window.setMaximized(true);
         window.setScene(scene1);
 
         // ADD BACK

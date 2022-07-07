@@ -17,7 +17,7 @@ public class ConcreteModel implements Model {
                     "  Target NUMERIC(18,2)\n" +
                     ");";
     private static final String SELECT_ALL =
-            "SELECT Habit_Name, Habit_Question FROM Habits;";
+            "SELECT Habit_Name, Habit_Question, Unit, Target FROM Habits;";
 
     private static final String DB_FILEPATH = "db/Habits.mv.db";
     private static final String H2_URL = "jdbc:h2:./db/Habits";
