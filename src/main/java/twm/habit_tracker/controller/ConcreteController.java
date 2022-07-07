@@ -11,6 +11,7 @@ public class ConcreteController implements Controller {
         this.view = v;
         this.model = m;
         this.view.setCreateHabitListener(e -> view.displayMessage("Alert!","Creating a Habit"));
+        this.view.setHabitsTableData(model.getHabitData().get());
     }
 
 }

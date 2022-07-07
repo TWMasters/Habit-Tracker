@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -14,8 +15,10 @@ import java.sql.ResultSet;
 
 public class GUIView implements View {
     private final Button createHabit;
-    Stage window;
-    Scene scene1,  scene2;
+    private ResultSet habitsTableData;
+    private Stage window;
+    private Scene scene1,  scene2;
+    private TableView habitTable;
 
     public GUIView() {
         this.createHabit = new Button("Add Habit");
@@ -27,14 +30,24 @@ public class GUIView implements View {
     }
 
     @Override
+    public void setHabitsTableData(ResultSet resultSet) {
+        habitsTableData = resultSet;
+    }
+
+    @Override
     public void setCreateHabitListener(EventHandler<ActionEvent> onClick) {
         createHabit.setOnAction(onClick);
     }
 
-    @Override
-    public void setHabitDisplay(ResultSet HabitData) {
+    /*
+    public TableView<ResultSet> setHabitDisplay(ResultSet HabitData) {
+        TableView<ResultSet> output = new TableView();
+
+
 
     }
+
+     */
 
     @Override
     public void setUp(Stage primaryStage) throws Exception {

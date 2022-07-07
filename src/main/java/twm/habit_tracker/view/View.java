@@ -2,6 +2,7 @@ package twm.habit_tracker.view;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.sql.ResultSet;
@@ -21,10 +22,10 @@ public interface View {
     void setCreateHabitListener(EventHandler<ActionEvent> event);
 
     /**
-     * Update view of Habits
-     * @param HabitData
+     * Controller uses to send Habits Table Data to GUI for display
+     * @param resultSet
      */
-    void setHabitDisplay (ResultSet HabitData);
+    void setHabitsTableData(ResultSet resultSet);
 
     /**
      * Set up stage at start

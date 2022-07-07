@@ -1,0 +1,20 @@
+2022-07-07 19:44:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HABITS" already exists; SQL statement:
+CREATE TABLE Habits (
+  Habit_ID  INT PRIMARY KEY,
+  Habit_Name VARCHAR(255) NOT NULL,
+  Binary_Habit BOOLEAN,
+  Habit_Question VARCHAR(255) NOT NULL,
+  Unit VARCHAR(255),
+  Target NUMERIC(18,2)
+) [42101-214]
+2022-07-07 19:45:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HABITS" already exists; SQL statement:
+CREATE TABLE Habits (
+  Habit_ID  INT PRIMARY KEY,
+  Habit_Name VARCHAR(255) NOT NULL,
+  Binary_Habit BOOLEAN,
+  Habit_Question VARCHAR(255) NOT NULL,
+  Unit VARCHAR(255),
+  Target NUMERIC(18,2)
+) [42101-214]

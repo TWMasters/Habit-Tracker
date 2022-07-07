@@ -17,9 +17,9 @@ public class ConcreteModel implements Model {
                     "  Target NUMERIC(18,2)\n" +
                     ");";
     private static final String SELECT_ALL =
-            "SELECT * FROM Habits;";
+            "SELECT Habit_Name, Habit_Question FROM Habits;";
 
-    private static final String DB_FILEPATH = ".db/Habits.mv.db";
+    private static final String DB_FILEPATH = "db/Habits.mv.db";
     private static final String H2_URL = "jdbc:h2:./db/Habits";
 
     private Connection connection = null;
@@ -27,6 +27,7 @@ public class ConcreteModel implements Model {
     private ConcreteModel() {
         try {
             Boolean dbExists = new File(DB_FILEPATH).exists();
+            System.out.println(dbExists);
             connection = DriverManager.getConnection(H2_URL);
             if (!dbExists)
                 createTables();
