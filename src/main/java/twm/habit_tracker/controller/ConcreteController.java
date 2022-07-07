@@ -9,7 +9,7 @@ public class ConcreteController implements Controller {
 
     public ConcreteController(View v) {
         this.view = v;
-        this.view.setCreateHabitListener(e -> view.displayMessage("Creating a Habit"));
+        this.view.setCreateHabitListener(e -> view.displayMessage("Alert!","Creating a Habit"));
     }
 
 }

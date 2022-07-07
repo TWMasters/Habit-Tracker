@@ -8,10 +8,11 @@ import java.sql.ResultSet;
 
 public interface View {
     /**
-     * Display a messagee
-     * @param text
+     * Display a message
+     * @param title
+     * @param message
      */
-    void displayMessage(String text);
+    void displayMessage(String title, String message);
 
     /**
      * Set Event Handling for Create Habit button

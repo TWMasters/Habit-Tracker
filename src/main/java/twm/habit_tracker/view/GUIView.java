@@ -22,8 +22,8 @@ public class GUIView implements View {
     }
 
     @Override
-    public void displayMessage(String text) {
-        System.out.println(text);
+    public void displayMessage(String title, String message) {
+        AlertBox.display(title, message);
     }
 
     @Override
