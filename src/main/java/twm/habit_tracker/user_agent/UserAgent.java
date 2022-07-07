@@ -8,7 +8,7 @@ import twm.habit_tracker.view.GUIView;
 import twm.habit_tracker.view.View;
 
 
-public class Main extends Application {
+public class UserAgent extends Application {
     public static void main(String[] args) {
         launch();
     }
@@ -17,6 +17,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         View GUI = new GUIView();
         Controller controller = new ConcreteController(GUI);
+        // Send to view to set-up
         GUI.setUp(primaryStage);
         primaryStage.show();
 
