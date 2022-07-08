@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -24,28 +25,28 @@ public class GUIView implements View {
     private ObservableList<ObservableList> habitsTableData;
     private Stage window;
     private Scene scene1,  scene2;
-    private TableView habitsTable;
 
     public GUIView() {
         this.createHabit = new Button("Add Habit");
 
     }
 
-
     /**
-     * Create Habits Table
-     * @return
+     * Create Habits Table based off Data matrix
+     * @return a new Habits Table
      */
-    private TableView<ResultSet> buildHabitsTable() throws SQLException {
+    private TableView<ObservableList> buildHabitsTable() throws SQLException {
 
-        TableView<ResultSet> output = new TableView();
+        TableView<ObservableList> outputTable = new TableView();
 
         for (int i = 0; i < habitsTableData.get(0).size(); i++) {
             // Create a Dynamic Table
-            TableColumn col = new TableColumn(habitsTableData.get(0).get(i).toString().replace('_', ' '));
-            output.getColumns().addAll(col);
+            TableColumn<ObservableList, String> col = new TableColumn(habitsTableData.get(0).get(i).toString().replace('_', ' '));
+            if (habitsTableData.size() > 1)
+                col.setCellValueFactory(new PropertyValueFactory<ObservableList, String>(habitsTableData.get(i+1).toString()));
+            outputTable.getColumns().add(col);
         }
-        return output;
+        return outputTable;
     }
 
     @Override
@@ -53,6 +54,11 @@ public class GUIView implements View {
         AlertBox.display(title, message);
     }
 
+    /**
+     * Send Habits table data to GUI for display by converting into
+     * an Observable List matrix, which can then be used by the TableView
+     * @param resultSet
+     */
     @Override
     public void setHabitsTableData(ResultSet resultSet) {
         try {
