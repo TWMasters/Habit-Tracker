@@ -16,11 +16,12 @@ import javafx.stage.Stage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 public class GUIView implements View {
     private final Button createHabit;
     private ObservableList<ObservableList> habitsTableData;
-    private ResultSet habitsTableRS;
     private Stage window;
     private Scene scene1,  scene2;
     private TableView habitsTable;
@@ -36,14 +37,12 @@ public class GUIView implements View {
      * @return
      */
     private TableView<ResultSet> buildHabitsTable() throws SQLException {
-        habitsTableData = FXCollections.observableArrayList();
+
         TableView<ResultSet> output = new TableView();
 
-        for (int i = 0; i < habitsTableRS.getMetaData().getColumnCount(); i++) {
+        for (int i = 0; i < habitsTableData.get(0).size(); i++) {
             // Create a Dynamic Table
-            final int j = i;
-            TableColumn col = new TableColumn(habitsTableRS.getMetaData().getColumnName(i+1).replace('_', ' '));
-
+            TableColumn col = new TableColumn(habitsTableData.get(0).get(i).toString().replace('_', ' '));
             output.getColumns().addAll(col);
         }
         return output;
@@ -56,7 +55,25 @@ public class GUIView implements View {
 
     @Override
     public void setHabitsTableData(ResultSet resultSet) {
-        habitsTableRS = resultSet;
+        try {
+            habitsTableData = FXCollections.observableArrayList();
+            // Add Column Names
+            ObservableList<String> columnNames = FXCollections.observableArrayList();
+            for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
+                // Get Column Name
+                columnNames.add(resultSet.getMetaData().getColumnName(i + 1));
+                // Get Column Data as Array, and add to DataSet
+                if (resultSet.isBeforeFirst()) {
+                    List colAsList = Arrays.asList(resultSet.getArray(i + 1));
+                    ObservableList<String> colAsObservableList = FXCollections.observableArrayList(colAsList);
+                    habitsTableData.add(colAsObservableList);
+                }
+            }
+            // Add Array of Column Names to start
+            habitsTableData.add(0, columnNames);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

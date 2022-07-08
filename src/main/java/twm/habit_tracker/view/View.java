@@ -2,10 +2,10 @@ package twm.habit_tracker.view;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public interface View {
     /**
@@ -25,7 +25,7 @@ public interface View {
      * Controller uses to send Habits Table Data to GUI for display
      * @param resultSet
      */
-    void setHabitsTableData(ResultSet resultSet);
+    void setHabitsTableData(ResultSet resultSet) throws SQLException;
 
     /**
      * Set up stage at start
