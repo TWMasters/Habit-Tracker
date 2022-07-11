@@ -1,5 +1,7 @@
 package twm.habit_tracker.view;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,16 +15,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 
 public class GUIView implements View {
     private final Button createHabit;
-    private ObservableList<ObservableList> habitsTableData;
+    private ObservableList<ObservableList<String>> habitsTableData;
     private Stage window;
     private Scene scene1,  scene2;
 
@@ -35,17 +36,20 @@ public class GUIView implements View {
      * Create Habits Table based off Data matrix
      * @return a new Habits Table
      */
-    private TableView<ObservableList> buildHabitsTable() {
+    private TableView<ObservableList<String>> buildHabitsTable() {
 
-        TableView<ObservableList> outputTable = new TableView();
+        TableView<ObservableList<String>> outputTable = new TableView();
 
         for (int i = 0; i < habitsTableData.get(0).size(); i++) {
             // Create a Dynamic Table
-            TableColumn<ObservableList, String> col = new TableColumn(habitsTableData.get(0).get(i).toString().replace('_', ' '));
+            TableColumn<ObservableList<String>, String> col =
+                    new TableColumn(habitsTableData.get(0).get(i).toString().replace('_', ' '));
+            final int j = i;
             if (habitsTableData.size() > 1)
-                col.setCellValueFactory(new PropertyValueFactory<ObservableList, String>(habitsTableData.get(i+1).toString()));
+                col.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().get(j)));
             outputTable.getColumns().add(col);
         }
+        outputTable.setItems(habitsTableData);
         return outputTable;
     }
 
@@ -85,6 +89,7 @@ public class GUIView implements View {
             else
                 System.out.println("No Rows!");
 
+            // TODO: 11/07/2022 Internal use only. Delete later! 
             for (int i =0; i < habitsTableData.size(); i++)
                 System.out.println(habitsTableData.get(i));
 

@@ -28,7 +28,6 @@ public class ConcreteModel implements Model {
     private ConcreteModel() {
         try {
             Boolean dbExists = new File(DB_FILEPATH).exists();
-            System.out.println(dbExists);
             connection = DriverManager.getConnection(H2_URL);
             if (!dbExists)
                 createTables();

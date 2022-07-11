@@ -7,11 +7,11 @@ import java.sql.SQLException;
 
 public class ConcreteController implements Controller {
     private final View view;
-    private Model model;
+    private final Model model;
 
-    public ConcreteController(View v, Model m) throws SQLException {
-        this.view = v;
-        this.model = m;
+    public ConcreteController(View view, Model model) throws SQLException {
+        this.view = view;
+        this.model = model;
         // Link View to Model
         this.view.setCreateHabitListener(e -> view.displayMessage("Alert!","Creating a Habit"));
         this.view.setHabitsTableData(model.getHabitData().get());
