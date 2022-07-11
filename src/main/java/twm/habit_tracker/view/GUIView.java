@@ -35,18 +35,15 @@ public class GUIView implements View {
      * Create Habits Table based off Data matrix
      * @return a new Habits Table
      */
-    private TableView<ObservableList> buildHabitsTable() throws SQLException {
+    private TableView<ObservableList> buildHabitsTable() {
 
         TableView<ObservableList> outputTable = new TableView();
 
         for (int i = 0; i < habitsTableData.get(0).size(); i++) {
             // Create a Dynamic Table
             TableColumn<ObservableList, String> col = new TableColumn(habitsTableData.get(0).get(i).toString().replace('_', ' '));
-            /*
             if (habitsTableData.size() > 1)
                 col.setCellValueFactory(new PropertyValueFactory<ObservableList, String>(habitsTableData.get(i+1).toString()));
-
-             */
             outputTable.getColumns().add(col);
         }
         return outputTable;
@@ -66,24 +63,31 @@ public class GUIView implements View {
     public void setHabitsTableData(ResultSet resultSet) {
         try {
             habitsTableData = FXCollections.observableArrayList();
-            // Add Column Names
+
+            // Get Column Names and set up ArrayLists in Data
             ObservableList<String> columnNames = FXCollections.observableArrayList();
-            for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
-                // Get Column Name
-                columnNames.add(resultSet.getMetaData().getColumnName(i + 1));
-                // Get Column Data as Array, and add to DataSet
-                /*
-                if (resultSet.isBeforeFirst()) {
-                    List colAsList = Arrays.asList(resultSet.getArray(i + 1));
-                    ObservableList<String> colAsObservableList = FXCollections.observableArrayList(colAsList);
-                    habitsTableData.add(colAsObservableList);
-
-
-                }
-                 */
+            int columnCount = resultSet.getMetaData().getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+                habitsTableData.add(FXCollections.observableArrayList());
             }
-            // Add Array of Column Names to start
             habitsTableData.add(0, columnNames);
+
+            // Get Column Data as Array, and add to DataSet (Messy Algorithm)
+            if (resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    for (int i = 1; i <= columnCount; i++ ) {
+                        String input = resultSet.getString(i);
+                        habitsTableData.get(i).add(input);
+                    }
+                }
+            }
+            else
+                System.out.println("No Rows!");
+
+            for (int i =0; i < habitsTableData.size(); i++)
+                System.out.println(habitsTableData.get(i));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -124,7 +128,7 @@ public class GUIView implements View {
         window.setMaximized(true);
         window.setScene(scene1);
 
-        // ADD BACK
+        // ADD BACK AT SOME POINT
         // StackPane layout =  new StackPane();
         // layout.getChildren().add(createHabit);
     }
