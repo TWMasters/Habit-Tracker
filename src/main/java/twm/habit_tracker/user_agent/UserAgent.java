@@ -20,9 +20,8 @@ public class UserAgent extends Application {
         View GUI = new GUIView();
         Model DB = ConcreteModel.getModel();
         Controller controller = new ConcreteController(GUI, DB);
-        // Send to view to set-up
+        // Send primary stage to view to set-up
         GUI.setUp(primaryStage);
         primaryStage.show();
-
     }
 }

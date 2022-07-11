@@ -42,8 +42,11 @@ public class GUIView implements View {
         for (int i = 0; i < habitsTableData.get(0).size(); i++) {
             // Create a Dynamic Table
             TableColumn<ObservableList, String> col = new TableColumn(habitsTableData.get(0).get(i).toString().replace('_', ' '));
+            /*
             if (habitsTableData.size() > 1)
                 col.setCellValueFactory(new PropertyValueFactory<ObservableList, String>(habitsTableData.get(i+1).toString()));
+
+             */
             outputTable.getColumns().add(col);
         }
         return outputTable;
@@ -69,11 +72,15 @@ public class GUIView implements View {
                 // Get Column Name
                 columnNames.add(resultSet.getMetaData().getColumnName(i + 1));
                 // Get Column Data as Array, and add to DataSet
+                /*
                 if (resultSet.isBeforeFirst()) {
                     List colAsList = Arrays.asList(resultSet.getArray(i + 1));
                     ObservableList<String> colAsObservableList = FXCollections.observableArrayList(colAsList);
                     habitsTableData.add(colAsObservableList);
+
+
                 }
+                 */
             }
             // Add Array of Column Names to start
             habitsTableData.add(0, columnNames);

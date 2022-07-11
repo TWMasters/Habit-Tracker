@@ -6,3 +6,13 @@ CREATE TABLE Habits (
   Unit VARCHAR(255),
   Target NUMERIC(18,2)
 );
+
+INSERT INTO
+(Habit_ID, Habit_Name, Binary_Habit, Habit_Question)
+VALUES (1, 'Piano', true, 'Did you practise the Piano?');
+
+INSERT INTO
+(Habit_ID, Habit_Name, Binary_Habit, Habit_Question)
+VALUES (2, 'Walk', true, 'Did you go for a walk?');
+
+COMMIT;

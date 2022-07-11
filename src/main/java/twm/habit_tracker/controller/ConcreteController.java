@@ -12,6 +12,7 @@ public class ConcreteController implements Controller {
     public ConcreteController(View v, Model m) throws SQLException {
         this.view = v;
         this.model = m;
+        // Link View to Model
         this.view.setCreateHabitListener(e -> view.displayMessage("Alert!","Creating a Habit"));
         this.view.setHabitsTableData(model.getHabitData().get());
     }
