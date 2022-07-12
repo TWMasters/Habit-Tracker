@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -50,7 +49,7 @@ public class GUIView implements View {
 
     @Override
     public void displayMessage(String title, String message) {
-        AlertBox.display(title, message);
+        System.out.println(ConfirmBox.display(title, message));
     }
 
 
@@ -66,8 +65,8 @@ public class GUIView implements View {
 
         // Wiring
         addHabitbutton.setOnAction(e -> {
-            window.setScene(habitPage);
             window.setMaximized(true);
+            window.setScene(habitPage);
         });
 
         // Layout
@@ -89,8 +88,8 @@ public class GUIView implements View {
         // Wiring
         addHabitButton.setOnAction(createHabitEventHandler);
         backButton.setOnAction(e -> {
-                window.setScene(homePage);
-                window.setMaximized(true);
+            window.setMaximized(true);
+            window.setScene(homePage);
         });
 
         // Layout
@@ -107,7 +106,6 @@ public class GUIView implements View {
         habitsTableColumnData = FXCollections.observableArrayList();
         for (int i = 1; i <= columnCount; i++)
             habitsTableColumnData.add(resultSet.getMetaData().getColumnName(i));
-
     }
 
     /**
@@ -158,7 +156,7 @@ public class GUIView implements View {
 
         // Contents
         window.setTitle("Habit Tracker");
-        window.setMaximized(true);
+        // window.setMaximized(true);
         window.setScene(homePage);
     }
 }
