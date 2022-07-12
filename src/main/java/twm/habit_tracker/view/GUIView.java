@@ -29,7 +29,7 @@ public class GUIView implements View {
      * Create Habits Table based off Data matrix
      * @return a new Habits Table
      */
-    public TableView<ObservableList<String>> buildHabitsTable() {
+    private TableView<ObservableList<String>> buildHabitsTable() {
 
         TableView<ObservableList<String>> outputTable = new TableView();
 
@@ -45,6 +45,15 @@ public class GUIView implements View {
         }
         outputTable.setItems(habitsTableData);
         return outputTable;
+    }
+
+    // TODO: 12/07/2022 Change to controller? 
+    /**
+     * Actions on exiting program
+     */
+    private void closeProgram() {
+        Boolean answer = ConfirmBox.display("Alert!", "Are you sure you want to exit?");
+        if (answer) window.close();
     }
 
     @Override
@@ -154,9 +163,15 @@ public class GUIView implements View {
         homePage = new HabitScene(getHomePage()).buildScene();
         habitPage = new HabitScene(getHabitPage()).buildScene();
 
-        // Contents
+        // Window Contents
         window.setTitle("Habit Tracker");
+        window.setOnCloseRequest(e -> {
+            e.consume(); // Consume -> Use developer logic
+            closeProgram();
+        });
+
         // window.setMaximized(true);
         window.setScene(homePage);
     }
+
 }
