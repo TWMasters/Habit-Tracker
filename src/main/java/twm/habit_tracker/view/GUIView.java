@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,13 +24,13 @@ public class GUIView implements View {
     private ObservableList<String> habitsTableColumnData;
     private ObservableList<ObservableList<String>> habitsTableData;
     private Stage window;
-    private Scene scene1,  scene2;
+    private Scene homePage, habitPage;
 
     /**
      * Create Habits Table based off Data matrix
      * @return a new Habits Table
      */
-    private TableView<ObservableList<String>> buildHabitsTable() {
+    public TableView<ObservableList<String>> buildHabitsTable() {
 
         TableView<ObservableList<String>> outputTable = new TableView();
 
@@ -50,6 +51,52 @@ public class GUIView implements View {
     @Override
     public void displayMessage(String title, String message) {
         AlertBox.display(title, message);
+    }
+
+
+    /**
+     * Helper Method to assemble Home page
+     * @return Pane
+     */
+    private Pane getHomePage() {
+        // Elements
+        Label header = new Label("HOME PAGE");
+        TableView habitsTable = buildHabitsTable();
+        Button addHabitbutton = new Button("Add Habit");
+
+        // Wiring
+        addHabitbutton.setOnAction(e -> {
+            window.setScene(habitPage);
+            window.setMaximized(true);
+        });
+
+        // Layout
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(header, habitsTable, addHabitbutton);
+        return layout;
+    }
+
+    /**
+     * Helper Method to assemble Habit page
+     * @return Pane
+     */
+    public Pane getHabitPage() {
+        //  Elements
+        Label header = new Label("HABIT PAGE");
+        Button addHabitButton = new Button("Create");
+        Button backButton = new Button("Back");
+
+        // Wiring
+        addHabitButton.setOnAction(createHabitEventHandler);
+        backButton.setOnAction(e -> {
+                window.setScene(homePage);
+                window.setMaximized(true);
+        });
+
+        // Layout
+        VBox layout  = new VBox(20);
+        layout.getChildren().addAll(header, addHabitButton, backButton);
+        return layout;
     }
 
     /**
@@ -106,33 +153,12 @@ public class GUIView implements View {
     public void setUp(Stage primaryStage) throws Exception {
         window = primaryStage;
 
-        // Home Screen
-        Label label1 = new Label("Welcome to the first scene");
-        Button button1 = new Button("Go to scene 2");
-        button1.setOnAction(e -> window.setScene(scene2));
-        TableView habitsTable = buildHabitsTable();
-
-        // Layout - scene1
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1, habitsTable, button1);
-        scene1 = new Scene(layout1, 200, 200);
-
-        // Set up scene 2 Elements
-        Button button2 = new Button("Go to scene 1");
-        button2.setOnAction(e -> window.setScene(scene1));
-
-        // Layout - scene2
-        StackPane layout2 = new StackPane();
-        layout2.getChildren().add(button2);
-        scene2 = new Scene(layout2);
+        homePage = new HabitScene(getHomePage()).buildScene();
+        habitPage = new HabitScene(getHabitPage()).buildScene();
 
         // Contents
         window.setTitle("Habit Tracker");
         window.setMaximized(true);
-        window.setScene(scene1);
-
-        // ADD BACK AT SOME POINT
-        // StackPane layout =  new StackPane();
-        // layout.getChildren().add(createHabit);
+        window.setScene(homePage);
     }
 }
