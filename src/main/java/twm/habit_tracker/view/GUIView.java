@@ -19,16 +19,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GUIView implements View {
-    private final Button createHabit;
+    private EventHandler<ActionEvent> createHabitEventHandler;
     private ObservableList<String> habitsTableColumnData;
     private ObservableList<ObservableList<String>> habitsTableData;
     private Stage window;
     private Scene scene1,  scene2;
-
-    public GUIView() {
-        this.createHabit = new Button("Add Habit");
-
-    }
 
     /**
      * Create Habits Table based off Data matrix
@@ -58,6 +53,17 @@ public class GUIView implements View {
     }
 
     /**
+     * Helper method for Column metadata
+     * @param resultSet
+     */
+    private void setHabitsTableColumnData(ResultSet resultSet, int columnCount) throws SQLException {
+        habitsTableColumnData = FXCollections.observableArrayList();
+        for (int i = 1; i <= columnCount; i++)
+            habitsTableColumnData.add(resultSet.getMetaData().getColumnName(i));
+
+    }
+
+    /**
      * Send Habits table data to GUI for display by converting into
      * an Observable List matrix, which can then be used by the TableView
      * @param resultSet
@@ -65,11 +71,10 @@ public class GUIView implements View {
     @Override
     public void setHabitsTableData(ResultSet resultSet) {
         try {
-            // Get Column Names and set up ArrayLists in Data
-            habitsTableColumnData = FXCollections.observableArrayList();
             int columnCount = resultSet.getMetaData().getColumnCount();
-            for (int i = 1; i <= columnCount; i++)
-                habitsTableColumnData.add(resultSet.getMetaData().getColumnName(i));
+
+            // Call helper method to save column metadata
+            setHabitsTableColumnData(resultSet, columnCount);
 
             // Get Column Data as Array, and add to DataSet (Messy Algorithm)
             habitsTableData = FXCollections.observableArrayList();
@@ -92,8 +97,8 @@ public class GUIView implements View {
     }
 
     @Override
-    public void setCreateHabitListener(EventHandler<ActionEvent> onClick) {
-        createHabit.setOnAction(onClick);
+    public void setCreateHabitListener(EventHandler<ActionEvent> e) {
+        createHabitEventHandler = e;
     }
 
 
@@ -101,7 +106,7 @@ public class GUIView implements View {
     public void setUp(Stage primaryStage) throws Exception {
         window = primaryStage;
 
-        // Set up scene 1 Elements
+        // Home Screen
         Label label1 = new Label("Welcome to the first scene");
         Button button1 = new Button("Go to scene 2");
         button1.setOnAction(e -> window.setScene(scene2));
@@ -109,7 +114,7 @@ public class GUIView implements View {
 
         // Layout - scene1
         VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1, createHabit, habitsTable, button1);
+        layout1.getChildren().addAll(label1, habitsTable, button1);
         scene1 = new Scene(layout1, 200, 200);
 
         // Set up scene 2 Elements
