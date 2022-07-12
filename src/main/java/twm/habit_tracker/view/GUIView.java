@@ -65,23 +65,22 @@ public class GUIView implements View {
     @Override
     public void setHabitsTableData(ResultSet resultSet) {
         try {
-            habitsTableColumnData = FXCollections.observableArrayList();
-            habitsTableData = FXCollections.observableArrayList();
-
             // Get Column Names and set up ArrayLists in Data
+            habitsTableColumnData = FXCollections.observableArrayList();
             int columnCount = resultSet.getMetaData().getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
+            for (int i = 1; i <= columnCount; i++)
                 habitsTableColumnData.add(resultSet.getMetaData().getColumnName(i));
-                habitsTableData.add(FXCollections.observableArrayList());
-            }
 
             // Get Column Data as Array, and add to DataSet (Messy Algorithm)
+            habitsTableData = FXCollections.observableArrayList();
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
+                    ObservableList<String> inputRow = FXCollections.observableArrayList();
                     for (int i = 1; i <= columnCount; i++ ) {
                         String input = resultSet.getString(i);
-                        habitsTableData.get(i-1).add(input);
+                        inputRow.add(input);
                     }
+                    habitsTableData.add(inputRow);
                 }
             }
             else
