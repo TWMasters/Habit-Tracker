@@ -1,7 +1,6 @@
 package twm.habit_tracker.view;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,11 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 
 import java.sql.ResultSet;
@@ -23,6 +20,7 @@ import java.sql.SQLException;
 
 public class GUIView implements View {
     private final Button createHabit;
+    private ObservableList<String> habitsTableColumnData;
     private ObservableList<ObservableList<String>> habitsTableData;
     private Stage window;
     private Scene scene1,  scene2;
@@ -40,10 +38,11 @@ public class GUIView implements View {
 
         TableView<ObservableList<String>> outputTable = new TableView();
 
+        // Create a Dynamic Table
         for (int i = 0; i < habitsTableData.get(0).size(); i++) {
-            // Create a Dynamic Table
+            // Create a Column
             TableColumn<ObservableList<String>, String> col =
-                    new TableColumn(habitsTableData.get(0).get(i).toString().replace('_', ' '));
+                    new TableColumn(habitsTableColumnData.get(i).replace('_', ' '));
             final int j = i;
             if (habitsTableData.size() > 1)
                 col.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().get(j)));
@@ -66,32 +65,27 @@ public class GUIView implements View {
     @Override
     public void setHabitsTableData(ResultSet resultSet) {
         try {
+            habitsTableColumnData = FXCollections.observableArrayList();
             habitsTableData = FXCollections.observableArrayList();
 
             // Get Column Names and set up ArrayLists in Data
-            ObservableList<String> columnNames = FXCollections.observableArrayList();
             int columnCount = resultSet.getMetaData().getColumnCount();
             for (int i = 1; i <= columnCount; i++) {
-                columnNames.add(resultSet.getMetaData().getColumnName(i));
+                habitsTableColumnData.add(resultSet.getMetaData().getColumnName(i));
                 habitsTableData.add(FXCollections.observableArrayList());
             }
-            habitsTableData.add(0, columnNames);
 
             // Get Column Data as Array, and add to DataSet (Messy Algorithm)
             if (resultSet.isBeforeFirst()) {
                 while (resultSet.next()) {
                     for (int i = 1; i <= columnCount; i++ ) {
                         String input = resultSet.getString(i);
-                        habitsTableData.get(i).add(input);
+                        habitsTableData.get(i-1).add(input);
                     }
                 }
             }
             else
                 System.out.println("No Rows!");
-
-            // TODO: 11/07/2022 Internal use only. Delete later! 
-            for (int i =0; i < habitsTableData.size(); i++)
-                System.out.println(habitsTableData.get(i));
 
         } catch (SQLException e) {
             e.printStackTrace();

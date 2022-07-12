@@ -7,11 +7,11 @@ CREATE TABLE Habits (
   Target NUMERIC(18,2)
 );
 
-INSERT INTO
+INSERT INTO Habits
 (Habit_ID, Habit_Name, Binary_Habit, Habit_Question)
 VALUES (1, 'Piano', true, 'Did you practise the Piano?');
 
-INSERT INTO
+INSERT INTO Habits
 (Habit_ID, Habit_Name, Binary_Habit, Habit_Question)
 VALUES (2, 'Walk', true, 'Did you go for a walk?');
 
