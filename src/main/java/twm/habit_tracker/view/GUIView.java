@@ -5,11 +5,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -72,6 +74,13 @@ public class GUIView implements View {
         TableView habitsTable = buildHabitsTable();
         Button addHabitbutton = new Button("Add Habit");
 
+        // Nested Layout
+        HBox bottomMenu = new HBox(20);
+        Button homeButton = new Button("Home");
+        Button avatarButton = new Button("Avatar");
+        bottomMenu.getChildren().addAll(homeButton, avatarButton);
+        bottomMenu.setAlignment(Pos.CENTER);
+
         // Wiring
         addHabitbutton.setOnAction(e -> {
             window.setMaximized(true);
@@ -80,7 +89,8 @@ public class GUIView implements View {
 
         // Layout
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(header, habitsTable, addHabitbutton);
+        layout.getChildren().addAll(header, habitsTable, addHabitbutton, bottomMenu);
+        layout.setAlignment(Pos.TOP_CENTER);
         return layout;
     }
 
@@ -104,6 +114,7 @@ public class GUIView implements View {
         // Layout
         VBox layout  = new VBox(20);
         layout.getChildren().addAll(header, addHabitButton, backButton);
+        layout.setAlignment(Pos.TOP_CENTER);
         return layout;
     }
 
