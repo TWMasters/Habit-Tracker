@@ -25,6 +25,13 @@ public class ConcreteModel implements Model {
 
     private Connection connection = null;
 
+
+    @Override
+    public void addHabit() {
+
+
+    }
+
     private ConcreteModel() {
         try {
             Boolean dbExists = new File(DB_FILEPATH).exists();

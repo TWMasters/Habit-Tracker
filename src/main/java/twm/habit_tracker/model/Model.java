@@ -9,6 +9,9 @@ import java.util.Optional;
  * and supplies the Controller data on demand
  */
 public interface Model {
+
+    void addHabit();
+
     /**
      * Use to get data from Habits Relation
      * @return Habits ResultSet

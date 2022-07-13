@@ -17,9 +17,11 @@ public class UserAgent extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Compose application
         View GUI = new GUIView();
         Model DB = ConcreteModel.getModel();
         Controller controller = new ConcreteController(GUI, DB);
+
         // Send primary stage to view to set-up
         GUI.setUp(primaryStage);
         primaryStage.show();

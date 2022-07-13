@@ -15,7 +15,17 @@ public class ConcreteController implements Controller {
         // Link View to Model
         this.view.setCreateHabitListener(e -> {
             view.getHabitInfo();
+            
+            try {
+                refreshData();
+            } catch (SQLException ex) {
+            }
         });
+        refreshData();
+    }
+
+    @Override
+    public void refreshData() throws SQLException {
         this.view.setHabitsTableData(model.getHabitData().get());
     }
 }
