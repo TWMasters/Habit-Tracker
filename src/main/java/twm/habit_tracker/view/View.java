@@ -16,6 +16,13 @@ public interface View {
     void displayMessage(String title, String message);
 
     /**
+     * Use to gather Habit Information from text-fields
+     * when creating a new Habit or modifying an existing Habit
+     * @return Habit Record
+     */
+    Habit getHabitInfo();
+
+    /**
      * Set Event Handling for Create Habit button
      * @param event
      */
