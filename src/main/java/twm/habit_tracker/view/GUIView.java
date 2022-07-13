@@ -26,6 +26,7 @@ public class GUIView implements View {
     private ObservableList<ObservableList<String>> habitsTableData;
     private Stage window;
     private Scene homePage, habitPage;
+    private TextField habitNameTF,  habitQuestionTF;
 
     /**
      * Create Habits Table based off Data matrix
@@ -61,6 +62,20 @@ public class GUIView implements View {
     @Override
     public void displayMessage(String title, String message) {
         System.out.println(ConfirmBox.display(title, message));
+    }
+
+    @Override
+    public Habit getHabitInfo() {
+        Habit habit = new Habit(
+                habitNameTF.getText(),
+                true,
+                habitQuestionTF.getText(),
+                null,
+                null
+        );
+        System.out.println(habit.habitName());
+        System.out.println(habit.habitQuestion());
+        return habit;
     }
 
 
@@ -112,12 +127,12 @@ public class GUIView implements View {
 
         Label habitName = new Label("Habit Name: ");
         layout.add(habitName, 0, 1);
-        TextField habitNameTF = new TextField();
+        habitNameTF = new TextField();
         layout.add(habitNameTF, 1, 1, 2, 1);
 
         Label habitQuestion = new Label("Habit Question: ");
         layout.add(habitQuestion, 0, 2);
-        TextField habitQuestionTF = new TextField();
+        habitQuestionTF = new TextField();
         layout.add(habitQuestionTF, 1, 2, 2, 1);
 
         Button addHabitButton = new Button("Create");
