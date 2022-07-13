@@ -32,7 +32,7 @@ public class ConcreteModel implements Model {
 
 
     @Override
-    public void addHabit(String habitName, Boolean binaryHabit, String habitQuestion) throws SQLException {
+    public ResultSet addHabit(String habitName, Boolean binaryHabit, String habitQuestion) throws SQLException {
         // Get Highest ID
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(HIGHEST_ID);
@@ -43,6 +43,10 @@ public class ConcreteModel implements Model {
         String addStatement = String.format(ADD_HABIT, newID, habitName, habitQuestion);
         stmt = connection.createStatement();
         stmt.execute(addStatement);
+
+        // Return new entry
+        stmt = connection.createStatement();
+        return stmt.executeQuery(SELECT_ALL + "WHERE Habit_ID = " + newID);
     }
 
     private ConcreteModel() {

@@ -9,6 +9,11 @@ import java.sql.SQLException;
 
 public interface View {
     /**
+     *
+     */
+    void addHabit(ResultSet newEntry) throws SQLException;
+
+    /**
      * Display a message
      * @param title
      * @param message

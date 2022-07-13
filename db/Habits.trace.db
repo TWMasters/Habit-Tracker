@@ -287,3 +287,9 @@ org.h2.jdbc.JdbcSQLDataException: Invalid value "0" for parameter "columnIndex" 
 	at javafx.graphics@18-ea/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
 	at javafx.graphics@18-ea/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-07-13 12:27:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]WHERE Habit_ID = 7"; SQL statement:
+WHERE Habit_ID = 7 [42000-214]
+2022-07-13 12:28:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]WHERE Habit_ID = 8"; SQL statement:
+WHERE Habit_ID = 8 [42000-214]

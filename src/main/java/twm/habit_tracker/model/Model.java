@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 public interface Model {
 
-    void addHabit(String habitName, Boolean binaryHabit, String habitQuestion) throws SQLException;
+    ResultSet addHabit(String habitName, Boolean binaryHabit, String habitQuestion) throws SQLException;
 
     /**
      * Use to get data from Habits Relation

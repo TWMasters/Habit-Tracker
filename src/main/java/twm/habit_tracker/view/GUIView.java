@@ -26,6 +26,7 @@ public class GUIView implements View {
     private ObservableList<ObservableList<String>> habitsTableData;
     private Stage window;
     private Scene homePage, habitPage;
+    TableView habitsTable;
     private TextField habitNameTF,  habitQuestionTF;
 
     /**
@@ -60,6 +61,19 @@ public class GUIView implements View {
     }
 
     @Override
+    public void addHabit(ResultSet newEntry) throws SQLException {
+        while (newEntry.next()) {
+            ObservableList<String> inputRow = FXCollections.observableArrayList();
+            for (int i = 1; i <= newEntry.getMetaData().getColumnCount(); i++ ) {
+                String input = newEntry.getString(i);
+                inputRow.add(input);
+            }
+            habitsTableData.add(inputRow);
+        }
+        habitsTable.setItems(habitsTableData);
+    }
+
+    @Override
     public void displayMessage(String title, String message) {
         System.out.println(ConfirmBox.display(title, message));
     }
@@ -86,7 +100,7 @@ public class GUIView implements View {
     private Pane getHomePage() {
         // Elements
         Label header = new Label("HOME PAGE");
-        TableView habitsTable = buildHabitsTable();
+        habitsTable = buildHabitsTable();
         Button addHabitbutton = new Button("Add Habit");
 
         // Nested Layout

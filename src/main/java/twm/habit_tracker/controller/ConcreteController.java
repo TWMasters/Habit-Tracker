@@ -4,6 +4,7 @@ import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConcreteController implements Controller {
@@ -17,8 +18,8 @@ public class ConcreteController implements Controller {
         this.view.setCreateHabitListener(e -> {
             try {
             Habit newHabit = view.getHabitInfo();
-            model.addHabit(newHabit.habitName(), newHabit.binaryHabit(), newHabit.habitQuestion());
-            refreshData();
+            ResultSet rs = model.addHabit(newHabit.habitName(), newHabit.binaryHabit(), newHabit.habitQuestion());
+            view.addHabit(rs);
             } catch (SQLException ex) {
             }
         });
