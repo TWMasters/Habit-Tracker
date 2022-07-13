@@ -1,6 +1,7 @@
 package twm.habit_tracker.controller;
 
 import twm.habit_tracker.model.Model;
+import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
 
 import java.sql.SQLException;
@@ -14,10 +15,10 @@ public class ConcreteController implements Controller {
         this.model = model;
         // Link View to Model
         this.view.setCreateHabitListener(e -> {
-            view.getHabitInfo();
-            
             try {
-                refreshData();
+            Habit newHabit = view.getHabitInfo();
+            model.addHabit(newHabit.habitName(), newHabit.binaryHabit(), newHabit.habitQuestion());
+            refreshData();
             } catch (SQLException ex) {
             }
         });

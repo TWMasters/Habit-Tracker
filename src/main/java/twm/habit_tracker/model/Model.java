@@ -1,6 +1,7 @@
 package twm.habit_tracker.model;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Optional;
  */
 public interface Model {
 
-    void addHabit();
+    void addHabit(String habitName, Boolean binaryHabit, String habitQuestion) throws SQLException;
 
     /**
      * Use to get data from Habits Relation
