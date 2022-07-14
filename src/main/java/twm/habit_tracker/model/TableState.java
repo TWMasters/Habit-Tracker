@@ -2,47 +2,38 @@ package twm.habit_tracker.model;
 
 import java.sql.ResultSet;
 
-/**
- * @author tobym
- */
-public interface Model {
+public interface TableState {
     /**
-     * Change target Table for Model methods to act upon
-     * @param state
-     */
-    void changeTargetTable(TableState newTargetTable);
-
-    /**
-     * Pull all data from Target Table
+     * Pull all data from Table
      * @return ResultSet
      */
     ResultSet getTable();
 
     /**
-     * Get specified row of Target Table
+     * Get specified row of Table
      * @param lookupValue
      * @return ResultSet
      */
     ResultSet getRow(String lookupValue);
 
     /**
-     * Add row to Target Table
+     * Add row to Table
      * @param values
      */
     void addEntry(String[] values);
 
     /**
-     * Delete specified row from Target Table
+     * Delete specified row from Table
      * @param lookupValue
      */
     void deleteEntry(String lookupValue);
 
     /**
-     * Edit specified row of Target Table
+     * Edit specified row of Table
+     * Implement by comparing values of entry at lookupValue with values supplied as parameter,
+     * then changing the difference
      * @param values
      * @param lookupValue
      */
     void editEntry(String[] values, String lookupValue);
-
-
 }
