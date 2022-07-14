@@ -4,8 +4,8 @@ import java.io.File;
 import java.sql.*;
 import java.util.Optional;
 
-public class ConcreteModel implements Model {
-    private static Model model = null; // Singleton
+public class ConcreteModel_version_1 implements Model_version_1 {
+    private static Model_version_1 model = null; // Singleton
     // Transfer SQL constants to a file?
     private static final String HABIT_TABLE_SQL =
             "CREATE TABLE Habits (\n" +
@@ -49,7 +49,7 @@ public class ConcreteModel implements Model {
         return stmt.executeQuery(SELECT_ALL + "WHERE Habit_ID = " + newID);
     }
 
-    private ConcreteModel() {
+    private ConcreteModel_version_1() {
         try {
             Boolean dbExists = new File(DB_FILEPATH).exists();
             connection = DriverManager.getConnection(H2_URL);
@@ -75,9 +75,9 @@ public class ConcreteModel implements Model {
      * Please make getModel static and Constructor private on implementation
      * @return concrete instance of Model
      */
-    public static Model getModel() {
+    public static Model_version_1 getModel() {
         if (model == null)
-            model = new ConcreteModel();
+            model = new ConcreteModel_version_1();
         return model;
     }
 

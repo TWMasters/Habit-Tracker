@@ -68,9 +68,9 @@ public class GUIView implements View {
                 String input = newEntry.getString(i);
                 inputRow.add(input);
             }
+            System.out.println(inputRow);
             habitsTableData.add(inputRow);
         }
-        habitsTable.setItems(habitsTableData);
     }
 
     @Override

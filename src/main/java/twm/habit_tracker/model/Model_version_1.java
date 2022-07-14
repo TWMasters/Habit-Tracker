@@ -9,7 +9,7 @@ import java.util.Optional;
  * redirects commands from the Controller class to the relevant Table,
  * and supplies the Controller data on demand
  */
-public interface Model {
+public interface Model_version_1 {
 
     ResultSet addHabit(String habitName, Boolean binaryHabit, String habitQuestion) throws SQLException;
 

@@ -4,8 +4,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import twm.habit_tracker.controller.ConcreteController;
 import twm.habit_tracker.controller.Controller;
-import twm.habit_tracker.model.ConcreteModel;
-import twm.habit_tracker.model.Model;
+import twm.habit_tracker.model.ConcreteModel_version_1;
+import twm.habit_tracker.model.Model_version_1;
 import twm.habit_tracker.view.GUIView;
 import twm.habit_tracker.view.View;
 
@@ -19,7 +19,7 @@ public class UserAgent extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Compose application
         View GUI = new GUIView();
-        Model DB = ConcreteModel.getModel();
+        Model_version_1 DB = ConcreteModel_version_1.getModel();
         Controller controller = new ConcreteController(GUI, DB);
 
         // Send primary stage to view to set-up

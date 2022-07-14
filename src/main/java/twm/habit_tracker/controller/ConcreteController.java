@@ -1,6 +1,6 @@
 package twm.habit_tracker.controller;
 
-import twm.habit_tracker.model.Model;
+import twm.habit_tracker.model.Model_version_1;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
 
@@ -9,9 +9,9 @@ import java.sql.SQLException;
 
 public class ConcreteController implements Controller {
     private final View view;
-    private final Model model;
+    private final Model_version_1 model;
 
-    public ConcreteController(View view, Model model) throws SQLException {
+    public ConcreteController(View view, Model_version_1 model) throws SQLException {
         this.view = view;
         this.model = model;
         // Link View to Model
