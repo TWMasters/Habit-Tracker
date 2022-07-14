@@ -53,12 +53,21 @@ public class ConcreteModel implements Model {
         this.targetTable = newTargetTable;
     }
 
+    @Override
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            System.err.println("SQL Exception while closing connection");
+        }
+    }
+
     /**
      * Singleton pattern so no more than one instance of Database
      * Please make getModel static and Constructor private on implementation
      * @return concrete instance of Model
      */
-    public Model getModel() {
+    public static Model getModel() {
         if (model == null)
             model = new ConcreteModel();
         return model;

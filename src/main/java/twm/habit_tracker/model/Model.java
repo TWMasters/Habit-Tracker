@@ -13,6 +13,11 @@ public interface Model {
     void changeTargetTable(TableState newTargetTable);
 
     /**
+     * End connection to Habits Database
+     */
+    void closeConnection();
+
+    /**
      * Pull all data from Target Table
      * @return ResultSet
      */
