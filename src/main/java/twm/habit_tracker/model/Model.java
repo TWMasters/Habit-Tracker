@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 public interface Model {
     /**
      * Change target Table for Model methods to act upon
-     * @param state
+     * @param newTargetTable New Target Table
      */
     void changeTargetTable(TableState newTargetTable);
 
@@ -20,27 +20,27 @@ public interface Model {
 
     /**
      * Get specified row of Target Table
-     * @param lookupValue
+     * @param lookupValue Primary Key Value of Target Row
      * @return ResultSet
      */
     ResultSet getRow(String lookupValue);
 
     /**
      * Add row to Target Table
-     * @param values
+     * @param values Values to populate new Row
      */
     void addEntry(String[] values);
 
     /**
      * Delete specified row from Target Table
-     * @param lookupValue
+     * @param lookupValue Primary Key Value of Target Row
      */
     void deleteEntry(String lookupValue);
 
     /**
      * Edit specified row of Target Table
-     * @param values
-     * @param lookupValue
+     * @param values New Values to populate Target Row
+     * @param lookupValue Primary Key Value of Target Row
      */
     void editEntry(String[] values, String lookupValue);
 
