@@ -84,6 +84,13 @@ public class HabitTableStateTest {
 
     @Test
     void testAddRow() {
+        String[] input = {"TestHabit2", "true", "null", "null"};
+        try {
+            testModel.addEntry(input);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }
