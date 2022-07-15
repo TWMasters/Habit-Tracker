@@ -1,5 +1,6 @@
 package twm.habit_tracker.model;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 
 public interface TableState {
@@ -36,4 +37,10 @@ public interface TableState {
      * @param lookupValue
      */
     void editEntry(String[] values, String lookupValue);
+
+    /**
+     * Set context of new state
+     * @param context Model connection to DB
+     */
+    void setContext(Connection context);
 }

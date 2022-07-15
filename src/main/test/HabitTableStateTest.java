@@ -70,7 +70,15 @@ public class HabitTableStateTest {
 
     @Test
     void testGetRow() {
-        Assertions.assertEquals(1,1);
+        ResultSet rs = testModel.getRow(String.valueOf(primaryKeys[0]));
+        try {
+            rs.next();
+            Assertions.assertEquals(String.valueOf(primaryKeys[0]),rs.getString(1));
+            Assertions.assertEquals("TestHabit1" ,rs.getString(2));
+            Assertions.assertEquals("Have you done TestHabit1?" ,rs.getString(4));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

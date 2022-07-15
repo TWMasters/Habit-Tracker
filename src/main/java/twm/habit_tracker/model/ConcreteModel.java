@@ -51,6 +51,7 @@ public class ConcreteModel implements Model {
     @Override
     public void changeTargetTable(TableState newTargetTable) {
         this.targetTable = newTargetTable;
+        targetTable.setContext(connection);
     }
 
     @Override
