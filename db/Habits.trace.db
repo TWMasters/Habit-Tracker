@@ -1114,3 +1114,6 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/tobym/D
 	at org.h2.mvstore.FileStore.open(FileStore.java:128)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
 	... 71 more
+2022-07-19 14:43:57 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "UPDATE Habits SET Habit_Name = 'TestHabit3Edited', Binary_Habit = true, Habit_Question = 'Have you done TestHabit3Edited?', Unit = null, Target = nullWHERE [*]HABIT_ID = 4;"; SQL statement:
+UPDATE Habits SET Habit_Name = 'TestHabit3Edited', Binary_Habit = true, Habit_Question = 'Have you done TestHabit3Edited?', Unit = null, Target = nullWHERE HABIT_ID = 4; [42000-214]

@@ -129,7 +129,7 @@ public class HabitTableStateTest {
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
             rs.next();
             Assertions.assertEquals("TestHabit3Edited", rs.getString(2));
-            Assertions.assertEquals("Have you done TestHabit3?Edited?", rs.getString(4));
+            Assertions.assertEquals("Have you done TestHabit3Edited?", rs.getString(4));
 
         } catch (SQLException e) {
             e.printStackTrace();
