@@ -87,6 +87,7 @@ public class HabitTableStateTest {
             // testModel.closeConnection();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKeys[1] + ";");
             if (rs.isBeforeFirst()) {
+                rs.next();
                 Assertions.assertEquals("TestHabit2", rs.getString(2));
                 Assertions.assertEquals("Have you done TestHabit2?", rs.getString(4));
             }

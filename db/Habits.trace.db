@@ -936,3 +936,5 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CATALOGS" not found; SQL stateme
 select CATALOG_NAME from INFORMATION_SCHEMA.CATALOGS [42102-210]
 2022-07-19 13:00:08 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
+2022-07-19 14:01:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
