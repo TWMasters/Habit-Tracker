@@ -12,7 +12,7 @@ public class HabitTableStateTest {
     private static final String H2_URL = "jdbc:h2:./db/Habits";
 
     private static Connection connection;
-    private static final int[] primaryKeys = new int[3];
+    private static int primaryKey;
     private static Model testModel;
     private static Statement stmt;
 
@@ -23,12 +23,7 @@ public class HabitTableStateTest {
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT MAX(Habit_ID) FROM Habits;");
             rs.next();
-            int highestID = rs.getInt(1) + 1;
-            for (int i = 0; i < 2; i++)
-                primaryKeys[i] = highestID + i;
-            // Add SQL
-            stmt.execute("INSERT INTO Habits" +
-                    " VALUES (" + primaryKeys[0] + ",\'TestHabit1\', true, \'Have you done TestHabit1?\', null, null);");
+            primaryKey = rs.getInt(1) + 1;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,33 +36,34 @@ public class HabitTableStateTest {
     @AfterAll
     static void shutDown() {
         testModel.closeConnection();
+        try {
+           if (connection != null)
+               connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @AfterEach
+    void deleteRow() {
         // Write SQL to ensure added rows have been deleted
         try {
             stmt.execute("DELETE FROM Habits " +
-                    "WHERE Habit_ID = " + primaryKeys[0] + ";");
-            stmt.execute("DELETE FROM Habits " +
-                    "WHERE Habit_ID = " + primaryKeys[1] + ";");
-            stmt.execute("DELETE FROM Habits " +
-                    "WHERE Habit_ID = " + primaryKeys[2] + ";");
+                    "WHERE Habit_ID = " + primaryKey + ";");
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (connection != null)
-                    connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     @Test
     void testGetRow() {
-        ResultSet rs = testModel.getRow(String.valueOf(primaryKeys[0]));
         try {
+            stmt.execute("INSERT INTO Habits" +
+                    " VALUES (" + primaryKey + ",\'TestHabit1\', true, \'Have you done TestHabit1?\', null, null);");
+            ResultSet rs = testModel.getRow(String.valueOf(primaryKey));
             if (rs != null) {
                 rs.next();
-                Assertions.assertEquals(String.valueOf(primaryKeys[0]), rs.getString(1));
+                Assertions.assertEquals(String.valueOf(primaryKey), rs.getString(1));
                 Assertions.assertEquals("TestHabit1", rs.getString(2));
                 Assertions.assertEquals("Have you done TestHabit1?", rs.getString(4));
             }
@@ -84,8 +80,14 @@ public class HabitTableStateTest {
         String[] input = {"TestHabit2", "true", "Have you done TestHabit2?", "null", "null"};
         try {
             testModel.addEntry(input);
-            // testModel.closeConnection();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKeys[1] + ";");
+
+            // Testing
+            ResultSet rsTest = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_Name = \'TestHabit2\'");
+            rsTest.next();
+            System.out.println("Added Row ID: " + rsTest.getString(1));
+            System.out.println("Primary Key used for Search: " + primaryKey);
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
             if (rs.isBeforeFirst()) {
                 rs.next();
                 Assertions.assertEquals("TestHabit2", rs.getString(2));
@@ -102,8 +104,10 @@ public class HabitTableStateTest {
     @Test
     void testDeleteRow() {
         try {
-            testModel.deleteEntry(String.valueOf(primaryKeys[0]));
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKeys[0] + ";");
+            stmt.execute("INSERT INTO Habits" +
+                    " VALUES (" + primaryKey + ",\'TestHabit4\', true, \'Have you done TestHabit4?\', null, null);");
+            testModel.deleteEntry(String.valueOf(primaryKey));
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
             if (rs.isBeforeFirst()) {
                 Assertions.fail("Entry still exists!");
             }
@@ -118,11 +122,11 @@ public class HabitTableStateTest {
     @Test
     void testEditEntry() {
         try {
-            stmt.execute("INSERT INTO Habits VALUES(" + primaryKeys[2] + ", \'TestHabit3\', true, \'Have you done TestHabit3?\', null, null)");
+            stmt.execute("INSERT INTO Habits VALUES(" + primaryKey + ", \'TestHabit3\', true, \'Have you done TestHabit3?\', null, null)");
             String[] newValues = {"TestHabit3Edited", "true", "Have you done TestHabit3Edited?", "null", "null"};
-            testModel.editEntry(newValues, String.valueOf(primaryKeys[2]));
+            testModel.editEntry(newValues, String.valueOf(primaryKey));
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKeys[2] + ";");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
             rs.next();
             Assertions.assertEquals("TestHabit3Edited", rs.getString(2));
             Assertions.assertEquals("Have you done TestHabit3?Edited?", rs.getString(4));

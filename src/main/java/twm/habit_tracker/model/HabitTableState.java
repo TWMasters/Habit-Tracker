@@ -10,6 +10,7 @@ public class HabitTableState implements TableState {
     private final String ADD_ROW = "INSERT INTO Habits VALUES(%d, \'%s\', %s, \'%s\', %s, %s)";
     private final String GET_KEY = "SELECT MAX(Habit_ID) FROM Habits;";
     private final String GET_ROW = "SELECT * FROM Habits WHERE Habit_ID = %s;";
+    private final String DELETE_ROW = "DELETE FROM Habits WHERE Habit_ID = %s;";
 
     Connection context;
 
@@ -43,13 +44,21 @@ public class HabitTableState implements TableState {
             stmt.execute(String.format(ADD_ROW, newKey, values[0], values[1], values[2], values[3], values[4]));
 
         } catch (SQLException e) {
-            System.err.println("SQL ERROR in Add method");
+            System.err.println("SQL Error in Add Method");
             e.printStackTrace();
         }
     }
 
     @Override
     public void deleteEntry(String lookupValue) {
+        try {
+            Statement stmt = context.createStatement();
+            stmt.execute(String.format(DELETE_ROW, lookupValue));
+
+        } catch (SQLException e) {
+            System.err.println("SQL Error in Delete Method");
+            e.printStackTrace();
+        }
 
     }
 
