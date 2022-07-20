@@ -2,6 +2,7 @@ package twm.habit_tracker.model;
 
 import java.io.File;
 import java.sql.*;
+import java.time.LocalDate;
 
 public class ConcreteModel implements Model {
 
@@ -32,6 +33,8 @@ public class ConcreteModel implements Model {
             connection = DriverManager.getConnection(H2_URL);
             if (!databaseExists)
                 createTables();
+            else
+                updateTables();
         } catch (SQLException e) {
             System.err.println("SQL Exception on Connection");
         }
@@ -60,8 +63,13 @@ public class ConcreteModel implements Model {
     private void createTables() {
         try {
             Statement stmt = connection.createStatement();
+
             stmt.execute(HABIT_TABLE_SQL);
             stmt.execute(HABIT_TRACKER_TABLE);
+
+            changeTargetTable(new HabitTrackerTableState());
+            String[] date = {LocalDate.now().toString()};
+            targetTable.addEntry(date);
         }
         catch (SQLException e) {
             System.err.println("SQL Exception on Creating Tables");
@@ -102,5 +110,12 @@ public class ConcreteModel implements Model {
     @Override
     public void editEntry(String[] values, String lookupValue) {
         targetTable.editEntry(values, lookupValue);
+    }
+
+    // TODO: 20/07/2022 Come back to this! 
+    /**
+     * Helper method to update tables on booting up application
+     */
+    private void updateTables() {
     }
 }

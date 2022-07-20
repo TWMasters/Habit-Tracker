@@ -15,6 +15,7 @@ public class HabitTrackerTableStateTest {
     private static final String DATE_KEY = "\'3000-01-01\'";
     private static final String DATE_KEY_NO_APOS = "3000-01-01";
     private static final String EDITED_DATE_KEY = "\'4000-01-01\'";
+    private static final String EDITED_DATE_KEY_NO_APOS = "4000-01-01";
 
     private static Connection connection;
     private static Model testModel;
@@ -111,18 +112,19 @@ public class HabitTrackerTableStateTest {
         }
     }
 
+    // TODO: 20/07/2022 Update test so add a column in Habit_Tracker 
     @Test
     void testEditEntry() {
         try {
             stmt.execute("INSERT INTO Habit_Tracker" +
                     " VALUES (" + DATE_KEY + ");");
-            String[] newValues = {EDITED_DATE_KEY};
-            testModel.editEntry(newValues, DATE_KEY);
+            String[] newValues = {EDITED_DATE_KEY_NO_APOS};
+            testModel.editEntry(newValues, DATE_KEY_NO_APOS);
 
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habit_Tracker WHERE Date = " + EDITED_DATE_KEY + ";");
             if (rs.isBeforeFirst()) {
                 rs.next();
-                Assertions.assertEquals(EDITED_DATE_KEY, rs.getString(1));
+                Assertions.assertEquals(EDITED_DATE_KEY_NO_APOS, rs.getString(1));
             }
             else
                 Assertions.fail("Edited Row couldn't be found!");
