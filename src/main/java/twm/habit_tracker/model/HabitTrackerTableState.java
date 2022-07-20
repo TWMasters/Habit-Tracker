@@ -38,7 +38,8 @@ public class HabitTrackerTableState implements TableState{
         }
     }
 
-    // TODO: 20/07/2022 Update so date ISN'T updated as primary key! 
+    // TODO: 20/07/2022 Update so date ISN'T updated as primary key!
+    // TODO: 20/07/2022 Could also update to make it less crude, maybe receive numbers of columns to be updated?
     @Override
     public void editEntry(String[] values, String lookupValue) {
         // Set up String Builder
