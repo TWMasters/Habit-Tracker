@@ -12,7 +12,7 @@ public class HabitTrackerTableState implements TableState{
     private final String EDIT_ROW = "UPDATE Habit_Tracker " +
             "SET Habit_Name = \'%s\', Binary_Habit = %s, Habit_Question = \'%s\', Unit = %s, Target = %s " +
             "WHERE Date = \'%s\';";
-    private final String GET_ROW = "SELECT * FROM Habit_Tracker WHERE Date = %s;";
+    private final String GET_ROW = "SELECT * FROM Habit_Tracker WHERE Date = \'%s\';";
     private final String GET_TABLE = "SELECT * FROM Habit_Tracker;";
 
     Connection context;
@@ -48,11 +48,25 @@ public class HabitTrackerTableState implements TableState{
 
     @Override
     public ResultSet getEntry(String lookupValue) {
+        try {
+            ResultSet rs = stmt.executeQuery(String.format(GET_ROW, lookupValue));
+            return rs;
+        } catch (SQLException e) {
+            System.err.println("Error on Get Entry Method");
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public ResultSet getTable() {
+        try {
+            ResultSet rs = stmt.executeQuery(GET_TABLE);
+            return rs;
+        } catch (SQLException e) {
+            System.err.println("Error on Get Table Method");
+            e.printStackTrace();
+        }
         return null;
     }
 

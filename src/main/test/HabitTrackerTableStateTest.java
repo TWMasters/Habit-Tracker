@@ -61,10 +61,10 @@ public class HabitTrackerTableStateTest {
         try {
             stmt.execute("INSERT INTO Habit_Tracker " +
                     "VALUES (" + DATE_KEY + ");");
-            ResultSet rs = testModel.getEntry(String.valueOf(DATE_KEY));
+            ResultSet rs = testModel.getEntry(DATE_KEY_NO_APOS);
             if (rs != null) {
                 rs.next();
-                Assertions.assertEquals(DATE_KEY, rs.getString(1));
+                Assertions.assertEquals(DATE_KEY_NO_APOS, rs.getString(1));
             }
             Assertions.assertNotNull(rs);
 

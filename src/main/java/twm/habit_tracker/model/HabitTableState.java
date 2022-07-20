@@ -93,8 +93,10 @@ public class HabitTableState implements TableState {
             Statement stmt = context.createStatement();
             ResultSet rs = stmt.executeQuery(GET_TABLE);
             return rs;
+
         } catch (SQLException e) {
             System.err.println("SQL Error on Get Table Method");
+            e.printStackTrace();
         }
 
         return null;
