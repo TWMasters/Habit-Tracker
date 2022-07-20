@@ -15,7 +15,7 @@ public interface TableState {
      * @param lookupValue
      * @return ResultSet
      */
-    ResultSet getRow(String lookupValue);
+    ResultSet getEntry(String lookupValue);
 
     /**
      * Add row to Table

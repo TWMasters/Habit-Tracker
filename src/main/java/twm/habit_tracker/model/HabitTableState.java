@@ -19,24 +19,6 @@ public class HabitTableState implements TableState {
     Connection context;
 
     @Override
-    public ResultSet getTable() {
-        return null;
-    }
-
-    @Override
-    public ResultSet getRow(String lookupValue) {
-        try {
-            Statement stmt = context.createStatement();
-            ResultSet rs = stmt.executeQuery(String.format(GET_ROW, lookupValue));
-            return rs;
-        } catch (SQLException e) {
-            System.err.println("SQL Error on Get Method");
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
     public void addEntry(String[] values) {
         try {
             // Get Key
@@ -81,13 +63,43 @@ public class HabitTableState implements TableState {
 
     }
 
+    /**
+     * Helper method for converting non-null Unit Values into correct format
+     * @param input Raw Unit Value
+     * @return Formatted Unit Value
+     */
+    private String editUnitIfNotNull(String input) {
+        String output = input.equals(NULL_STRING) ? input : "\'" + input + "\'";
+        return output;
+    }
+
+    @Override
+    public ResultSet getEntry(String lookupValue) {
+        try {
+            Statement stmt = context.createStatement();
+            ResultSet rs = stmt.executeQuery(String.format(GET_ROW, lookupValue));
+            return rs;
+        } catch (SQLException e) {
+            System.err.println("SQL Error on Get Entry Method");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ResultSet getTable() {
+        try {
+            Statement stmt = context.createStatement();
+        } catch (SQLException e) {
+            System.err.println("SQL Error on Get Table Method");
+        }
+
+        return null;
+    }
+
     @Override
     public void setContext(Connection context) {
         this.context = context;
     }
 
-    private String editUnitIfNotNull(String input) {
-        String output = input.equals(NULL_STRING) ? input : "\'" + input + "\'";
-        return output;
-    }
 }

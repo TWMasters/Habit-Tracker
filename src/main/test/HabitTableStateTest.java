@@ -60,7 +60,7 @@ public class HabitTableStateTest {
         try {
             stmt.execute("INSERT INTO Habits" +
                     " VALUES (" + primaryKey + ",\'TestHabit1\', true, \'Have you done TestHabit1?\', null, null);");
-            ResultSet rs = testModel.getRow(String.valueOf(primaryKey));
+            ResultSet rs = testModel.getEntry(String.valueOf(primaryKey));
             if (rs != null) {
                 rs.next();
                 Assertions.assertEquals(String.valueOf(primaryKey), rs.getString(1));

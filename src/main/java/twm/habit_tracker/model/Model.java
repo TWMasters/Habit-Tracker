@@ -29,7 +29,7 @@ public interface Model {
      * @param lookupValue Primary Key Value of Target Row
      * @return ResultSet
      */
-    ResultSet getRow(String lookupValue);
+    ResultSet getEntry(String lookupValue);
 
     /**
      * Add row to Target Table

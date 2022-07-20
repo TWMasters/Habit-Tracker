@@ -17,6 +17,10 @@ public class ConcreteModel implements Model {
                     "  Unit VARCHAR(255),\n" +
                     "  Target NUMERIC(18,2)\n" +
                     ");";
+    private static final String HABIT_TRACKER_TABLE =
+            "CREATE TABLE HabitTracker (\n" +
+                    "DATE PRIMARY KEY,\n" +
+                    ");";
 
     private Connection connection = null;
     private static Model model = null;
@@ -33,21 +37,6 @@ public class ConcreteModel implements Model {
         }
     }
 
-    /**
-     * Helper method to populate a new Habits database with following Relations:
-     *  - Habit
-     *  - HabitTracker
-     */
-    private void createTables() {
-        try {
-            Statement stmt = connection.createStatement();
-            stmt.execute(HABIT_TABLE_SQL);
-        }
-        catch (SQLException e) {
-            System.err.println("SQL Exception on Creating Tables");
-        }
-    }
-
     @Override
     public void changeTargetTable(TableState newTargetTable) {
         this.targetTable = newTargetTable;
@@ -60,6 +49,22 @@ public class ConcreteModel implements Model {
             connection.close();
         } catch (SQLException e) {
             System.err.println("SQL Exception while closing connection");
+        }
+    }
+
+    /**
+     * Helper method to populate a new Habits database with following Relations:
+     *  - Habit
+     *  - HabitTracker
+     */
+    private void createTables() {
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.execute(HABIT_TABLE_SQL);
+            stmt.execute(HABIT_TRACKER_TABLE);
+        }
+        catch (SQLException e) {
+            System.err.println("SQL Exception on Creating Tables");
         }
     }
 
@@ -80,8 +85,8 @@ public class ConcreteModel implements Model {
     }
 
     @Override
-    public ResultSet getRow(String lookupValue) {
-        return targetTable.getRow(lookupValue);
+    public ResultSet getEntry(String lookupValue) {
+        return targetTable.getEntry(lookupValue);
     }
 
     @Override
