@@ -112,7 +112,7 @@ public class ConcreteModel implements Model {
         targetTable.editEntry(values, lookupValue);
     }
 
-    // TODO: 20/07/2022 Come back to this! 
+    // TODO: 20/07/2022 Come back to this!
     /**
      * Helper method to update tables on booting up application
      */

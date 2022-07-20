@@ -1,4 +1,4 @@
-package twm.habit_tracker.model;
+package twm.habit_tracker.zexamples;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

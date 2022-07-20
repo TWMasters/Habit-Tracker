@@ -1,4 +1,4 @@
-package twm.habit_tracker.model;
+package twm.habit_tracker.zexamples;
 
 import java.io.File;
 import java.sql.*;
