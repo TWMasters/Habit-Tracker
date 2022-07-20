@@ -18,8 +18,8 @@ public class ConcreteModel implements Model {
                     "  Target NUMERIC(18,2)\n" +
                     ");";
     private static final String HABIT_TRACKER_TABLE =
-            "CREATE TABLE HabitTracker (\n" +
-                    "DATE PRIMARY KEY,\n" +
+            "CREATE TABLE Habit_Tracker (\n" +
+                    "Date DATE PRIMARY KEY,\n" +
                     ");";
 
     private Connection connection = null;
