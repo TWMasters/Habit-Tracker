@@ -80,8 +80,8 @@ public class HabitTableStateTest {
         String[] input = {"TestHabit2", "true", "Have you done TestHabit2?", "null", "null"};
         try {
             testModel.addEntry(input);
-
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
+
             if (rs.isBeforeFirst()) {
                 rs.next();
                 Assertions.assertEquals("TestHabit2", rs.getString(2));
@@ -92,6 +92,12 @@ public class HabitTableStateTest {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                stmt.execute("ALTER TABLE Habit_Tracker DROP COLUMN TestHabit2");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -100,6 +106,7 @@ public class HabitTableStateTest {
         try {
             stmt.execute("INSERT INTO Habits" +
                     " VALUES (" + primaryKey + ",\'TestHabit4\', true, \'Have you done TestHabit4?\', null, null);");
+            stmt.execute("ALTER TABLE Habit_Tracker ADD TestHabit4 BOOLEAN DEFAULT false;");
             testModel.deleteEntry(String.valueOf(primaryKey));
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
             if (rs.isBeforeFirst()) {
