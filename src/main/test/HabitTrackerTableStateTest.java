@@ -13,6 +13,7 @@ import java.sql.*;
 public class HabitTrackerTableStateTest {
     private static final String H2_URL = "jdbc:h2:./db/Habits";
     private static final String DATE_KEY = "\'3000-01-01\'";
+    private static final String DATE_KEY_NO_APOS = "3000-01-01";
     private static final String EDITED_DATE_KEY = "\'4000-01-01\'";
 
     private static Connection connection;
@@ -75,14 +76,14 @@ public class HabitTrackerTableStateTest {
 
     @Test
     void testAddRow() {
-        String[] input = {DATE_KEY};
+        String[] input = {DATE_KEY_NO_APOS};
         try {
             testModel.addEntry(input);
 
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habit_Tracker WHERE Date = " + DATE_KEY + ";");
             if (rs.isBeforeFirst()) {
                 rs.next();
-                Assertions.assertEquals(DATE_KEY, rs.getString(1));
+                Assertions.assertEquals(DATE_KEY_NO_APOS, rs.getString(1));
             }
             else
                 Assertions.fail("Added Row could not be found!");
@@ -97,7 +98,7 @@ public class HabitTrackerTableStateTest {
         try {
             stmt.execute("INSERT INTO Habit_Tracker" +
                     " VALUES (" + DATE_KEY + ");");
-            testModel.deleteEntry(DATE_KEY);
+            testModel.deleteEntry(DATE_KEY_NO_APOS);
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habit_Tracker WHERE Date = " + DATE_KEY + ";");
             if (rs.isBeforeFirst()) {
                 Assertions.fail("Entry still exists!");
