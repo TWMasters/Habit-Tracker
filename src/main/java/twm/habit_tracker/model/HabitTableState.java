@@ -14,6 +14,7 @@ public class HabitTableState implements TableState {
             "WHERE HABIT_ID = %s;";
     private final String GET_KEY = "SELECT MAX(Habit_ID) FROM Habits;";
     private final String GET_ROW = "SELECT * FROM Habits WHERE Habit_ID = %s;";
+    private final String GET_TABLE = "SELECT * FROM Habits;";
     private final String NULL_STRING = "null";
 
     Connection context;
@@ -90,6 +91,8 @@ public class HabitTableState implements TableState {
     public ResultSet getTable() {
         try {
             Statement stmt = context.createStatement();
+            ResultSet rs = stmt.executeQuery(GET_TABLE);
+            return rs;
         } catch (SQLException e) {
             System.err.println("SQL Error on Get Table Method");
         }

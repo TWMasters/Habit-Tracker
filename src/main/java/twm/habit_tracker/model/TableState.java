@@ -5,19 +5,6 @@ import java.sql.ResultSet;
 
 public interface TableState {
     /**
-     * Pull all data from Table
-     * @return ResultSet
-     */
-    ResultSet getTable();
-
-    /**
-     * Get specified row of Table
-     * @param lookupValue
-     * @return ResultSet
-     */
-    ResultSet getEntry(String lookupValue);
-
-    /**
      * Add row to Table
      * @param values
      */
@@ -37,6 +24,19 @@ public interface TableState {
      * @param lookupValue
      */
     void editEntry(String[] values, String lookupValue);
+
+    /**
+     * Get specified row of Table
+     * @param lookupValue
+     * @return ResultSet
+     */
+    ResultSet getEntry(String lookupValue);
+
+    /**
+     * Pull all data from Table
+     * @return ResultSet
+     */
+    ResultSet getTable();
 
     /**
      * Set context of new state
