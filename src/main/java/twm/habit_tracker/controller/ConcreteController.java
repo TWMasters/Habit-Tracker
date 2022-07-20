@@ -2,11 +2,9 @@ package twm.habit_tracker.controller;
 
 import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.Model;
-import twm.habit_tracker.model.Model_version_1;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConcreteController implements Controller {

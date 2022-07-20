@@ -12,8 +12,8 @@ import java.sql.*;
  */
 public class HabitTrackerTableStateTest {
     private static final String H2_URL = "jdbc:h2:./db/Habits";
-    private static final String DATE_KEY = "3000-01-01";
-    private static final String EDITED_DATE_KEY = "4000-01-01";
+    private static final String DATE_KEY = "\'3000-01-01\'";
+    private static final String EDITED_DATE_KEY = "\'4000-01-01\'";
 
     private static Connection connection;
     private static Model testModel;
@@ -58,8 +58,8 @@ public class HabitTrackerTableStateTest {
     @Test
     void testGetRow() {
         try {
-            stmt.execute("INSERT INTO Habit_Tracker" +
-                    " VALUES (" + DATE_KEY + ";");
+            stmt.execute("INSERT INTO Habit_Tracker " +
+                    "VALUES (" + DATE_KEY + ");");
             ResultSet rs = testModel.getEntry(String.valueOf(DATE_KEY));
             if (rs != null) {
                 rs.next();
@@ -95,7 +95,7 @@ public class HabitTrackerTableStateTest {
     @Test
     void testDeleteRow() {
         try {
-            stmt.execute("INSERT INTO Habits" +
+            stmt.execute("INSERT INTO Habit_Tracker" +
                     " VALUES (" + DATE_KEY + ");");
             testModel.deleteEntry(DATE_KEY);
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habit_Tracker WHERE Date = " + DATE_KEY + ";");
@@ -113,14 +113,19 @@ public class HabitTrackerTableStateTest {
     @Test
     void testEditEntry() {
         try {
-            stmt.execute("INSERT INTO Habits" +
+            stmt.execute("INSERT INTO Habit_Tracker" +
                     " VALUES (" + DATE_KEY + ");");
             String[] newValues = {EDITED_DATE_KEY};
             testModel.editEntry(newValues, DATE_KEY);
 
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habit_Tracker WHERE Date = " + EDITED_DATE_KEY + ";");
-            rs.next();
-            Assertions.assertEquals(EDITED_DATE_KEY, rs.getString(1));
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                Assertions.assertEquals(EDITED_DATE_KEY, rs.getString(1));
+            }
+            else
+                Assertions.fail("Edited Row couldn't be found!");
+
 
         } catch (SQLException e) {
             e.printStackTrace();
