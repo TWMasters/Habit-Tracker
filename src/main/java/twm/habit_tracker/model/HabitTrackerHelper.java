@@ -9,11 +9,11 @@ import java.sql.Statement;
  */
 class HabitTrackerHelper {
     private static String ADD_COLUMN =
-            "ALTER TABLE Habit_Tracker" +
-            "ADD %s BOOLEAN DEFAULT false";
+            "ALTER TABLE Habit_Tracker " +
+            "ADD %s BOOLEAN DEFAULT false;";
     private static String DELETE_COLUMN =
-            "ALTER TABLE Habit_Tracker" +
-            "DROP COLUMN %s";
+            "ALTER TABLE Habit_Tracker " +
+            "DROP COLUMN %s;";
 
     /**
      * Add Column to Habit Tracker Table
