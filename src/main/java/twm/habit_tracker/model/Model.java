@@ -7,6 +7,12 @@ import java.sql.ResultSet;
  */
 public interface Model {
     /**
+     * Add row to Target Table
+     * @param values Values to populate new Row
+     */
+    void addEntry(String[] values);
+
+    /**
      * Change target Table for Model methods to act upon
      * @param newTargetTable New Target Table
      */
@@ -16,25 +22,6 @@ public interface Model {
      * End connection to Habits Database
      */
     void closeConnection();
-
-    /**
-     * Pull all data from Target Table
-     * @return ResultSet
-     */
-    ResultSet getTable();
-
-    /**
-     * Get specified row of Target Table
-     * @param lookupValue Primary Key Value of Target Row
-     * @return ResultSet
-     */
-    ResultSet getEntry(String lookupValue);
-
-    /**
-     * Add row to Target Table
-     * @param values Values to populate new Row
-     */
-    void addEntry(String[] values);
 
     /**
      * Delete specified row from Target Table
@@ -49,5 +36,17 @@ public interface Model {
      */
     void editEntry(String[] values, String lookupValue);
 
+    /**
+     * Get specified row of Target Table
+     * @param lookupValue Primary Key Value of Target Row
+     * @return ResultSet
+     */
+    ResultSet getEntry(String lookupValue);
+
+    /**
+     * Pull all data from Target Table
+     * @return ResultSet
+     */
+    ResultSet getTable();
 
 }
