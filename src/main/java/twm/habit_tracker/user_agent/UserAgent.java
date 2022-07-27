@@ -10,6 +10,7 @@ import twm.habit_tracker.view.GUIView;
 import twm.habit_tracker.view.View;
 
 
+
 public class UserAgent extends Application {
     public static void main(String[] args) {
         launch();
