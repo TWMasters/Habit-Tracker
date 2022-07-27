@@ -11,18 +11,30 @@ import twm.habit_tracker.view.View;
 
 
 
+
 public class UserAgent extends Application {
+    View GUI;
+    Model DB;
+    Controller controller;
+
     public static void main(String[] args) {
         launch();
     }
 
+    /**
+     * Overridden init method to compose MVC prior to start()
+     * @throws Exception
+     */
+    @Override
+    public void init() throws Exception {
+        GUI = new GUIView();
+        DB = ConcreteModel.getModel();
+        controller = new ConcreteController(GUI, DB);
+
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Compose application
-        View GUI = new GUIView();
-        Model DB = ConcreteModel.getModel();
-        Controller controller = new ConcreteController(GUI, DB);
-
         // Send primary stage to view to set-up
         GUI.setUp(primaryStage);
         primaryStage.show();
