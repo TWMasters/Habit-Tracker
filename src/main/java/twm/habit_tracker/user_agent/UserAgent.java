@@ -9,9 +9,6 @@ import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.GUIView;
 import twm.habit_tracker.view.View;
 
-
-
-
 public class UserAgent extends Application {
     View GUI;
     Model DB;
