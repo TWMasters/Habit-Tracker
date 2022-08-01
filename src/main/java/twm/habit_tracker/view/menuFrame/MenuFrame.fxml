@@ -21,12 +21,12 @@
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="545.0" prefWidth="141.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" text="HABITS">
+            <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#habitButtonPush" text="HABITS">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" text="GOALS">
+            <Button mnemonicParsing="false" onAction="#goalButtonPush" text="GOALS">
                <font>
                   <Font size="24.0" />
                </font>
