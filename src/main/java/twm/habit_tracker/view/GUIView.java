@@ -3,7 +3,6 @@ package twm.habit_tracker.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -27,6 +26,7 @@ public class GUIView implements View {
             Scene scene = new Scene(root); // Width, then Height
             primaryStage.setScene(scene);
             primaryStage.show();
+
         } catch (IOException e) {
             System.err.println("Problems when loading MenuFrame FXML File");
             e.printStackTrace();
