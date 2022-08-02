@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +23,11 @@ public class MenuFrame implements Initializable {
 
     @FXML
     private BorderPane mainFrame;
+
+    public void exitButtonPush() {
+        Stage currentWindow = (Stage) mainFrame.getScene().getWindow();
+        currentWindow.close();
+    }
 
     public void goalButtonPush() {
         try {

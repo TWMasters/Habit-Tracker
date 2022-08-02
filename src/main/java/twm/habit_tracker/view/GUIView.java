@@ -17,7 +17,7 @@ public class GUIView implements View {
     @Override
     public void setUp(Stage primaryStage) {
         primaryStage.setMaximized(true);
-        primaryStage.initStyle(StageStyle.DECORATED); // DECORATED for now. Change to UNDECORATED Later
+        primaryStage.initStyle(StageStyle.UNDECORATED);
 
         try {
             URL menuFrameURL =  new File(MENU_FRAME_URL).toURI().toURL();
