@@ -20,6 +20,7 @@ public class HabitPage implements Initializable {
     private TableView<Habit> Habits_Table;
 
     private void buildTable() {
+        Habits_Table.setItems(habitDataSet);
         Habits_Table.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("habit"));
         Habits_Table.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("habitQuestion"));
     }
@@ -27,6 +28,8 @@ public class HabitPage implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         habitDataSet = getHabitData.get();
+        for (Habit h : habitDataSet)
+            System.out.println(h.getHabit());
         buildTable();
 
     }
