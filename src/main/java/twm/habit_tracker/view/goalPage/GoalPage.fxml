@@ -13,7 +13,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
     <top>
-        <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
+        <ButtonBar BorderPane.alignment="TOP_CENTER">
             <buttons>
                 <Label text="GOALS">
                     <font>
@@ -29,9 +29,9 @@
         </ButtonBar>
     </top>
     <center>
-        <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <StackPane BorderPane.alignment="CENTER">
             <children>
-                <TableView id="Goal_Table" prefHeight="200.0" prefWidth="200.0">
+                <TableView id="Goal_Table">
                     <columns>
                         <TableColumn prefWidth="75.0" text="C1" />
                         <TableColumn prefWidth="75.0" text="C2" />
