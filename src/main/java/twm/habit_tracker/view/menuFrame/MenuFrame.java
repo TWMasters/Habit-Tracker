@@ -3,6 +3,7 @@ package twm.habit_tracker.view.menuFrame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
@@ -24,16 +25,20 @@ public class MenuFrame implements Initializable {
 
     public void goalButtonPush() {
         try {
-            mainFrame.setCenter(FXMLLoader.load(goalPageURL));
+            Node page = FXMLLoader.load(goalPageURL);
+            mainFrame.setCenter(page);
+            BorderPane.setAlignment(page, Pos.TOP_LEFT);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void habitButtonPush() {
         try {
-            mainFrame.setCenter(FXMLLoader.load(habitPageURL));
+            Node page = FXMLLoader.load(habitPageURL);
+            mainFrame.setCenter(page);
+            BorderPane.setAlignment(page, Pos.TOP_LEFT);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,7 +49,7 @@ public class MenuFrame implements Initializable {
         try {
             habitPageURL = new File(HABIT_PAGE_URL).toURI().toURL();
             goalPageURL = new File(GOAL_PAGE_URL).toURI().toURL();
-            mainFrame.setCenter(FXMLLoader.load(habitPageURL));
+            habitButtonPush();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
