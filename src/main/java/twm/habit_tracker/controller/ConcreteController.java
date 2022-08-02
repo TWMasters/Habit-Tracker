@@ -1,8 +1,11 @@
 package twm.habit_tracker.controller;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.Model;
+import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
 import twm.habit_tracker.view.habitPage.HabitPage;
 
@@ -31,11 +34,24 @@ public class ConcreteController implements Controller {
 
     @Override
     public void setHabitPageMethods() throws SQLException {
-        // Retrieve Habit Data
-        Supplier<ResultSet> s = () -> {
+        // Retrieve Habit Data as ObservableList
+        Supplier<ObservableList<Habit>> s = () -> {
             model.changeTargetTable(new HabitTableState());
-            return model.getTable();
+            ResultSet rs = model.getTable();
+            ObservableList<Habit> list = FXCollections.observableArrayList();
+            try {
+                while (rs.next()) {
+                    Habit h = new Habit();
+                    h.setHabit(rs.getString(2));
+                    h.setHabitQuestion(rs.getString(3));
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return list;
         };
         HabitPage.setGetHabitData(s);
     }
+
 }
