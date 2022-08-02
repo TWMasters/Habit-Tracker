@@ -19,11 +19,15 @@ module twm.habit_tracker.habittracker {
 
     exports twm.habit_tracker.view;
     opens twm.habit_tracker.view to javafx.fxml;
+
     exports twm.habit_tracker.view.menuFrame;
     opens twm.habit_tracker.view.menuFrame to javafx.fxml;
+
     exports twm.habit_tracker.view.habitPage;
     opens twm.habit_tracker.view.habitPage to javafx.fxml;
 
+    exports twm.habit_tracker.view.habitEditPage;
+    opens twm.habit_tracker.view.habitEditPage to javafx.fxml;
 
     exports twm.habit_tracker.zexamples;
     opens twm.habit_tracker.zexamples to javafx.fxml;

@@ -57,7 +57,7 @@ public class ConcreteController implements Controller {
             return habitData;
         };
 
-        HabitPage.setGetHabitData(habitDataSupplier);
+        HabitPage.setHabitDataSupplier(habitDataSupplier);
     }
 
 }

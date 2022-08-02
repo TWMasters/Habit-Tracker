@@ -1,24 +1,24 @@
 package twm.habit_tracker.view;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 
 /**
  * Helper Class which holds a single static method to create a Popup Menu
  */
-class PopupMenu {
+public class PopupMenu {
     public static final Integer HALF = 2;
 
     public static void display(String title, String javafx_location) {
+        System.out.println("Display popup!");
+
         Stage popupWindow = new Stage();
+        popupWindow.initStyle(StageStyle.DECORATED);
 
         // Set up Stage
         popupWindow.initModality(Modality.APPLICATION_MODAL);
@@ -27,18 +27,10 @@ class PopupMenu {
         popupWindow.setTitle(title);
 
         // Get JavaFX
-        try {
-            URL popupURL =  new File(javafx_location).toURI().toURL();
-            Parent root = FXMLLoader.load(popupURL);
-
-            Scene scene = new Scene(root); // Width, then Height
-            popupWindow.setScene(scene);
-            popupWindow.show();
-
-        } catch (IOException e) {
-            System.err.println("Problems when producing popup window");
-            e.printStackTrace();
-        }
+        Parent root = (Parent) GUIView.getFXMLResource(javafx_location);
+        Scene scene = new Scene(root); // Width, then Height
+        popupWindow.setScene(scene);
+        popupWindow.show();
 
     }
 }
