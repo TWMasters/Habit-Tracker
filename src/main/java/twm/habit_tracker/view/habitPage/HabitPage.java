@@ -28,8 +28,6 @@ public class HabitPage implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         habitDataSet = getHabitData.get();
-        for (Habit h : habitDataSet)
-            System.out.println(h.getHabit());
         buildTable();
 
     }
