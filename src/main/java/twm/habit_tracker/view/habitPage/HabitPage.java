@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import twm.habit_tracker.view.Habit;
 
 import java.net.URL;
@@ -19,12 +20,14 @@ public class HabitPage implements Initializable {
     private TableView<Habit> Habits_Table;
 
     private void buildTable() {
-
+        Habits_Table.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("habit"));
+        Habits_Table.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("habitQuestion"));
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         habitDataSet = getHabitData.get();
+        buildTable();
 
     }
 

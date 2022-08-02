@@ -1,11 +1,12 @@
 package twm.habit_tracker.view;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Habit {
 
-    private StringProperty habit;
-    private StringProperty habitQuestion;
+    private StringProperty habit = new SimpleStringProperty();
+    private StringProperty habitQuestion = new SimpleStringProperty();
 
     public String getHabit() {
         return habit.get();

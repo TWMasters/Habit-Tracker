@@ -35,23 +35,29 @@ public class ConcreteController implements Controller {
     @Override
     public void setHabitPageMethods() throws SQLException {
         // Retrieve Habit Data as ObservableList
-        Supplier<ObservableList<Habit>> s = () -> {
+        Supplier<ObservableList<Habit>> habitDataSupplier = () -> {
             model.changeTargetTable(new HabitTableState());
             ResultSet rs = model.getTable();
-            ObservableList<Habit> list = FXCollections.observableArrayList();
+            ObservableList<Habit> habitData = FXCollections.observableArrayList();
             try {
-                while (rs.next()) {
-                    Habit h = new Habit();
-                    h.setHabit(rs.getString(2));
-                    h.setHabitQuestion(rs.getString(3));
+                if (rs.isBeforeFirst()) {
+                    while (rs.next()) {
+                        Habit h = new Habit();
+                        h.setHabit(rs.getString(2));
+                        h.setHabitQuestion(rs.getString(4));
+                        habitData.add(h);
+                    }
                 }
+                else
+                    System.out.println("Result Set is empty!");
             }
             catch (SQLException e) {
                 e.printStackTrace();
             }
-            return list;
+            return habitData;
         };
-        HabitPage.setGetHabitData(s);
+
+        HabitPage.setGetHabitData(habitDataSupplier);
     }
 
 }
