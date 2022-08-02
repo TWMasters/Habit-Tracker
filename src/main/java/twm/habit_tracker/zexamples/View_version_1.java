@@ -1,4 +1,4 @@
-package twm.habit_tracker.view;
+package twm.habit_tracker.zexamples;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

@@ -1,4 +1,4 @@
-package twm.habit_tracker.view;
+package twm.habit_tracker.zexamples;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
