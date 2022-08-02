@@ -26,7 +26,7 @@ public class HabitPage implements Initializable {
         PopupMenu.display("HABIT", HABIT_EDIT_URL);
         System.out.println("Window closed");
         getHabitData();
-        Habits_Table.refresh();
+        buildTable();
     }
 
     /**
