@@ -7,10 +7,12 @@ import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
+import twm.habit_tracker.view.habitEditPage.HabitEditPage;
 import twm.habit_tracker.view.habitPage.HabitPage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ConcreteController implements Controller {
@@ -25,7 +27,20 @@ public class ConcreteController implements Controller {
         setGoalPageMethods();
         setHabitPageMethods();
 
+        setEditHabitPageMethods();
+
     }
+
+    @Override
+    public void setEditHabitPageMethods() throws SQLException {
+        Consumer<String[]> addHabitConsumer = (s) -> {
+            String[] output = {s[0], "true", s[1], "null", "null"};
+            model.changeTargetTable(new HabitTableState());
+            model.addEntry(output);
+        };
+        HabitEditPage.setAddHabitConsumer(addHabitConsumer);
+    }
+
 
     @Override
     public void setGoalPageMethods() throws SQLException {

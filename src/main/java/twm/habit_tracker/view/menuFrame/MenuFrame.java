@@ -1,7 +1,6 @@
 package twm.habit_tracker.view.menuFrame;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -9,9 +8,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import twm.habit_tracker.view.GUIView;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
