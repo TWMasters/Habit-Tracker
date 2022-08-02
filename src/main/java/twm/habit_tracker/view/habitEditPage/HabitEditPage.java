@@ -30,7 +30,6 @@ public class HabitEditPage {
     public void saveButtonPush() {
         String[] input = {nameInput.getText(), questionInput.getText()};
         addHabitConsumer.accept(input);
-        HabitPage.getHabitData();
         exit();
     }
 }

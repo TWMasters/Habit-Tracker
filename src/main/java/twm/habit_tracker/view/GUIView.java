@@ -29,7 +29,7 @@ public class GUIView implements View {
     @Override
     public void setUp(Stage primaryStage) {
         primaryStage.setMaximized(true);
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.initStyle(StageStyle.DECORATED);
 
         Parent root = (Parent) getFXMLResource(MENU_FRAME_URL);
         Scene scene = new Scene(root); // Width, then Height

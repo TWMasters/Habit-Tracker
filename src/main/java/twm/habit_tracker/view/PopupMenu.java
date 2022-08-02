@@ -15,10 +15,9 @@ public class PopupMenu {
     public static final Integer HALF = 2;
 
     public static void display(String title, String javafx_location) {
-        System.out.println("Display popup!");
 
         Stage popupWindow = new Stage();
-        popupWindow.initStyle(StageStyle.UNDECORATED);
+        popupWindow.initStyle(StageStyle.DECORATED);
 
         // Set up Stage
         popupWindow.initModality(Modality.APPLICATION_MODAL);
@@ -30,7 +29,7 @@ public class PopupMenu {
         Parent root = (Parent) GUIView.getFXMLResource(javafx_location);
         Scene scene = new Scene(root); // Width, then Height
         popupWindow.setScene(scene);
-        popupWindow.show();
+        popupWindow.showAndWait();
 
     }
 }

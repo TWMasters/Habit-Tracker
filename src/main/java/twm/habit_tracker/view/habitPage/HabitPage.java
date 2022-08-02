@@ -24,6 +24,9 @@ public class HabitPage implements Initializable {
 
     public void addButtonPush() {
         PopupMenu.display("HABIT", HABIT_EDIT_URL);
+        System.out.println("Window closed");
+        getHabitData();
+        Habits_Table.refresh();
     }
 
     /**
@@ -35,7 +38,7 @@ public class HabitPage implements Initializable {
         Habits_Table.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("habitQuestion"));
     }
 
-    public static void getHabitData() {
+    public void getHabitData() {
         habitDataSet = habitDataSupplier.get();
     }
 
