@@ -18,7 +18,7 @@ public class PopupMenu {
         System.out.println("Display popup!");
 
         Stage popupWindow = new Stage();
-        popupWindow.initStyle(StageStyle.DECORATED);
+        popupWindow.initStyle(StageStyle.UNDECORATED);
 
         // Set up Stage
         popupWindow.initModality(Modality.APPLICATION_MODAL);

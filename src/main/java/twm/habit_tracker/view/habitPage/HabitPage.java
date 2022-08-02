@@ -35,7 +35,7 @@ public class HabitPage implements Initializable {
         Habits_Table.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("habitQuestion"));
     }
 
-    public void getHabitData() {
+    public static void getHabitData() {
         habitDataSet = habitDataSupplier.get();
     }
 
@@ -49,6 +49,5 @@ public class HabitPage implements Initializable {
     public static void setHabitDataSupplier(Supplier<ObservableList<Habit>> f) {
         habitDataSupplier = f;
     }
-
 
 }
