@@ -1,10 +1,14 @@
 package twm.habit_tracker.controller;
 
+
 import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.View;
+import twm.habit_tracker.view.habitPage.HabitPage;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.function.Supplier;
 
 public class ConcreteController implements Controller {
     private final View view;
@@ -13,22 +17,25 @@ public class ConcreteController implements Controller {
     public ConcreteController(View view, Model model) throws SQLException {
         this.view = view;
         this.model = model;
-        // Link View to Model
-        /*
-        this.view.setCreateHabitListener(e -> {
-            Habit newHabit = view.getHabitInfo();
-            model.addEntry(new String[]{newHabit.habitName(), String.valueOf(newHabit.binaryHabit()), newHabit.habitQuestion()});
-            // view.addHabit(rs);
-        });
 
-         */
-        // refreshData();
+        // Link View to Model
+        setGoalPageMethods();
+        setHabitPageMethods();
+
     }
 
     @Override
-    public void refreshData() throws SQLException {
-        // model.changeTargetTable(new HabitTableState());
-        // this.view.setHabitsTableData(model.getTable());
+    public void setGoalPageMethods() throws SQLException {
+
     }
 
+    @Override
+    public void setHabitPageMethods() throws SQLException {
+        // Retrieve Habit Data
+        Supplier<ResultSet> s = () -> {
+            model.changeTargetTable(new HabitTableState());
+            return model.getTable();
+        };
+        HabitPage.setGetHabitData(s);
+    }
 }

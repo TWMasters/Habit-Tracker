@@ -5,9 +5,14 @@ import java.sql.SQLException;
 public interface Controller {
 
     /**
-     * Refresh View with updated Habit Data
+     * Use to hold methods for setting Habit Page methods
      */
-    void refreshData() throws SQLException;
+    void setGoalPageMethods() throws SQLException;
+
+    /**
+     * Use to hold methods for setting Habit Page methods
+     */
+    void setHabitPageMethods() throws SQLException;
 
 }
 
