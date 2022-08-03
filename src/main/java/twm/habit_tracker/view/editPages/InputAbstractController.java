@@ -19,7 +19,7 @@ public abstract class InputAbstractController implements Initializable {
      */
     public abstract String[] getFields();
 
-    public void setTargetTable(Runnable targetTableInput) {
+    public static void setTargetTable(Runnable targetTableInput) {
         targetTable = targetTableInput;
     }
 

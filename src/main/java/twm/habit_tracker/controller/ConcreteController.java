@@ -7,6 +7,7 @@ import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
+import twm.habit_tracker.view.editPages.HabitInputFieldsController;
 import twm.habit_tracker.view.mainPages.HabitPageController;
 
 import java.sql.ResultSet;
@@ -33,6 +34,7 @@ public class ConcreteController implements Controller {
     @Override
     public void setEditPageMethods() throws SQLException {
         Runnable habitTableTarget = () -> model.changeTargetTable(new HabitTableState());
+        HabitInputFieldsController.setTargetTable(habitTableTarget);
 
         Consumer<String[]> addHabitConsumer = (s) -> {
             String[] output = {s[0], "true", s[1], "null", "null"};
