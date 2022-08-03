@@ -7,7 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import twm.habit_tracker.view.Habit;
-import twm.habit_tracker.view.PopupMenu;
+import twm.habit_tracker.view.editPages.EditPageBuilder;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,7 +26,7 @@ public class HabitPage implements Initializable {
      * Method for when add button is pressed
      */
     public void addButtonPush() {
-        PopupMenu.display("HABIT", HABIT_EDIT_URL);
+        EditPageBuilder.display("HABIT", HABIT_EDIT_URL);
         getHabitData();
         buildTable();
     }

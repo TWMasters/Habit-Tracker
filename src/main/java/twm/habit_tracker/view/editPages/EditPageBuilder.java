@@ -1,6 +1,5 @@
-package twm.habit_tracker.view;
+package twm.habit_tracker.view.editPages;
 
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -12,10 +11,10 @@ import javafx.stage.StageStyle;
 /**
  * Helper Class which holds a single static method to create a Popup Menu
  */
-public class PopupMenu {
+public class EditPageBuilder {
     public static final Integer HALF = 2;
 
-    public static void display(String title, String javafx_location) {
+    public static void display(String title) {
 
         Stage popupWindow = new Stage();
         popupWindow.initStyle(StageStyle.DECORATED);

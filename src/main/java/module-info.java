@@ -28,4 +28,6 @@ module twm.habit_tracker.habittracker {
 
     exports twm.habit_tracker.zexamples;
     opens twm.habit_tracker.zexamples to javafx.fxml;
+    opens twm.habit_tracker.view.editPages to javafx.fxml;
+    exports twm.habit_tracker.view.editPages;
 }
