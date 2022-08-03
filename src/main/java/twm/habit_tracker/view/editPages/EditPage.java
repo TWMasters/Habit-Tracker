@@ -18,15 +18,26 @@ public class EditPage {
     private EditPageContainerController containerController;
 
     private Node buttonBar;
+    private ButtonController buttonController;
+
     private Node inputFields;
 
-    public EditPage(String buttonBar, String inputFields) {
+    public EditPage(String buttonBarLocation, String inputFieldsLocation) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
+            FXMLLoader fxmlLoader = new FXMLLoader(EditPage.class.getResource("EditPageContainer.fxml"));
 
             // Container
-            container = fxmlLoader.load(EditPage.class.getResource("EditPageContainer.fxml"));
+            container = fxmlLoader.load();
             containerController = fxmlLoader.getController();
+
+            // Buttons
+            fxmlLoader = new FXMLLoader(EditPage.class.getResource(buttonBarLocation));
+            buttonBar = fxmlLoader.load();
+            buttonController = fxmlLoader.getController();
+
+            // Wiring
+            containerController.setButtons(buttonBar);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

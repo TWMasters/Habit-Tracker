@@ -26,7 +26,7 @@ public class HabitPageController implements Initializable {
      * Method for when add button is pressed
      */
     public void addButtonPush() {
-        editPage = new EditPage("", "");
+        editPage = new EditPage("AddButtons.fxml", "");
         editPage.display("HABIT");
         getHabitData();
         buildTable();

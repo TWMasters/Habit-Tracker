@@ -16,7 +16,7 @@
        <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
           <Button fx:id="backButton" mnemonicParsing="false" text="Back" />
-          <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonPush" text="Add" />
+          <Button fx:id="addButton" mnemonicParsing="false" text="Add" />
           <Button fx:id="saveButton" mnemonicParsing="false"  text="Save" />
           <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" />
         </buttons>
