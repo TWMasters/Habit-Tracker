@@ -7,14 +7,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import twm.habit_tracker.view.Habit;
+import twm.habit_tracker.view.editPages.EditPage;
 import twm.habit_tracker.view.editPages.EditPageBuilder;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
-public class HabitPage implements Initializable {
-    private static final String HABIT_EDIT_URL = "src/main/java/twm/habit_tracker/view/habitEditPage/HabitEditPage.fxml";
+public class HabitPageController implements Initializable {
+    private EditPage editPage;
 
     private static ObservableList<Habit> habitDataSet = FXCollections.observableArrayList();
     private static Supplier<ObservableList<Habit>> habitDataSupplier;
@@ -26,7 +27,8 @@ public class HabitPage implements Initializable {
      * Method for when add button is pressed
      */
     public void addButtonPush() {
-        EditPageBuilder.display("HABIT", HABIT_EDIT_URL);
+        editPage = new EditPage("", "");
+        editPage.display("HABIT");
         getHabitData();
         buildTable();
     }

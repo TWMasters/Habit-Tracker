@@ -23,11 +23,10 @@ module twm.habit_tracker.habittracker {
     exports twm.habit_tracker.view.mainPages;
     opens twm.habit_tracker.view.mainPages to javafx.fxml;
 
-    exports twm.habit_tracker.view.habitEditPage;
-    opens twm.habit_tracker.view.habitEditPage to javafx.fxml;
+    exports twm.habit_tracker.view.editPages;
+    opens twm.habit_tracker.view.editPages to javafx.fxml;
 
     exports twm.habit_tracker.zexamples;
     opens twm.habit_tracker.zexamples to javafx.fxml;
-    opens twm.habit_tracker.view.editPages to javafx.fxml;
-    exports twm.habit_tracker.view.editPages;
+
 }

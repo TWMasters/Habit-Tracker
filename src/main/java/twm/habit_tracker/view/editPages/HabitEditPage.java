@@ -1,4 +1,4 @@
-package twm.habit_tracker.view.habitEditPage;
+package twm.habit_tracker.view.editPages;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -26,7 +26,7 @@ public class HabitEditPage {
         HabitEditPage.addHabitConsumer = addHabitConsumer;
     }
 
-    public void saveButtonPush() {
+    public void addButtonPush() {
         String[] input = {nameInput.getText(), questionInput.getText()};
         addHabitConsumer.accept(input);
         exit();

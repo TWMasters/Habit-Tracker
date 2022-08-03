@@ -7,8 +7,8 @@ import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
-import twm.habit_tracker.view.habitEditPage.HabitEditPage;
-import twm.habit_tracker.view.mainPages.HabitPage;
+import twm.habit_tracker.view.editPages.HabitEditPage;
+import twm.habit_tracker.view.mainPages.HabitPageController;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,7 +72,7 @@ public class ConcreteController implements Controller {
             return habitData;
         };
 
-        HabitPage.setHabitDataSupplier(habitDataSupplier);
+        HabitPageController.setHabitDataSupplier(habitDataSupplier);
     }
 
 }
