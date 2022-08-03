@@ -10,9 +10,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class EditPage {
-    public static final Integer HALF = 2;
+    private static final Integer HALF = 2;
+
+    private static Consumer<String[]> addEntryConsumer;
 
     private Parent container;
     private EditPageContainerController containerController;
@@ -35,6 +38,7 @@ public class EditPage {
             fxmlLoader = new FXMLLoader(EditPage.class.getResource(buttonBarLocation));
             buttonBar = fxmlLoader.load();
             buttonController = fxmlLoader.getController();
+            buttonController.setContext(this);
 
             // Input Fields
             fxmlLoader = new FXMLLoader(EditPage.class.getResource(inputFieldsLocation));
@@ -49,6 +53,12 @@ public class EditPage {
             e.printStackTrace();
         }
 
+    }
+
+    public void add() {
+        System.out.println("Add Entry!");
+        addEntryConsumer.accept(inputFieldsController.getFields());
+        buttonController.backButtonPush();
     }
 
     public void display (String title) {
@@ -67,10 +77,8 @@ public class EditPage {
 
     }
 
-    public String[] getData() {
-        return null;
+    public static void setAddEntryConsumer(Consumer<String []> addEntryConsumerInput ) {
+        addEntryConsumer = addEntryConsumerInput;
     }
 
-    public void setData(String[] data) {
-    }
 }
