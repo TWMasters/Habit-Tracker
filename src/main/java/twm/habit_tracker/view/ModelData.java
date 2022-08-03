@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 /**
  * Parent class for data from Model
  */
-public class ModelData {
+public abstract class ModelData {
     private StringProperty primaryKey = new SimpleStringProperty();
 
     public String getPrimaryKey() {
@@ -24,4 +24,6 @@ public class ModelData {
     public void setPrimaryKey(String primaryKey) {
         this.primaryKey.set(primaryKey);
     };
+
+    public abstract String[] getAllFields();
 }

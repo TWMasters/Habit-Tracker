@@ -3,6 +3,8 @@ package twm.habit_tracker.view;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.HashMap;
+
 public class Habit extends ModelData {
 
     private StringProperty habit = new SimpleStringProperty();
@@ -30,5 +32,11 @@ public class Habit extends ModelData {
 
     public void setHabitQuestion(String habitQuestion) {
         this.habitQuestion.set(habitQuestion);
+    }
+
+    @Override
+    public String[] getAllFields() {
+        String[] output = {getPrimaryKey(), getHabit(), getHabitQuestion()};
+        return output;
     }
 }
