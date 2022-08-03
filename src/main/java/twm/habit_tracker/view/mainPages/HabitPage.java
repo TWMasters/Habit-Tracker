@@ -1,4 +1,4 @@
-package twm.habit_tracker.view.habitPage;
+package twm.habit_tracker.view.mainPages;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,9 +22,11 @@ public class HabitPage implements Initializable {
     @FXML
     private TableView<Habit> Habits_Table;
 
+    /**
+     * Method for when add button is pressed
+     */
     public void addButtonPush() {
         PopupMenu.display("HABIT", HABIT_EDIT_URL);
-        System.out.println("Window closed");
         getHabitData();
         buildTable();
     }

@@ -1,4 +1,4 @@
-package twm.habit_tracker.view.menuFrame;
+package twm.habit_tracker.view.mainPages;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -6,14 +6,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import twm.habit_tracker.view.GUIView;
+import twm.habit_tracker.view.View;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MenuFrame implements Initializable {
-    private static final String GOAL_PAGE_URL = "src/main/java/twm/habit_tracker/view/goalPage/GoalPage.fxml";
-    private static final String HABIT_PAGE_URL = "src/main/java/twm/habit_tracker/view/habitPage/HabitPage.fxml";
+public class MenuPage implements Initializable {
+    private static View context;
 
     @FXML
     private BorderPane mainFrame;
@@ -24,20 +23,26 @@ public class MenuFrame implements Initializable {
     }
 
     public void goalButtonPush() {
-        Node page = GUIView.getFXMLResource(GOAL_PAGE_URL);
+        Node page = context.getPage("Goal");
         mainFrame.setCenter(page);
         BorderPane.setAlignment(page, Pos.TOP_LEFT);
+
     }
 
     public void habitButtonPush() {
-        Node page = GUIView.getFXMLResource(HABIT_PAGE_URL);
+        Node page = context.getPage("Habit");
         mainFrame.setCenter(page);
         BorderPane.setAlignment(page, Pos.TOP_LEFT);
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         habitButtonPush();
 
+    }
+
+    public static void setContext(View v) {
+        context = v;
     }
 }

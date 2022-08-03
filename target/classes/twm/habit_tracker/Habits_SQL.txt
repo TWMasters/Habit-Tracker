@@ -15,4 +15,12 @@ INSERT INTO Habits
 (Habit_ID, Habit_Name, Binary_Habit, Habit_Question)
 VALUES (2, 'Walk', true, 'Did you go for a walk?');
 
+Select * FROM Habits;
+
+Select * FROM Habit_Tracker;
+
+DELETE FROM Habits
+WHERE Habit_ID > 1;
+
+
 COMMIT;

@@ -13,7 +13,8 @@
 
 <BorderPane fx:id="habitEditFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twm.habit_tracker.view.habitEditPage.HabitEditPage">
    <top>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <!--
+       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
           <Button mnemonicParsing="false" text="Back" />
             <Button mnemonicParsing="false" onAction="#saveButtonPush" text="Save" />
@@ -23,6 +24,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </ButtonBar>
+      -->
    </top>
    <center>
       <GridPane BorderPane.alignment="CENTER">

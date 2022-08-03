@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import twm.habit_tracker.view.habitPage.HabitPage;
 
 import java.util.function.Consumer;
 

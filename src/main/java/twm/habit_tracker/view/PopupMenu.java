@@ -2,6 +2,7 @@ package twm.habit_tracker.view;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -26,7 +27,8 @@ public class PopupMenu {
         popupWindow.setTitle(title);
 
         // Get JavaFX
-        Parent root = (Parent) GUIView.getFXMLResource(javafx_location);
+        // Parent root = (Parent) GUIView.getFXMLResource(javafx_location);
+        BorderPane root = new BorderPane();
         Scene scene = new Scene(root); // Width, then Height
         popupWindow.setScene(scene);
         popupWindow.showAndWait();

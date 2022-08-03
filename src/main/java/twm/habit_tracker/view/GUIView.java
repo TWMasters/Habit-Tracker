@@ -6,24 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import twm.habit_tracker.view.mainPages.MenuPage;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.util.HashMap;
 
 public class GUIView implements View {
-    private static final String MENU_FRAME_URL = "src/main/java/twm/habit_tracker/view/menuFrame/MenuFrame.fxml";
+    private Parent menu_page;
+    HashMap<String, Node> pages = new HashMap<>();
 
-    public static Node getFXMLResource(String local_path) {
-        try {
-            URL url = new File(local_path).toURI().toURL();
-            return FXMLLoader.load(url);
-
-        } catch (IOException e) {
-            System.out.println("Problems when loading FXML File");
-            e.printStackTrace();
-        }
-        return null;
+    @Override
+    public Node getPage(String pageID) {
+        return pages.get(pageID);
     }
 
     @Override
@@ -31,8 +25,23 @@ public class GUIView implements View {
         primaryStage.setMaximized(true);
         primaryStage.initStyle(StageStyle.DECORATED);
 
-        Parent root = (Parent) getFXMLResource(MENU_FRAME_URL);
-        Scene scene = new Scene(root); // Width, then Height
+        // Set Context!
+        MenuPage.setContext(this);
+
+        // Load Pages!
+        try {
+            pages.put("Habit", FXMLLoader.load(GUIView.class.getResource("HabitPage.fxml")));
+            pages.put("Goal", FXMLLoader.load(GUIView.class.getResource("GoalPage.fxml")));
+
+            menu_page = FXMLLoader.load(GUIView.class.getResource("MenuPage.fxml"));
+            // Can add other pages as needed!
+        } catch (IOException e) {
+            System.out.println("Problems when loading FXML File");
+            e.printStackTrace();
+        }
+
+
+        Scene scene = new Scene(menu_page); // Width, then Height
         primaryStage.setScene(scene);
 
         primaryStage.show();

@@ -8,7 +8,7 @@ import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
 import twm.habit_tracker.view.habitEditPage.HabitEditPage;
-import twm.habit_tracker.view.habitPage.HabitPage;
+import twm.habit_tracker.view.mainPages.HabitPage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
