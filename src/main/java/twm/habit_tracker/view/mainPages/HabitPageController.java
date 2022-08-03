@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import twm.habit_tracker.view.Habit;
+import twm.habit_tracker.view.ModelData;
 import twm.habit_tracker.view.editPages.EditPage;
 
 import java.net.URL;
@@ -36,9 +37,15 @@ public class HabitPageController implements Initializable {
      * Helper method to build table
      */
     private void buildTable() {
+        // https://stackoverflow.com/questions/26563390/detect-doubleclick-on-row-of-tableview-javafx
         Habits_Table.setItems(habitDataSet);
         Habits_Table.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("habit"));
         Habits_Table.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("habitQuestion"));
+    }
+
+    public void editTablePush() {
+        ModelData item = Habits_Table.getSelectionModel().getSelectedItem();
+        if (item != null) System.out.println(item.getPrimaryKey());
     }
 
     public void getHabitData() {

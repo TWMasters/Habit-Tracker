@@ -31,7 +31,7 @@
    <center>
       <StackPane BorderPane.alignment="TOP_LEFT">
          <children>
-            <TableView fx:id="Habits_Table">
+            <TableView fx:id="Habits_Table" onMouseClicked="#editTablePush">
               <columns>
                 <TableColumn text="Habit" />
                 <TableColumn text="Question" />
