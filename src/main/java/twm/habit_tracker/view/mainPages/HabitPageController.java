@@ -8,7 +8,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.editPages.EditPage;
-import twm.habit_tracker.view.editPages.EditPageBuilder;
 
 import java.net.URL;
 import java.util.ResourceBundle;

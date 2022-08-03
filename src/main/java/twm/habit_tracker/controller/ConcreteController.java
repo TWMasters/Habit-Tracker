@@ -7,7 +7,6 @@ import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
-import twm.habit_tracker.view.editPages.HabitEditPage;
 import twm.habit_tracker.view.mainPages.HabitPageController;
 
 import java.sql.ResultSet;
@@ -38,7 +37,7 @@ public class ConcreteController implements Controller {
             model.changeTargetTable(new HabitTableState());
             model.addEntry(output);
         };
-        HabitEditPage.setAddHabitConsumer(addHabitConsumer);
+        // HabitEditPage.setAddHabitConsumer(addHabitConsumer);
     }
 
 
