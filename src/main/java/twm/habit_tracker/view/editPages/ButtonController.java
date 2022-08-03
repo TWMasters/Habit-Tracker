@@ -19,6 +19,11 @@ public class ButtonController {
         currentWindow.close();
     }
 
+
+    public void deleteButtonPush() {
+        context.delete();
+    }
+
     public void setContext(EditPage context) {
         this.context = context;
     }

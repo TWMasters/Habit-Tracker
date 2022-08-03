@@ -3,7 +3,7 @@ package twm.habit_tracker.view;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Habit {
+public class Habit extends ModelData {
 
     private StringProperty habit = new SimpleStringProperty();
     private StringProperty habitQuestion = new SimpleStringProperty();

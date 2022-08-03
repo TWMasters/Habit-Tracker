@@ -63,6 +63,7 @@ public class ConcreteController implements Controller {
                 if (rs.isBeforeFirst()) {
                     while (rs.next()) {
                         Habit h = new Habit();
+                        h.setPrimaryKey(rs.getString(1));
                         h.setHabit(rs.getString(2));
                         h.setHabitQuestion(rs.getString(4));
                         habitData.add(h);

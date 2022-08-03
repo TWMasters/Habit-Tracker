@@ -61,6 +61,10 @@ public class EditPage {
         buttonController.backButtonPush();
     }
 
+    public void delete() {
+        System.out.println("Delete entry");
+    }
+
     public void display (String title) {
         Stage popupWindow = new Stage();
         popupWindow.initStyle(StageStyle.DECORATED);
