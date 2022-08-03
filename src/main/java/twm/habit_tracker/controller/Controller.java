@@ -7,7 +7,7 @@ public interface Controller {
     /**
      * Use to hold methods for setting Edit Habit Page methods
      */
-    void setEditHabitPageMethods() throws SQLException;
+    void setEditPageMethods() throws SQLException;
 
     /**
      * Use to hold methods for setting Habit Page methods

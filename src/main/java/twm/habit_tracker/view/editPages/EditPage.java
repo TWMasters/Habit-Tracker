@@ -59,4 +59,11 @@ public class EditPage {
         popupWindow.showAndWait();
 
     }
+
+    public String[] getData() {
+        return null;
+    }
+
+    public void setData(String[] data) {
+    }
 }

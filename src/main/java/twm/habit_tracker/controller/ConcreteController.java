@@ -26,12 +26,12 @@ public class ConcreteController implements Controller {
         setGoalPageMethods();
         setHabitPageMethods();
 
-        setEditHabitPageMethods();
+        setEditPageMethods();
 
     }
 
     @Override
-    public void setEditHabitPageMethods() throws SQLException {
+    public void setEditPageMethods() throws SQLException {
         Consumer<String[]> addHabitConsumer = (s) -> {
             String[] output = {s[0], "true", s[1], "null", "null"};
             model.changeTargetTable(new HabitTableState());
