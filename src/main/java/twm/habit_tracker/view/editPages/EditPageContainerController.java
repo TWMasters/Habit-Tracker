@@ -11,4 +11,8 @@ public class EditPageContainerController {
     public void setButtons(Node buttons) {
         editPageBorderFrame.setTop(buttons);
     }
+
+    public void setInputFields(Node inputFields) {
+        editPageBorderFrame.setCenter(inputFields);
+    }
 }

@@ -32,6 +32,8 @@ public class ConcreteController implements Controller {
 
     @Override
     public void setEditPageMethods() throws SQLException {
+        Runnable habitTableTarget = () -> model.changeTargetTable(new HabitTableState());
+
         Consumer<String[]> addHabitConsumer = (s) -> {
             String[] output = {s[0], "true", s[1], "null", "null"};
             model.changeTargetTable(new HabitTableState());

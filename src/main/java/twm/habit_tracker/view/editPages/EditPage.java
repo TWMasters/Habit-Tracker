@@ -21,6 +21,7 @@ public class EditPage {
     private ButtonController buttonController;
 
     private Node inputFields;
+    private InputAbstractController inputFieldsController;
 
     public EditPage(String buttonBarLocation, String inputFieldsLocation) {
         try {
@@ -35,8 +36,14 @@ public class EditPage {
             buttonBar = fxmlLoader.load();
             buttonController = fxmlLoader.getController();
 
+            // Input Fields
+            fxmlLoader = new FXMLLoader(EditPage.class.getResource(inputFieldsLocation));
+            inputFields = fxmlLoader.load();
+            inputFieldsController = fxmlLoader.getController();
+
             // Wiring
             containerController.setButtons(buttonBar);
+            containerController.setInputFields(inputFields);
 
         } catch (IOException e) {
             e.printStackTrace();

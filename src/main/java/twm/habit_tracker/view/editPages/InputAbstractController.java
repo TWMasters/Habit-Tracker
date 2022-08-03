@@ -13,7 +13,14 @@ public abstract class InputAbstractController implements Initializable {
         targetTable.run();
     }
 
+    /**
+     * Use to get Habit Information entered by user
+     * @return Text Field information
+     */
+    public abstract String[] getFields();
+
     public void setTargetTable(Runnable targetTableInput) {
         targetTable = targetTableInput;
     }
+
 }
