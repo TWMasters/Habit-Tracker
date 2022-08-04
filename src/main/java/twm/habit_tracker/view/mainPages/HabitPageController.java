@@ -2,12 +2,16 @@ package twm.habit_tracker.view.mainPages;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.layout.GridPane;
 import twm.habit_tracker.view.Habit;
-import twm.habit_tracker.view.ModelData;
 import twm.habit_tracker.view.editPages.EditPage;
 
 import java.net.URL;
@@ -15,13 +19,24 @@ import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
 public class HabitPageController implements Initializable {
-    private EditPage editPage;
 
-    private static ObservableList<Habit> habitDataSet = FXCollections.observableArrayList();
+    private EditPage editPage;
+    private EventHandler<ActionEvent> editButtonPush;
+    private static ObservableList<Habit> habitDataSet;
     private static Supplier<ObservableList<Habit>> habitDataSupplier;
 
     @FXML
-    private TableView<Habit> Habits_Table;
+    private GridPane Habits_Container;
+
+    {
+        habitDataSet = FXCollections.observableArrayList();
+        editButtonPush = e -> {
+            editPage = new EditPage("EditButtons.fxml", "HabitInputFields.fxml");
+            editPage.display("HABIT");
+            getHabitData();
+            buildHabitsContainer();
+        };
+    }
 
     /**
      * Method for when add button is pressed
@@ -30,22 +45,37 @@ public class HabitPageController implements Initializable {
         editPage = new EditPage("AddButtons.fxml", "HabitInputFields.fxml");
         editPage.display("HABIT");
         getHabitData();
-        buildTable();
+        buildHabitsContainer();
     }
 
     /**
      * Helper method to build table
      */
-    private void buildTable() {
+    private void buildHabitsContainer() {
         // https://stackoverflow.com/questions/26563390/detect-doubleclick-on-row-of-tableview-javafx
-        Habits_Table.setItems(habitDataSet);
-        Habits_Table.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("habit"));
-        Habits_Table.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("habitQuestion"));
-    }
+        int row_count = 0;
+        for (Habit h: habitDataSet ) {
+            Button button  = new Button(h.getHabit());
+            button.setAlignment(Pos.CENTER);
+            button.setPrefSize(144, 60);
+            button.setStyle("-fx-font-size: 18");
+            button.setId("button" + h.getPrimaryKey());
+            button.setOnAction(editButtonPush);
+            GridPane.setConstraints(button, 0, row_count, 1, 1);
 
-    public void editTablePush() {
-        ModelData item = Habits_Table.getSelectionModel().getSelectedItem();
-        if (item != null) System.out.println(item.getPrimaryKey());
+            Label label = new Label(h.getHabitQuestion());
+            label.setStyle("-fx-font-size: 18");
+            GridPane.setConstraints(label, 1, row_count, 2, 1);
+
+            RadioButton radio = new RadioButton();
+            radio.setId("radio" + h.getPrimaryKey());
+            GridPane.setConstraints(radio, 3, row_count, 1,  1);
+
+            Habits_Container.getChildren().addAll(button, label, radio);
+            row_count ++;
+
+        }
+
     }
 
     public void getHabitData() {
@@ -55,7 +85,7 @@ public class HabitPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         getHabitData();
-        buildTable();
+        buildHabitsContainer();
 
     }
 
