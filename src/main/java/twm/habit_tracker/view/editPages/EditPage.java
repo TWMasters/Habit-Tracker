@@ -56,7 +56,8 @@ public class EditPage {
     }
 
     public EditPage(String buttonBarLocation, String inputFieldsLocation, ModelData inputData) {
-        new EditPage(buttonBarLocation, inputFieldsLocation);
+        this(buttonBarLocation, inputFieldsLocation);
+        inputFieldsController.setInputData(inputData);
     }
 
     public void add() {

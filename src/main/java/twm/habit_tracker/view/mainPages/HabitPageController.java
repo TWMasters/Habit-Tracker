@@ -15,13 +15,16 @@ import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.editPages.EditPage;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class HabitPageController implements Initializable {
 
     private EditPage editPage;
     private EventHandler<ActionEvent> editButtonPush;
+    private static Function<String, Habit> getHabitEntryFunction;
     private static ObservableList<Habit> habitDataSet;
     private static Supplier<ObservableList<Habit>> habitDataSupplier;
 
@@ -31,7 +34,10 @@ public class HabitPageController implements Initializable {
     {
         habitDataSet = FXCollections.observableArrayList();
         editButtonPush = e -> {
-            editPage = new EditPage("EditButtons.fxml", "HabitInputFields.fxml");
+            Button buttonClicked = (Button) e.getTarget();
+            String id = buttonClicked.getId().substring(6);
+            Habit h = getHabitEntryFunction.apply(id);
+            editPage = new EditPage("EditButtons.fxml", "HabitInputFields.fxml", h);
             editPage.display("HABIT");
             getHabitData();
             buildHabitsContainer();
@@ -89,8 +95,13 @@ public class HabitPageController implements Initializable {
 
     }
 
-    public static void setHabitDataSupplier(Supplier<ObservableList<Habit>> f) {
-        habitDataSupplier = f;
+    public static void setGetHabitEntryFunction(Function<String, Habit> function) {
+        HabitPageController.getHabitEntryFunction = function;
     }
+
+    public static void setHabitDataSupplier(Supplier<ObservableList<Habit>> supplier) {
+        habitDataSupplier = supplier;
+    }
+
 
 }

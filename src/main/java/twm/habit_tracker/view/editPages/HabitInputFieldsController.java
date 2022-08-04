@@ -14,4 +14,11 @@ public class HabitInputFieldsController extends InputAbstractController {
         String[] output = { nameInput.getText(), questionInput.getText() };
         return output;
     }
+
+    @Override
+    public void setFields() {
+        String[] inputData = this.getInputData().getAllFields();
+        nameInput.setText(inputData[1]);
+        questionInput.setText(inputData[2]);
+    }
 }

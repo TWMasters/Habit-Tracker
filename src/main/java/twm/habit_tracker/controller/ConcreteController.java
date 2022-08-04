@@ -14,6 +14,7 @@ import twm.habit_tracker.view.mainPages.HabitPageController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ConcreteController implements Controller {
@@ -54,6 +55,26 @@ public class ConcreteController implements Controller {
 
     @Override
     public void setHabitPageMethods() throws SQLException {
+        // Retrieve single Habit
+        Function<String, Habit> getHabitEntryFunction = (id) -> {
+            model.changeTargetTable(new HabitTableState());
+            ResultSet rs = model.getEntry(id);
+            try {
+                if (rs.isBeforeFirst()) {
+                    rs.next();
+                    Habit h = new Habit();
+                    h.setPrimaryKey(rs.getString(1));
+                    h.setHabit(rs.getString(2));
+                    h.setHabitQuestion(rs.getString(4));
+                    return h;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        };
+        HabitPageController.setGetHabitEntryFunction(getHabitEntryFunction);
+
         // Retrieve Habit Data as ObservableList
         Supplier<ObservableList<Habit>> habitDataSupplier = () -> {
             model.changeTargetTable(new HabitTableState());
@@ -77,7 +98,6 @@ public class ConcreteController implements Controller {
             }
             return habitData;
         };
-
         HabitPageController.setHabitDataSupplier(habitDataSupplier);
     }
 
