@@ -45,6 +45,12 @@ public class ConcreteController implements Controller {
             model.addEntry(output);
         };
         EditPage.setAddEntryConsumer(addEntryConsumer);
+
+        //DeleteHabit
+        Consumer<String> deleteEntryConsumer = (s) -> {
+            model.deleteEntry(s);
+        };
+        EditPage.setDeleteEntryConsumer(deleteEntryConsumer);
     }
 
 

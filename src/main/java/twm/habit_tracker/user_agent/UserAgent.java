@@ -32,7 +32,6 @@ public class UserAgent extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Send primary stage to view to set-up
         GUI.setUp(primaryStage);
         primaryStage.show();
     }

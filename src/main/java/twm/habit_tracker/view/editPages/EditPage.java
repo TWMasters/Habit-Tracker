@@ -17,6 +17,7 @@ public class EditPage {
     private static final Integer HALF = 2;
 
     private static Consumer<String[]> addEntryConsumer;
+    private static Consumer<String> deleteEntryConsumer;
 
     private Parent container;
     private EditPageContainerController containerController;
@@ -72,7 +73,9 @@ public class EditPage {
     }
 
     public void delete() {
-        System.out.println("Delete entry");
+        String key = inputFieldsController.getInputData().getPrimaryKey();
+        deleteEntryConsumer.accept(key);
+        buttonController.backButtonPush();
     }
 
     public void display (String title) {
@@ -97,6 +100,10 @@ public class EditPage {
 
     public static void setAddEntryConsumer(Consumer<String []> addEntryConsumerInput ) {
         addEntryConsumer = addEntryConsumerInput;
+    }
+
+    public static void setDeleteEntryConsumer(Consumer<String> deleteEntryConsumerInput ) {
+        deleteEntryConsumer = deleteEntryConsumerInput;
     }
 
 }
