@@ -11,7 +11,7 @@ public class HabitInputFieldsController extends InputAbstractController {
 
     @Override
     public String[] getFields() {
-        String[] output = { nameInput.getText(), questionInput.getText() };
+        String[] output = { nameInput.getText(), "true", questionInput.getText(), "null", "null" };
         return output;
     }
 

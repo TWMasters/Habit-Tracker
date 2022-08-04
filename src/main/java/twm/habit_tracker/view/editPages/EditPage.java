@@ -17,6 +17,7 @@ public class EditPage {
     private static final Integer HALF = 2;
 
     private static Consumer<String[]> addEntryConsumer;
+    private static Consumer<String[]> editEntryConsumer;
     private static Consumer<String> deleteEntryConsumer;
 
     private Parent container;

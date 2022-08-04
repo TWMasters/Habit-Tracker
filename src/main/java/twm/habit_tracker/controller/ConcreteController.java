@@ -41,8 +41,7 @@ public class ConcreteController implements Controller {
 
         // AddHabit
         Consumer<String[]> addEntryConsumer = (s) -> {
-            String[] output = {s[0], "true", s[1], "null", "null"};
-            model.addEntry(output);
+            model.addEntry(s);
         };
         EditPage.setAddEntryConsumer(addEntryConsumer);
 
