@@ -28,6 +28,22 @@ public class EditPage {
     private InputAbstractController inputFieldsController;
 
     public EditPage(String buttonBarLocation, String inputFieldsLocation) {
+        buildEditPage(buttonBarLocation, inputFieldsLocation);
+
+    }
+
+    public EditPage(String buttonBarLocation, String inputFieldsLocation, ModelData inputData) {
+        HabitInputFieldsController.setInputData(inputData);
+        buildEditPage(buttonBarLocation, inputFieldsLocation);
+    }
+
+    public void add() {
+        System.out.println("Add Entry!");
+        addEntryConsumer.accept(inputFieldsController.getFields());
+        buttonController.backButtonPush();
+    }
+
+    private void buildEditPage(String buttonBarLocation, String inputFieldsLocation) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(EditPage.class.getResource("EditPageContainer.fxml"));
 
@@ -53,17 +69,6 @@ public class EditPage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public EditPage(String buttonBarLocation, String inputFieldsLocation, ModelData inputData) {
-        this(buttonBarLocation, inputFieldsLocation);
-        inputFieldsController.setInputData(inputData);
-    }
-
-    public void add() {
-        System.out.println("Add Entry!");
-        addEntryConsumer.accept(inputFieldsController.getFields());
-        buttonController.backButtonPush();
     }
 
     public void delete() {

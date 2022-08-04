@@ -37,6 +37,7 @@ public class HabitPageController implements Initializable {
             Button buttonClicked = (Button) e.getTarget();
             String id = buttonClicked.getId().substring(6);
             Habit h = getHabitEntryFunction.apply(id);
+            System.out.println(h.getHabit());
             editPage = new EditPage("EditButtons.fxml", "HabitInputFields.fxml", h);
             editPage.display("HABIT");
             getHabitData();

@@ -33,7 +33,7 @@ public abstract class InputAbstractController implements Initializable {
      */
     public abstract void setFields();
 
-    public void setInputData(ModelData inputData) {
+    public static void setInputData(ModelData inputData) {
         data = inputData;
     }
 
