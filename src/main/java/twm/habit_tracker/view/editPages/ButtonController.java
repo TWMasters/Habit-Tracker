@@ -24,6 +24,10 @@ public class ButtonController {
         context.delete();
     }
 
+    public void saveButtonPush() {
+        context.save();
+    }
+
     public void setContext(EditPage context) {
         this.context = context;
     }

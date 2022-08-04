@@ -8,6 +8,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import twm.habit_tracker.view.ModelData;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -52,7 +53,10 @@ public class EditPage {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public EditPage(String buttonBarLocation, String inputFieldsLocation, ModelData inputData) {
+        new EditPage(buttonBarLocation, inputFieldsLocation);
     }
 
     public void add() {
@@ -79,6 +83,10 @@ public class EditPage {
         popupWindow.setScene(scene);
         popupWindow.showAndWait();
 
+    }
+
+    public void save() {
+        System.out.println("Save entry");
     }
 
     public static void setAddEntryConsumer(Consumer<String []> addEntryConsumerInput ) {
