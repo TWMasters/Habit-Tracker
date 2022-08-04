@@ -39,7 +39,6 @@ public class EditPage {
     }
 
     public void add() {
-        System.out.println("Add Entry!");
         addEntryConsumer.accept(inputFieldsController.getFields());
         buttonController.backButtonPush();
     }

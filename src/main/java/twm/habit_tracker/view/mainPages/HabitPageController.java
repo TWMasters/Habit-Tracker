@@ -37,7 +37,6 @@ public class HabitPageController implements Initializable {
             Button buttonClicked = (Button) e.getTarget();
             String id = buttonClicked.getId().substring(6);
             Habit h = getHabitEntryFunction.apply(id);
-            System.out.println(h.getHabit());
             editPage = new EditPage("EditButtons.fxml", "HabitInputFields.fxml", h);
             editPage.display("HABIT");
             getHabitData();
@@ -60,6 +59,7 @@ public class HabitPageController implements Initializable {
      */
     private void buildHabitsContainer() {
         // https://stackoverflow.com/questions/26563390/detect-doubleclick-on-row-of-tableview-javafx
+        Habits_Container.getChildren().clear();
         int row_count = 0;
         for (Habit h: habitDataSet ) {
             Button button  = new Button(h.getHabit());
