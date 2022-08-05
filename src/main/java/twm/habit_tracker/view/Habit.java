@@ -1,21 +1,17 @@
 package twm.habit_tracker.view;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
-import java.util.HashMap;
+import javafx.beans.property.*;
 
 public class Habit extends ModelData {
 
     private StringProperty habit = new SimpleStringProperty();
     private StringProperty habitQuestion = new SimpleStringProperty();
+    private BooleanProperty habitType = new SimpleBooleanProperty();
+    private StringProperty unit = new SimpleStringProperty();
+    private DoubleProperty target = new SimpleDoubleProperty();
 
     public String getHabit() {
         return habit.get();
-    }
-
-    public StringProperty habitProperty() {
-        return habit;
     }
 
     public void setHabit(String habit) {
@@ -26,8 +22,40 @@ public class Habit extends ModelData {
         return habitQuestion.get();
     }
 
-    public StringProperty habitQuestionProperty() {
-        return habitQuestion;
+    public boolean isHabitType() {
+        return habitType.get();
+    }
+
+    public BooleanProperty habitTypeProperty() {
+        return habitType;
+    }
+
+    public void setHabitType(boolean habitType) {
+        this.habitType.set(habitType);
+    }
+
+    public String getUnit() {
+        return unit.get();
+    }
+
+    public StringProperty unitProperty() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit.set(unit);
+    }
+
+    public double getTarget() {
+        return target.get();
+    }
+
+    public DoubleProperty targetProperty() {
+        return target;
+    }
+
+    public void setTarget(double target) {
+        this.target.set(target);
     }
 
     public void setHabitQuestion(String habitQuestion) {
