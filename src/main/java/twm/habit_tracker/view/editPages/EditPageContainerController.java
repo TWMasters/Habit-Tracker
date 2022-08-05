@@ -1,10 +1,16 @@
 package twm.habit_tracker.view.editPages;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
-public class EditPageContainerController {
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditPageContainerController implements Initializable {
+
     @FXML
     BorderPane editPageBorderFrame;
 
@@ -14,5 +20,11 @@ public class EditPageContainerController {
 
     public void setInputFields(Node inputFields) {
         editPageBorderFrame.setCenter(inputFields);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        editPageBorderFrame.setStyle("-fx-border-color: black");
+
     }
 }

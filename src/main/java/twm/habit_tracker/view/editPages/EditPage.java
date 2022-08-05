@@ -88,7 +88,7 @@ public class EditPage {
 
     public void display (String title) {
         popupWindow = new Stage();
-        popupWindow.initStyle(StageStyle.DECORATED);
+        popupWindow.initStyle(StageStyle.UNDECORATED);
 
         // Set up Stage
         popupWindow.initModality(Modality.APPLICATION_MODAL);
