@@ -11,7 +11,7 @@
 
 <BorderPane fx:id="mainFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="twm.habit_tracker.view.mainPages.MenuPage">
+            fx:controller="twm.habit_tracker.view.mainPages.MenuPageController">
    <left>
       <VBox alignment="TOP_CENTER" spacing="15.0" BorderPane.alignment="CENTER">
          <children>

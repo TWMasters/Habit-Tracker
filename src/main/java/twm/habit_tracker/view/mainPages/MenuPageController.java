@@ -11,7 +11,7 @@ import twm.habit_tracker.view.View;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MenuPage implements Initializable {
+public class MenuPageController implements Initializable {
     private static View context;
 
     @FXML

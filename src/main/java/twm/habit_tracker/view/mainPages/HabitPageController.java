@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.GridPane;
@@ -58,7 +59,6 @@ public class HabitPageController implements Initializable {
      * Helper method to build table
      */
     private void buildHabitsContainer() {
-        // https://stackoverflow.com/questions/26563390/detect-doubleclick-on-row-of-tableview-javafx
         Habits_Container.getChildren().clear();
         int row_count = 0;
         for (Habit h: habitDataSet ) {
@@ -74,11 +74,12 @@ public class HabitPageController implements Initializable {
             label.setStyle("-fx-font-size: 18");
             GridPane.setConstraints(label, 1, row_count, 2, 1);
 
-            RadioButton radio = new RadioButton();
-            radio.setId("radio" + h.getPrimaryKey());
-            GridPane.setConstraints(radio, 3, row_count, 1,  1);
+            CheckBox checkBox = new CheckBox();
+            checkBox.setPrefSize(72,  72);
+            checkBox.setId("checkBox" + h.getPrimaryKey());
+            GridPane.setConstraints(checkBox, 3, row_count, 1,  1);
 
-            Habits_Container.getChildren().addAll(button, label, radio);
+            Habits_Container.getChildren().addAll(button, label, checkBox);
             row_count ++;
 
         }

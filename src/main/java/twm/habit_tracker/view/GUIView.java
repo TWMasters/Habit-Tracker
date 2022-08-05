@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import twm.habit_tracker.view.mainPages.MenuPage;
+import twm.habit_tracker.view.mainPages.MenuPageController;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class GUIView implements View {
         primaryStage.initStyle(StageStyle.DECORATED);
 
         // Set Context!
-        MenuPage.setContext(this);
+        MenuPageController.setContext(this);
 
         // Load Pages!
         try {
