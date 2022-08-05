@@ -13,6 +13,7 @@ import twm.habit_tracker.view.mainPages.HabitPageController;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -50,6 +51,12 @@ public class ConcreteController implements Controller {
             model.deleteEntry(s);
         };
         EditPage.setDeleteEntryConsumer(deleteEntryConsumer);
+
+        //SaveHabit
+        BiConsumer<String[], String> editEntryConsumer = (k, s) -> {
+            model.editEntry(k,s);
+        };
+        EditPage.setEditEntryConsumer(editEntryConsumer);
     }
 
 

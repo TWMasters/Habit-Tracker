@@ -11,13 +11,14 @@ import javafx.stage.StageStyle;
 import twm.habit_tracker.view.ModelData;
 
 import java.io.IOException;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class EditPage {
     private static final Integer HALF = 2;
 
     private static Consumer<String[]> addEntryConsumer;
-    private static Consumer<String[]> editEntryConsumer;
+    private static BiConsumer<String[], String> editEntryConsumer;
     private static Consumer<String> deleteEntryConsumer;
 
     private Parent container;
@@ -95,7 +96,9 @@ public class EditPage {
     }
 
     public void save() {
-        System.out.println("Save entry");
+        String key = inputFieldsController.getInputData().getPrimaryKey();
+        editEntryConsumer.accept(inputFieldsController.getFields(), key);
+        buttonController.backButtonPush();
     }
 
     public static void setAddEntryConsumer(Consumer<String []> addEntryConsumerInput ) {
@@ -104,6 +107,10 @@ public class EditPage {
 
     public static void setDeleteEntryConsumer(Consumer<String> deleteEntryConsumerInput ) {
         deleteEntryConsumer = deleteEntryConsumerInput;
+    }
+
+    public static void setEditEntryConsumer(BiConsumer<String[], String> editEntryConsumerInput) {
+        editEntryConsumer = editEntryConsumerInput;
     }
 
 }
