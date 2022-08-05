@@ -77,7 +77,10 @@ public class ConcreteController implements Controller {
                     Habit h = new Habit();
                     h.setPrimaryKey(rs.getString(1));
                     h.setHabit(rs.getString(2));
+                    h.setHabitType(rs.getBoolean(3));
                     h.setHabitQuestion(rs.getString(4));
+                    h.setUnit(rs.getString(5));
+                    h.setTarget(rs.getDouble(6));
                     return h;
                 }
             } catch (SQLException e) {

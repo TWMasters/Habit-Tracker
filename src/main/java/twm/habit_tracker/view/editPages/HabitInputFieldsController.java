@@ -6,12 +6,15 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
+import java.util.Arrays;
+
 public class HabitInputFieldsController extends InputAbstractController {
     @FXML private TextField nameInput;
     @FXML private TextField questionInput;
 
     @FXML private ToggleGroup Habit_Type;
     @FXML private RadioButton analogType;
+    @FXML private RadioButton binaryType;
 
     @FXML private Label unitLabel;
     @FXML private TextField unitInput;
@@ -57,7 +60,20 @@ public class HabitInputFieldsController extends InputAbstractController {
     public void setFields() {
         String[] inputData = this.getInputData().getAllFields();
         nameInput.setText(inputData[1]);
-        questionInput.setText(inputData[2]);
+        setHabitType(Boolean.parseBoolean(inputData[2]));
+        questionInput.setText(inputData[3]);
+        unitInput.setText(inputData[4]);
+        targetInput.setText(inputData[5]);
+        habitTypeSelected();
+    }
+
+    private void setHabitType(Boolean flag) {
+        if (flag) {
+            binaryType.setSelected(true);
+        }
+        else {
+            analogType.setSelected(true);
+        }
     }
 
     private void toggleVisibility(Boolean flag) {

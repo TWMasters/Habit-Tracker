@@ -64,7 +64,14 @@ public class Habit extends ModelData {
 
     @Override
     public String[] getAllFields() {
-        String[] output = {getPrimaryKey(), getHabit(), getHabitQuestion()};
+        String[] output = {
+                getPrimaryKey(),
+                getHabit(),
+                String.valueOf(isHabitType()),
+                getHabitQuestion(),
+                getUnit(),
+                String.valueOf(getTarget())
+        };
         return output;
     }
 }
