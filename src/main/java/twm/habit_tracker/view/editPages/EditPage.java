@@ -30,6 +30,8 @@ public class EditPage {
     private Node inputFields;
     private InputAbstractController inputFieldsController;
 
+    private Stage popupWindow;
+
     public EditPage(String buttonBarLocation, String inputFieldsLocation) {
         buildEditPage(buttonBarLocation, inputFieldsLocation);
 
@@ -43,6 +45,11 @@ public class EditPage {
     public void add() {
         addEntryConsumer.accept(inputFieldsController.getFields());
         buttonController.backButtonPush();
+    }
+
+    public void back() {
+        InputAbstractController.setInputData(null);
+        popupWindow.close();
     }
 
     private void buildEditPage(String buttonBarLocation, String inputFieldsLocation) {
@@ -80,7 +87,7 @@ public class EditPage {
     }
 
     public void display (String title) {
-        Stage popupWindow = new Stage();
+        popupWindow = new Stage();
         popupWindow.initStyle(StageStyle.DECORATED);
 
         // Set up Stage
