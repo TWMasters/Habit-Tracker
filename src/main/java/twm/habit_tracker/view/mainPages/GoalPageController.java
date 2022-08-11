@@ -28,6 +28,16 @@ public class GoalPageController implements Initializable {
 
     }
 
+    /**
+     * Method for when edit button is pressed
+     */
+    public void addButtonPush() {
+        editPage = new EditPage("AddButtons.fxml", "GoalInputFields.fxml");
+        editPage.display("GOAL");
+        getGoalData();
+        buildGoalContainer();
+    }
+
     private void buildGoalContainer() {
         Goals_Container.getChildren().clear();
         int row_count = 0;
