@@ -63,7 +63,7 @@ public class GoalTableStateTest {
     void testGetRow() {
         try {
             stmt.execute("INSERT INTO Goals" +
-                    " VALUES (" + primaryKey + ",\'TestGoal1\', null, null);");
+                    " VALUES (" + primaryKey + ",\'TestGoal1\', null, null, false);");
             ResultSet rs = testModel.getEntry(String.valueOf(primaryKey));
             if (rs != null) {
                 rs.next();
@@ -100,7 +100,7 @@ public class GoalTableStateTest {
     void testDeleteRow() {
         try {
             stmt.execute("INSERT INTO Goals" +
-                    " VALUES (" + primaryKey + ",\'TestGoal4\', null, null);");
+                    " VALUES (" + primaryKey + ",\'TestGoal4\', null, null, false);");
             testModel.deleteEntry(String.valueOf(primaryKey));
             ResultSet rs = stmt.executeQuery("SELECT * FROM Goals WHERE Goal_ID = " + primaryKey + ";");
             if (rs.isBeforeFirst()) {
@@ -117,7 +117,7 @@ public class GoalTableStateTest {
     @Test
     void testEditEntry() {
         try {
-            stmt.execute("INSERT INTO Goals VALUES(" + primaryKey + ", \'TestGoal3\', null, null)");
+            stmt.execute("INSERT INTO Goals VALUES(" + primaryKey + ", \'TestGoal3\', null, null, false)");
             String[] newValues = {"TestGoal3Edited", "null", "null", "false"};
             testModel.editEntry(newValues, String.valueOf(primaryKey));
 

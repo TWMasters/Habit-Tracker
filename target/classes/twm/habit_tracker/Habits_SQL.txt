@@ -12,7 +12,7 @@ CREATE TABLE Goal (
   Goal_Name VARCHAR(255) NOT NULL,
   Goal_Description VARCHAR(255),
   Deadline Date DATE,
-  Achieved BOOLEAN DEFAULT True NOT NULL
+  Achieved BOOLEAN DEFAULT false NOT NULL
 );
 
 INSERT INTO Habits

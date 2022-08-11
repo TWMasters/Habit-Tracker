@@ -19,7 +19,7 @@ public class ConcreteModel implements Model {
                     "  Target NUMERIC(18,2)\n" +
                     ");";
     private static final String GOAL_TABLE_SQL = "" +
-            "CREATE TABLE Goal (\n" +
+            "CREATE TABLE Goals (\n" +
                     "  Goal_ID INT PRIMARY KEY,\n" +
                     "  Goal_Name VARCHAR(255) NOT NULL,\n" +
                     "  Goal_Description VARCHAR(255),\n" +
