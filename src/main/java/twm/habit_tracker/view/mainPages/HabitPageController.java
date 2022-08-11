@@ -16,7 +16,6 @@ import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.editPages.EditPage;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.function.Supplier;
