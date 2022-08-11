@@ -107,7 +107,6 @@ public class HabitTableState implements TableState {
             System.err.println("SQL Error on Get Table Method");
             e.printStackTrace();
         }
-
         return null;
     }
 
