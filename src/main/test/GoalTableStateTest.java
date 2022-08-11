@@ -123,7 +123,7 @@ public class GoalTableStateTest {
 
             ResultSet rs = stmt.executeQuery("SELECT * FROM Goals WHERE Goal_ID = " + primaryKey + ";");
             rs.next();
-            Assertions.assertEquals("Goal3Edited", rs.getString(2));
+            Assertions.assertEquals("TestGoal3Edited", rs.getString(2));
 
         } catch (SQLException e) {
             e.printStackTrace();
