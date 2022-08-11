@@ -24,7 +24,7 @@ public class ConcreteModel implements Model {
                     "  Goal_Name VARCHAR(255) NOT NULL,\n" +
                     "  Goal_Description VARCHAR(255),\n" +
                     "  Deadline DATE,\n" +
-                    "  Achieved BOOLEAN DEFAULT True NOT NULL\n" +
+                    "  Achieved BOOLEAN DEFAULT false NOT NULL\n" +
                     ");";
     private static final String HABIT_TRACKER_TABLE =
             "CREATE TABLE Habit_Tracker (\n" +
