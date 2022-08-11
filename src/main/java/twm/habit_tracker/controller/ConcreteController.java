@@ -3,12 +3,15 @@ package twm.habit_tracker.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import twm.habit_tracker.model.GoalTableState;
 import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.Model;
+import twm.habit_tracker.view.Goal;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.View;
 import twm.habit_tracker.view.editPages.EditPage;
 import twm.habit_tracker.view.editPages.HabitInputFieldsController;
+import twm.habit_tracker.view.mainPages.GoalPageController;
 import twm.habit_tracker.view.mainPages.HabitPageController;
 
 import java.sql.ResultSet;
@@ -62,6 +65,29 @@ public class ConcreteController implements Controller {
 
     @Override
     public void setGoalPageMethods() throws SQLException {
+        // Retrieve Goal Data as ObservableList
+        Supplier<ObservableList<Goal>> goalDataSupplier = () -> {
+            model.changeTargetTable(new GoalTableState());
+            ResultSet rs = model.getTable();
+            ObservableList<Goal> goalData = FXCollections.observableArrayList();
+            try {
+                if (rs.isBeforeFirst()) {
+                    while (rs.next()) {
+                        Goal g = new Goal();
+                        g.setPrimaryKey(rs.getString(1));
+                        g.setGoal(rs.getString(2));
+                        goalData.add(g);
+                    }
+                }
+                else
+                    System.out.println("Goal Result Set is empty!");
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return goalData;
+        };
+        GoalPageController.setGoalDataSupplier(goalDataSupplier);
 
     }
 
@@ -106,7 +132,7 @@ public class ConcreteController implements Controller {
                     }
                 }
                 else
-                    System.out.println("Result Set is empty!");
+                    System.out.println("Habit Result Set is empty!");
             }
             catch (SQLException e) {
                 e.printStackTrace();

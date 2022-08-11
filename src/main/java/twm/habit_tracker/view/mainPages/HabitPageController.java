@@ -10,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.layout.GridPane;
 import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.editPages.EditPage;
@@ -80,7 +79,6 @@ public class HabitPageController implements Initializable {
 
             Habits_Container.getChildren().addAll(button, label, checkBox);
             row_count ++;
-
         }
 
     }
