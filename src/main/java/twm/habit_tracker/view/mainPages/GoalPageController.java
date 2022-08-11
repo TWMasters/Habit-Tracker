@@ -34,7 +34,7 @@ public class GoalPageController implements Initializable {
         for (Goal g: goalDataSet) {
             Button button = new Button(g.getGoal());
             button.setAlignment(Pos.CENTER);
-            button.setPrefSize(144, 60);
+            button.setPrefSize(288, 60);
             button.setStyle("-fx-font-size: 18");
             button.setId("goal_button" + g.getPrimaryKey());
             // button.setOnAction();
