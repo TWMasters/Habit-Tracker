@@ -18,6 +18,14 @@ public class ConcreteModel implements Model {
                     "  Unit VARCHAR(255),\n" +
                     "  Target NUMERIC(18,2)\n" +
                     ");";
+    private static final String GOAL_TABLE_SQL = "" +
+            "CREATE TABLE Goal (\n" +
+                    "  Goal_ID INT PRIMARY KEY,\n" +
+                    "  Goal_Name VARCHAR(255) NOT NULL,\n" +
+                    "  Goal_Description VARCHAR(255),\n" +
+                    "  Deadline DATE,\n" +
+                    "  Achieved BOOLEAN DEFAULT True NOT NULL\n" +
+                    ");";
     private static final String HABIT_TRACKER_TABLE =
             "CREATE TABLE Habit_Tracker (\n" +
                     "Date DATE PRIMARY KEY\n" +
@@ -65,11 +73,14 @@ public class ConcreteModel implements Model {
             Statement stmt = connection.createStatement();
 
             stmt.execute(HABIT_TABLE_SQL);
+            stmt.execute(GOAL_TABLE_SQL);
+
             stmt.execute(HABIT_TRACKER_TABLE);
 
             changeTargetTable(new HabitTrackerTableState());
             String[] date = {LocalDate.now().toString()};
             targetTable.addEntry(date);
+
         }
         catch (SQLException e) {
             System.err.println("SQL Exception on Creating Tables");

@@ -7,6 +7,14 @@ CREATE TABLE Habits (
   Target NUMERIC(18,2)
 );
 
+CREATE TABLE Goal (
+  Goal_ID INT PRIMARY KEY,
+  Goal_Name VARCHAR(255) NOT NULL,
+  Goal_Description VARCHAR(255),
+  Deadline Date DATE,
+  Achieved BOOLEAN DEFAULT True NOT NULL
+);
+
 INSERT INTO Habits
 (Habit_ID, Habit_Name, Binary_Habit, Habit_Question)
 VALUES (1, 'Piano', true, 'Did you practise the Piano?');
