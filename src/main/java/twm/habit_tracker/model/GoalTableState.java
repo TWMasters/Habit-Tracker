@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class GoalTableState implements TableState {
-
+    private final int INCREMENT = 1;
+    private final String DELETE_ROW = "DELETE FROM Goals WHERE Goal_ID = %s;";
     private final String GET_ROW = "SELECT * FROM Goals where Goal_ID = %s;";
     private final String GET_TABLE = "SELECT * FROM Goals;";
 
@@ -19,6 +20,14 @@ public class GoalTableState implements TableState {
 
     @Override
     public void deleteEntry(String lookupValue) {
+        try {
+            Statement stmt = context.createStatement();
+            stmt.execute(String.format(DELETE_ROW, lookupValue));
+
+        } catch (SQLException e) {
+            System.err.println("SQL Error on Delete Method");
+            e.printStackTrace();
+        }
 
     }
 
