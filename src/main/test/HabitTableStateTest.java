@@ -22,8 +22,12 @@ public class HabitTableStateTest {
             connection = DriverManager.getConnection(H2_URL);
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT MAX(Habit_ID) FROM Habits;");
-            rs.next();
-            primaryKey = rs.getInt(1) + 1;
+
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                primaryKey = rs.getInt(1) + 1;
+            }
+            else primaryKey = 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
