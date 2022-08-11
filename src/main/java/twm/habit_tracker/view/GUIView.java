@@ -22,7 +22,7 @@ public class GUIView implements View {
 
     @Override
     public void setUp(Stage primaryStage) {
-        primaryStage.setMaximized(true);
+        // primaryStage.setMaximized(true);
         primaryStage.initStyle(StageStyle.DECORATED);
 
         // Set Context!
@@ -41,7 +41,7 @@ public class GUIView implements View {
         }
 
 
-        Scene scene = new Scene(menu_page); // Width, then Height
+        Scene scene = new Scene(menu_page, 1024, 768); // Width, then Height
         primaryStage.setScene(scene);
 
         primaryStage.show();
