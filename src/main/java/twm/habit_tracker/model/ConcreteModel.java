@@ -104,6 +104,11 @@ public class ConcreteModel implements Model {
     }
 
     @Override
+    public String getTableState() {
+        return targetTable.getTableState();
+    }
+
+    @Override
     public ResultSet getEntry(String lookupValue) {
         return targetTable.getEntry(lookupValue);
     }

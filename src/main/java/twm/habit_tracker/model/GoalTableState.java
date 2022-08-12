@@ -105,6 +105,11 @@ public class GoalTableState implements TableState {
     }
 
     @Override
+    public String getTableState() {
+        return "Goal Table State";
+    }
+
+    @Override
     public void setContext(Connection context) {
         this.context = context;
     }

@@ -39,6 +39,12 @@ public interface TableState {
     ResultSet getTable();
 
     /**
+     * Method to get name of current TableState
+     * @return
+     */
+    String getTableState();
+
+    /**
      * Set context of new state
      * @param context Model connection to DB
      */

@@ -49,4 +49,10 @@ public interface Model {
      */
     ResultSet getTable();
 
+    /**
+     * Get name of current Table State
+     * @return name of Table State
+     */
+    String getTableState();
+
 }

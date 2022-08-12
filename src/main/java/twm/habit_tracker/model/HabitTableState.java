@@ -111,6 +111,11 @@ public class HabitTableState implements TableState {
     }
 
     @Override
+    public String getTableState() {
+        return "Habit Table State";
+    }
+
+    @Override
     public void setContext(Connection context) {
         this.context = context;
     }

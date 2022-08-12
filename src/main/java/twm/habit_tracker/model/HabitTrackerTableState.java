@@ -84,6 +84,11 @@ public class HabitTrackerTableState implements TableState{
     }
 
     @Override
+    public String getTableState() {
+        return "Habit Tracker State";
+    }
+
+    @Override
     public void setContext(Connection context) {
         this.context = context;
 
