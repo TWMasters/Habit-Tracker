@@ -23,7 +23,7 @@ public class GoalInputFieldsController extends InputAbstractController{
     public void setFields() {
         String[] inputData = this.getInputData().getAllFields();
         goalInput.setText(inputData[1]);
-        goalInput.setText(inputData[2]);
-        goalInput.setText(inputData[3]);
+        descriptionInput.setText(inputData[2]);
+        deadlineInput.setText(inputData[3]);
     }
 }

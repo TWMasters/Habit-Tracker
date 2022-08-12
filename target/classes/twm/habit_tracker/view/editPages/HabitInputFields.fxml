@@ -43,7 +43,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <RadioButton fx:id="binaryType" mnemonicParsing="false" selected="true" text="Yes or No" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#habitTypeSelected">
+      <RadioButton fx:id="binaryType" mnemonicParsing="false" selected="true" text="Yes or No" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#isHabitTypeSelected">
          <font>
             <Font size="18.0" />
          </font>
@@ -51,7 +51,7 @@
             <ToggleGroup fx:id="Habit_Type" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="analogType" mnemonicParsing="false" text="Measurable" toggleGroup="$Habit_Type" GridPane.columnIndex="1" GridPane.rowIndex="3" onAction="#habitTypeSelected">
+      <RadioButton fx:id="analogType" mnemonicParsing="false" text="Measurable" toggleGroup="$Habit_Type" GridPane.columnIndex="1" GridPane.rowIndex="3" onAction="#isHabitTypeSelected">
          <font>
             <Font size="18.0" />
          </font>

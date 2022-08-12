@@ -61,11 +61,15 @@ public class Goal extends ModelData {
 
     @Override
     public String[] getAllFields() {
+        String date = "";
+        if (getDate() != null)
+            date = String.valueOf(getDate());
+
         String [] output = {
                 getPrimaryKey(),
                 getGoal(),
                 getGoalDescription(),
-                String.valueOf(getDate()),
+                date,
                 String.valueOf(isAchieved())
         };
         return output;

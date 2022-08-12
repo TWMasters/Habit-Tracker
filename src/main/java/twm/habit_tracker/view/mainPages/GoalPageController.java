@@ -10,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import twm.habit_tracker.view.Goal;
-import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.editPages.EditPage;
 
 import java.net.URL;
@@ -36,7 +35,7 @@ public class GoalPageController implements Initializable {
             String id = buttonClicked.getId().substring(6);
             Goal g = getGoalEntryFunction.apply(id);
             editPage = new EditPage("EditButtons.fxml", "GoalInputFields.fxml", g);
-            editPage.display("HABIT");
+            editPage.display("GOAL");
             getGoalData();
             buildGoalContainer();
         };
@@ -61,7 +60,7 @@ public class GoalPageController implements Initializable {
             button.setAlignment(Pos.CENTER);
             button.setPrefSize(288, 60);
             button.setStyle("-fx-font-size: 18");
-            button.setId("goal_button" + g.getPrimaryKey());
+            button.setId("button" + g.getPrimaryKey());
             button.setOnAction(editButtonPush);
             GridPane.setConstraints(button, 0, row_count, 1, 1);
 
