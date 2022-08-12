@@ -41,6 +41,7 @@ public class ConcreteController implements Controller {
     public void setEditPageMethods() throws SQLException {
         // AddHabit
         Consumer<String[]> addEntryConsumer = (s) -> {
+            System.out.println(model.getTableState());
             model.addEntry(s);
         };
         EditPage.setAddEntryConsumer(addEntryConsumer);
