@@ -108,11 +108,9 @@ public class EditPage {
 
         // Set up Stage
         popupWindow.initModality(Modality.APPLICATION_MODAL);
-        popupWindow.setMinHeight(Screen.getPrimary().getBounds().getHeight() / HALF);
-        popupWindow.setMinWidth(Screen.getPrimary().getBounds().getWidth() / HALF);
         popupWindow.setTitle(title);
 
-        Scene scene = new Scene(container); // Width, then Height
+        Scene scene = new Scene(container, 800, 600); // Width, then Height
         popupWindow.setScene(scene);
         popupWindow.showAndWait();
 
