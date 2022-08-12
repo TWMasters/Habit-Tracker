@@ -21,6 +21,9 @@ public class GoalInputFieldsController extends InputAbstractController{
 
     @Override
     public void setFields() {
-
+        String[] inputData = this.getInputData().getAllFields();
+        goalInput.setText(inputData[1]);
+        goalInput.setText(inputData[2]);
+        goalInput.setText(inputData[3]);
     }
 }

@@ -39,7 +39,7 @@ public class HabitInputFieldsController extends InputAbstractController {
             return "true";
     }
 
-    public void habitTypeSelected() {
+    public void isHabitTypeSelected() {
         if (Habit_Type.getSelectedToggle().equals(analogType))
             toggleVisibility(true);
         else
@@ -54,7 +54,7 @@ public class HabitInputFieldsController extends InputAbstractController {
         questionInput.setText(inputData[3]);
         unitInput.setText(inputData[4]);
         targetInput.setText(inputData[5]);
-        habitTypeSelected();
+        isHabitTypeSelected();
     }
 
     private void setHabitType(Boolean flag) {

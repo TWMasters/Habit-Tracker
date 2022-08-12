@@ -62,6 +62,28 @@ public class ConcreteController implements Controller {
 
     @Override
     public void setGoalPageMethods() throws SQLException {
+        // Retrieve single Goal
+        Function<String, Goal> getGoalEntryFunction = (id) -> {
+            model.changeTargetTable(new GoalTableState());
+            ResultSet rs = model.getEntry(id);
+            try {
+                if (rs.isBeforeFirst()) {
+                    rs.next();
+                    Goal g = new Goal();
+                    g.setPrimaryKey(rs.getString(1));
+                    g.setGoal(rs.getString(2));
+                    g.setGoalDescription(rs.getString(3));
+                    g.setDate(rs.getDate(4));
+                    g.setAchieved(rs.getBoolean(5));
+                    return g;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        };
+        GoalPageController.setGetGoalEntryFunction(getGoalEntryFunction);
+
         // Retrieve Goal Data as ObservableList
         Supplier<ObservableList<Goal>> goalDataSupplier = () -> {
             model.changeTargetTable(new GoalTableState());
