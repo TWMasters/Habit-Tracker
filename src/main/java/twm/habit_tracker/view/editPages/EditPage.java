@@ -32,11 +32,22 @@ public class EditPage {
 
     private Stage popupWindow;
 
+    /**
+     * Constructor for Adding data to Model
+     * @param buttonBarLocation
+     * @param inputFieldsLocation
+     */
     public EditPage(String buttonBarLocation, String inputFieldsLocation) {
         buildEditPage(buttonBarLocation, inputFieldsLocation);
 
     }
 
+    /**
+     * Constructor when Editing existing data in Model
+     * @param buttonBarLocation
+     * @param inputFieldsLocation
+     * @param inputData
+     */
     public EditPage(String buttonBarLocation, String inputFieldsLocation, ModelData inputData) {
         HabitInputFieldsController.setInputData(inputData);
         buildEditPage(buttonBarLocation, inputFieldsLocation);
@@ -52,6 +63,11 @@ public class EditPage {
         popupWindow.close();
     }
 
+    /**
+     * Helper method to build Edit Page
+     * @param buttonBarLocation
+     * @param inputFieldsLocation
+     */
     private void buildEditPage(String buttonBarLocation, String inputFieldsLocation) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(EditPage.class.getResource("EditPageContainer.fxml"));

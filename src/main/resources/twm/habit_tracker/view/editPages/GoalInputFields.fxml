@@ -33,7 +33,7 @@
     </Label>
     <TextField fx:id="goalInput" GridPane.columnIndex="1" GridPane.columnSpan="2" />
     <TextField fx:id="descriptionInput" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <Label text="Goal Deadline" GridPane.rowIndex="2">
+      <Label text="Goal Deadline (Format YYYY-MM-DD)" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font>

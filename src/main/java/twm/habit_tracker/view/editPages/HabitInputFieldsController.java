@@ -6,8 +6,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
-import java.util.Arrays;
-
 public class HabitInputFieldsController extends InputAbstractController {
     @FXML private TextField nameInput;
     @FXML private TextField questionInput;
@@ -39,14 +37,6 @@ public class HabitInputFieldsController extends InputAbstractController {
             return "false";
         else
             return "true";
-    }
-
-    private String getNullableValue(TextField inputField) {
-        String output = inputField.getText();
-        if (output.equals(""))
-            return "null";
-        else
-            return output;
     }
 
     public void habitTypeSelected() {

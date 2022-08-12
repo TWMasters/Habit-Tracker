@@ -23,6 +23,10 @@ INSERT INTO Habits
 (Habit_ID, Habit_Name, Binary_Habit, Habit_Question)
 VALUES (2, 'Walk', true, 'Did you go for a walk?');
 
+INSERT INTO Goals
+(Goal_ID, Goal_Name, Deadline)
+VALUES (99, 'Complete Project', '2022-09-19' );
+
 Select * FROM Habits;
 
 Select * FROM Habit_Tracker;
