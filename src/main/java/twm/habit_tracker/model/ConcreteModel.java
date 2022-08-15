@@ -77,9 +77,17 @@ public class ConcreteModel implements Model {
 
             stmt.execute(HABIT_TRACKER_TABLE);
 
+            // TODO: 15/08/2022 Build date table -> Move to a different method?
             changeTargetTable(new HabitTrackerTableState());
-            String[] date = {LocalDate.now().toString()};
-            targetTable.addEntry(date);
+            LocalDate dateToday = LocalDate.now();
+            LocalDate startOfMo = dateToday.withDayOfMonth(1);
+            LocalDate endOfMo = dateToday.withDayOfMonth(1).withMonth(dateToday.getMonthValue() + 2);
+
+            startOfMo.datesUntil(endOfMo)
+                    .forEach(d -> {
+                        String[] input = {d.toString()};
+                        targetTable.addEntry(input);
+                    });
 
         }
         catch (SQLException e) {
