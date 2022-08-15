@@ -29,6 +29,8 @@ public class ConcreteModel implements Model {
     private static final String HABIT_TRACKER_TABLE =
             "CREATE TABLE Habit_Tracker (\n" +
                     "Date DATE PRIMARY KEY\n" +
+                    "Target INT DEFAULT 0 NOT NULL\n" +
+                    "Completed INT DEFAULT 0 NOT NULL\n" +
                     ");";
 
     private Connection connection = null;
