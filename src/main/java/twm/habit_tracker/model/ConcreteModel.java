@@ -81,7 +81,7 @@ public class ConcreteModel implements Model {
             changeTargetTable(new HabitTrackerTableState());
             LocalDate dateToday = LocalDate.now();
             LocalDate startOfMo = dateToday.withDayOfMonth(1);
-            LocalDate endOfMo = dateToday.withDayOfMonth(1).withMonth(dateToday.getMonthValue() + 2);
+            LocalDate endOfMo = dateToday.withDayOfMonth(1).plusMonths(2);
 
             startOfMo.datesUntil(endOfMo)
                     .forEach(d -> {
@@ -136,10 +136,24 @@ public class ConcreteModel implements Model {
         targetTable.editEntry(values, lookupValue);
     }
 
-    // TODO: 20/07/2022 Come back to this!
     /**
      * Helper method to update tables on booting up application
      */
     private void updateTables() {
+        changeTargetTable(new HabitTrackerTableState());
+        LocalDate checkDate = LocalDate.now().withDayOfMonth(1).plusMonths(1);
+        ResultSet rs = getEntry(checkDate.toString());
+        try {
+            if (rs.isBeforeFirst())
+                return;
+            else
+                checkDate.datesUntil(checkDate.plusMonths(1))
+                        .forEach(d -> {
+                            String[] input = {d.toString()};
+                            targetTable.addEntry(input);
+                        });
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
