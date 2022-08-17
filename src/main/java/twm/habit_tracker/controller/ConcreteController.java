@@ -44,14 +44,20 @@ public class ConcreteController implements Controller {
     @Override
     public void setEditPageMethods() throws SQLException {
         // Set Target Table
-        Runnable r = () -> model.changeTargetTable(new GoalTableState());
-        GoalInputFieldsController.setTargetTable(r);
-        r = () -> model.changeTargetTable(new HabitTableState());
-        HabitInputFieldsController.setTargetTable(r);
+        Runnable goalRunnable = () -> {
+            model.changeTargetTable(new GoalTableState());
+            System.out.println(model.getTableState());
+        };
+        GoalInputFieldsController.setTargetGoalTable(goalRunnable);
+
+        Runnable habitRunnable = () -> {
+            model.changeTargetTable(new HabitTableState());
+            System.out.println(model.getTableState());
+        };
+        HabitInputFieldsController.setTargetHabitTable(habitRunnable);
 
         // AddHabit
         Consumer<String[]> addEntryConsumer = (s) -> {
-            System.out.println(model.getTableState());
             model.addEntry(s);
         };
         EditPage.setAddEntryConsumer(addEntryConsumer);

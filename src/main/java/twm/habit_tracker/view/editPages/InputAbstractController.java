@@ -10,11 +10,9 @@ import java.util.ResourceBundle;
 public abstract class InputAbstractController implements Initializable {
     private static ModelData data;
 
-    public static Runnable targetTable;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        targetTable.run();
+        setTargetTable();
         if (data != null)
             setFields();
     }
@@ -52,8 +50,6 @@ public abstract class InputAbstractController implements Initializable {
         data = inputData;
     }
 
-    public static void setTargetTable(Runnable runnable) {
-        targetTable = runnable;
-    }
+    public abstract void setTargetTable();
 
 }

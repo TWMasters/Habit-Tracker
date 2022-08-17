@@ -302,3 +302,15 @@ Caused by: java.lang.NumberFormatException: For input string: "Did you practise 
 	at org.h2.util.DateTimeUtils.parseDateValue(DateTimeUtils.java:190)
 	at org.h2.value.ValueDate.parse(ValueDate.java:51)
 	... 138 more
+2022-08-17 19:18:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "Update Habit_Tracker Set Completed = ''[*]1=0"; SQL statement:
+Update Habit_Tracker Set Completed = ''1=0 [42000-214]
+2022-08-17 19:18:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "2=0[*]';"; SQL statement:
+2=0'; [42000-214]
+2022-08-17 19:19:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "Update Habit_Tracker SET Completed = ''[*]1=0"; SQL statement:
+Update Habit_Tracker SET Completed = ''1=0 [42000-214]
+2022-08-17 19:19:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "2=0[*]';"; SQL statement:
+2=0'; [42000-214]

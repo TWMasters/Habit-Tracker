@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
 public class HabitInputFieldsController extends InputAbstractController {
+    private static Runnable targetHabitTable;
+
     @FXML private TextField nameInput;
     @FXML private TextField questionInput;
 
@@ -64,6 +66,15 @@ public class HabitInputFieldsController extends InputAbstractController {
         else {
             analogType.setSelected(true);
         }
+    }
+
+    @Override
+    public void setTargetTable() {
+        targetHabitTable.run();
+    }
+
+    public static void setTargetHabitTable(Runnable r) {
+        targetHabitTable = r;
     }
 
     private void toggleVisibility(Boolean flag) {
