@@ -115,7 +115,7 @@ public class ConcreteController implements Controller {
 
     @Override
     public void setHabitPageMethods() throws SQLException {
-        // Retrieve single Habit
+        // Retrieve single Habit Entry
         Function<String, Habit> getHabitEntryFunction = (id) -> {
             model.changeTargetTable(new HabitTableState());
             ResultSet rs = model.getEntry(id);
@@ -138,7 +138,7 @@ public class ConcreteController implements Controller {
         };
         HabitPageController.setGetHabitEntryFunction(getHabitEntryFunction);
 
-        // Retrieve HabitTrackerEntry
+        // Retrieve single HabitTracker Entry
         Function<LocalDate, HabitTracker> getHabitTrackerEntryFunction = (date) -> {
             model.changeTargetTable(new HabitTrackerTableState());
             ResultSet rs = model.getEntry(date.toString());
@@ -182,6 +182,13 @@ public class ConcreteController implements Controller {
             return habitData;
         };
         HabitPageController.setHabitDataSupplier(habitDataSupplier);
+
+        //Update HabitTracker Completed
+        BiConsumer<LocalDate, String[]> updateHabitTrackerCompleted = (date,values) -> {
+            model.changeTargetTable(new HabitTrackerTableState());
+            model.editEntry(values, date.toString());
+        };
+        HabitPageController.setUpdateHabitTrackerCompletedAttributeBiConsumer(updateHabitTrackerCompleted);
     }
 
 }

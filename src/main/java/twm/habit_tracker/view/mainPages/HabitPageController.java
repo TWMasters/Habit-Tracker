@@ -1,5 +1,6 @@
 package twm.habit_tracker.view.mainPages;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,9 +33,10 @@ public class HabitPageController implements Initializable {
     private EditPage editPage;
     private EventHandler<ActionEvent> editButtonPush;
 
-    private static BiConsumer<LocalDate, String> updateHabitTrackerCompletedAttributeBiConsumer;
+    private static BiConsumer<LocalDate, String[]> updateHabitTrackerCompletedAttributeBiConsumer;
     private static Function<String, Habit> getHabitEntryFunction;
     private static Function<LocalDate, HabitTracker> getHabitTrackerEntryFunction;
+    private static int habitCount;
     private static ObservableList<Habit> habitDataSet;
     private static Supplier<ObservableList<Habit>> habitDataSupplier;
 
@@ -76,7 +78,9 @@ public class HabitPageController implements Initializable {
         // Build Container
         Habits_Container.getChildren().clear();
         int row_count = 0;
+        habitCount = 0;
         for (Habit h: habitDataSet ) {
+            habitCount += 1;
             Button button  = new Button(h.getHabit());
             button.setAlignment(Pos.CENTER);
             button.setPrefSize(144, 60);
@@ -92,6 +96,17 @@ public class HabitPageController implements Initializable {
             CheckBox checkBox = new CheckBox();
             checkBox.setPrefSize(72,  72);
             checkBox.setId("checkBox" + h.getPrimaryKey());
+            if (habitsCompletedMap.get(h.getPrimaryKey()).equals("1")) {
+                checkBox.setSelected(true);
+                checkBox.setDisable(true);
+            }
+            checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+                String habitID = checkBox.getId().substring(8);
+                habitsCompletedMap.put(habitID, "1");
+                String[] input = {String.valueOf(habitCount), convertToString(habitsCompletedMap)};
+                updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
+                checkBox.setDisable(true);
+            });
             GridPane.setConstraints(checkBox, 3, row_count, 1,  1);
 
             Habits_Container.getChildren().addAll(button, label, checkBox);
@@ -106,13 +121,13 @@ public class HabitPageController implements Initializable {
     private void buildHabitTracker() {
         LocalDate today = LocalDate.now();
         HabitTracker ht = getHabitTrackerEntryFunction.apply(today);
-        if (ht.getCompleted() == null) {
+        if (ht.getCompleted() == null || ht.getCompleted().equals("")) {
             String output = "";
             for (Habit h : habitDataSet) {
                 String entry = String.format("%s=0;");
                 output += entry;
             }
-            updateHabitTrackerCompletedAttributeBiConsumer.accept(today, output);
+            updateHabitTrackerCompletedAttributeBiConsumer.accept(today, new String[] {String.valueOf(habitCount),output});
         };
     }
 
@@ -131,6 +146,13 @@ public class HabitPageController implements Initializable {
                         a -> a[1]
                 ));
         return result;
+    }
+
+    private String convertToString(Map<String,String> map) {
+        String output = map.entrySet().stream()
+                .map(e -> new String(e.getKey() + "=" + e.getValue() + ";"))
+                .reduce("", (substring, string) -> string + substring);
+        return output;
     }
 
     public void getHabitData() {
@@ -156,7 +178,7 @@ public class HabitPageController implements Initializable {
         habitDataSupplier = supplier;
     }
 
-    public static void setUpdateHabitTrackerCompletedAttributeBiConsumer(BiConsumer<LocalDate, String> biConsumer) {
+    public static void setUpdateHabitTrackerCompletedAttributeBiConsumer(BiConsumer<LocalDate, String[]> biConsumer) {
         updateHabitTrackerCompletedAttributeBiConsumer = biConsumer;
     }
 
