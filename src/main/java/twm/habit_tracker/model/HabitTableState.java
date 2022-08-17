@@ -31,7 +31,7 @@ public class HabitTableState implements TableState {
             values[3] = editUnitIfNotNull(values[3]);
             stmt.execute(String.format(ADD_ROW, newKey, values[0], values[1], values[2], values[3], values[4]));
             // Update Habit Tracker Table
-            HabitTrackerHelper.addColumn(values[0], stmt);
+            // HabitTrackerHelper.addColumn(values[0], stmt);
 
         } catch (SQLException e) {
             System.err.println("SQL Error on Add Method");
@@ -43,13 +43,16 @@ public class HabitTableState implements TableState {
     public void deleteEntry(String lookupValue) {
         try {
             // Drop Column from Habit Tracker
+            /*
             ResultSet rs = getEntry(lookupValue);
             rs.next();
             String habitName = rs.getString(2);
-            Statement stmt = context.createStatement();
             HabitTrackerHelper.deleteColumn(habitName, stmt);
 
+             */
+
             // Delete Row
+            Statement stmt = context.createStatement();
             stmt.execute(String.format(DELETE_ROW, lookupValue));
 
         } catch (SQLException e) {

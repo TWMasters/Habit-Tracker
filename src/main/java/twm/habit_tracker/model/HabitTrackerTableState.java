@@ -7,7 +7,8 @@ public class HabitTrackerTableState implements TableState{
     private final String DELETE_ROW = "DELETE FROM Habit_Tracker WHERE Date = \'%s\';";
     // TODO: 20/07/2022 Come back to Edit_Row!
     private final String EDIT_ROW = "UPDATE Habit_Tracker " +
-            "SET %s " +
+            "SET Target =  %s" +
+            "SET Completed =  \'%s\'" +
             "WHERE Date = \'%s\';";
     private final String GET_ROW = "SELECT * FROM Habit_Tracker WHERE Date = \'%s\';";
     private final String GET_TABLE = "SELECT * FROM Habit_Tracker;";
@@ -38,22 +39,13 @@ public class HabitTrackerTableState implements TableState{
         }
     }
 
-    // TODO: 20/07/2022 Update so date ISN'T updated as primary key!
-    // TODO: 20/07/2022 Could also update to make it less crude, maybe receive numbers of columns to be updated?
     @Override
     public void editEntry(String[] values, String lookupValue) {
-        // Set up String Builder
-        StringBuilder sb = new StringBuilder();
         try {
-            // Get Column Names
-            values[0] = "\'" + values[0] + "\'";
-            ResultSetMetaData rsMeta = getTable().getMetaData();
-            for (int i = 0; i < rsMeta.getColumnCount(); i++) {
-                sb.append(String.format("%s = %s,", rsMeta.getColumnName(i+1), values[i]));
-            }
-            sb.deleteCharAt(sb.length() - 1);
-            stmt.execute(String.format(EDIT_ROW, sb.toString(), lookupValue));
+            Statement stmt = context.createStatement();
+            stmt.execute(String.format(EDIT_ROW, values[0], values[1], lookupValue));
         } catch (SQLException e) {
+            System.err.println("SQL Error on Edit Method");
             e.printStackTrace();
         }
 
