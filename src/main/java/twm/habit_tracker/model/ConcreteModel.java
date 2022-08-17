@@ -30,7 +30,7 @@ public class ConcreteModel implements Model {
             "CREATE TABLE Habit_Tracker (\n" +
                     "Date DATE PRIMARY KEY,\n" +
                     "Target INT DEFAULT 0 NOT NULL,\n" +
-                    "Completed VARCHAR(255) DEFAULT 'empty' NOT NULL\n" +
+                    "Completed VARCHAR(255)\n" +
                     ");";
 
     private Connection connection = null;

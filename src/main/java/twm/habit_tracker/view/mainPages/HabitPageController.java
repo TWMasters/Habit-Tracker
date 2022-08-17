@@ -20,14 +20,19 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class HabitPageController implements Initializable {
 
+    private static final String EMPTY_TRACKER = "empty";
+
     private EditPage editPage;
     private EventHandler<ActionEvent> editButtonPush;
+
+    private static BiConsumer<LocalDate, String> updateHabitTrackerCompletedAttributeBiConsumer;
     private static Function<String, Habit> getHabitEntryFunction;
     private static Function<LocalDate, HabitTracker> getHabitTrackerEntryFunction;
     private static ObservableList<Habit> habitDataSet;
@@ -63,6 +68,12 @@ public class HabitPageController implements Initializable {
      * Helper method to build table
      */
     private void buildHabitsContainer() {
+
+        buildHabitTracker();
+        HabitTracker ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
+        Map<String,String> habitsCompletedMap = convertToMap(ht.getCompleted());
+
+        // Build Container
         Habits_Container.getChildren().clear();
         int row_count = 0;
         for (Habit h: habitDataSet ) {
@@ -90,12 +101,30 @@ public class HabitPageController implements Initializable {
     }
 
     /**
+     * Helper method to build habit tracker
+     */
+    private void buildHabitTracker() {
+        LocalDate today = LocalDate.now();
+        HabitTracker ht = getHabitTrackerEntryFunction.apply(today);
+        if (ht.getCompleted() == null) {
+            String output = "";
+            for (Habit h : habitDataSet) {
+                String entry = String.format("%s=0;");
+                output += entry;
+            }
+            updateHabitTrackerCompletedAttributeBiConsumer.accept(today, output);
+        };
+    }
+
+    /**
      * Helper method to convert String into Map
      * @param input Completed Attribute from Habit_Tracker
      * @return Mapping of whether habits have been completed for the day
      */
     private Map<String,String> convertToMap(String input) {
-        Map<String,String> result = Arrays.stream(input.split(","))
+        if (input.equals(""))
+                return null;
+        Map<String,String> result = Arrays.stream(input.split(";"))
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(
                         a -> a[0],
@@ -125,6 +154,10 @@ public class HabitPageController implements Initializable {
 
     public static void setHabitDataSupplier(Supplier<ObservableList<Habit>> supplier) {
         habitDataSupplier = supplier;
+    }
+
+    public static void setUpdateHabitTrackerCompletedAttributeBiConsumer(BiConsumer<LocalDate, String> biConsumer) {
+        updateHabitTrackerCompletedAttributeBiConsumer = biConsumer;
     }
 
 
