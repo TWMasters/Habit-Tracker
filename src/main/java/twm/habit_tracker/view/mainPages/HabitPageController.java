@@ -28,8 +28,6 @@ import java.util.stream.Collectors;
 
 public class HabitPageController implements Initializable {
 
-    private static final String EMPTY_TRACKER = "empty";
-
     private EditPage editPage;
     private EventHandler<ActionEvent> editButtonPush;
 
@@ -70,7 +68,8 @@ public class HabitPageController implements Initializable {
      * Helper method to build table
      */
     private void buildHabitsContainer() {
-
+        habitCount = habitDataSet.size();
+        System.out.println(habitCount);
         buildHabitTracker();
         HabitTracker ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
         Map<String,String> habitsCompletedMap = convertToMap(ht.getCompleted());
@@ -78,9 +77,7 @@ public class HabitPageController implements Initializable {
         // Build Container
         Habits_Container.getChildren().clear();
         int row_count = 0;
-        habitCount = 0;
         for (Habit h: habitDataSet ) {
-            habitCount += 1;
             Button button  = new Button(h.getHabit());
             button.setAlignment(Pos.CENTER);
             button.setPrefSize(144, 60);
@@ -96,6 +93,13 @@ public class HabitPageController implements Initializable {
             CheckBox checkBox = new CheckBox();
             checkBox.setPrefSize(72,  72);
             checkBox.setId("checkBox" + h.getPrimaryKey());
+            // Check if new
+            if (habitsCompletedMap.get(h.getPrimaryKey()) == null) {
+                habitsCompletedMap.put(h.getPrimaryKey(), "0");
+                String[] input = {String.valueOf(habitCount), convertToString(habitsCompletedMap)};
+                updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
+            }
+            // Check if true
             if (habitsCompletedMap.get(h.getPrimaryKey()).equals("1")) {
                 checkBox.setSelected(true);
                 checkBox.setDisable(true);
