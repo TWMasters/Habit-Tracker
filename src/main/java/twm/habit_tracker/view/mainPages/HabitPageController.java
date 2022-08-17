@@ -124,7 +124,7 @@ public class HabitPageController implements Initializable {
         if (ht.getCompleted() == null || ht.getCompleted().equals("")) {
             String output = "";
             for (Habit h : habitDataSet) {
-                String entry = String.format("%s=0;");
+                String entry = String.format("%s=0;",h.getPrimaryKey());
                 output += entry;
             }
             updateHabitTrackerCompletedAttributeBiConsumer.accept(today, new String[] {String.valueOf(habitCount),output});
