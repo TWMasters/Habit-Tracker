@@ -18,9 +18,7 @@ import twm.habit_tracker.view.editPages.EditPage;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -28,6 +26,7 @@ import java.util.stream.Collectors;
 
 public class HabitPageController implements Initializable {
 
+    private Boolean firstBuild = true;
     private EditPage editPage;
     private EventHandler<ActionEvent> editButtonPush;
 
@@ -74,6 +73,25 @@ public class HabitPageController implements Initializable {
         HabitTracker ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
         Map<String,String> habitsCompletedMap = convertToMap(ht.getCompleted());
 
+        // Prep Map
+        if (!firstBuild) {
+            // Get Keys
+            Set<String> keySet = habitsCompletedMap.keySet();
+            for (Habit h : habitDataSet) {
+                // Add new habits
+                if (habitsCompletedMap.get(h.getPrimaryKey()) == null)
+                    habitsCompletedMap.put(h.getPrimaryKey(), "0");
+                else
+                    keySet.remove(h.getPrimaryKey());
+            }
+            // Remove deleted
+            for (String key : keySet)
+                habitsCompletedMap.remove(key);
+            String[] input = {String.valueOf(habitCount), convertToString(habitsCompletedMap)};
+            updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
+            ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
+        }
+
         // Build Container
         Habits_Container.getChildren().clear();
         int row_count = 0;
@@ -93,17 +111,13 @@ public class HabitPageController implements Initializable {
             CheckBox checkBox = new CheckBox();
             checkBox.setPrefSize(72,  72);
             checkBox.setId("checkBox" + h.getPrimaryKey());
-            // Check if new
-            if (habitsCompletedMap.get(h.getPrimaryKey()) == null) {
-                habitsCompletedMap.put(h.getPrimaryKey(), "0");
-                String[] input = {String.valueOf(habitCount), convertToString(habitsCompletedMap)};
-                updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
-            }
-            // Check if true
-            if (habitsCompletedMap.get(h.getPrimaryKey()).equals("1")) {
+
+            // Check if habit ticked
+            if (habitsCompletedMap.get(h.getPrimaryKey()) != null && habitsCompletedMap.get(h.getPrimaryKey()).equals("1")) {
                 checkBox.setSelected(true);
                 checkBox.setDisable(true);
             }
+
             checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
                 String habitID = checkBox.getId().substring(8);
                 habitsCompletedMap.put(habitID, "1");
@@ -116,6 +130,7 @@ public class HabitPageController implements Initializable {
             Habits_Container.getChildren().addAll(button, label, checkBox);
             row_count ++;
         }
+        firstBuild = false;
 
     }
 
@@ -141,9 +156,10 @@ public class HabitPageController implements Initializable {
      * @return Mapping of whether habits have been completed for the day
      */
     private Map<String,String> convertToMap(String input) {
+        Map<String,String> result = new HashMap<>();
         if (input.equals(""))
-                return null;
-        Map<String,String> result = Arrays.stream(input.split(";"))
+                return result;
+        result = Arrays.stream(input.split(";"))
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(
                         a -> a[0],
