@@ -5,9 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import twm.habit_tracker.model.GoalTableState;
 import twm.habit_tracker.model.HabitTableState;
+import twm.habit_tracker.model.HabitTrackerTableState;
 import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.Goal;
 import twm.habit_tracker.view.Habit;
+import twm.habit_tracker.view.HabitTracker;
 import twm.habit_tracker.view.View;
 import twm.habit_tracker.view.editPages.EditPage;
 import twm.habit_tracker.view.editPages.HabitInputFieldsController;
@@ -16,6 +18,7 @@ import twm.habit_tracker.view.mainPages.HabitPageController;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -134,6 +137,26 @@ public class ConcreteController implements Controller {
             return null;
         };
         HabitPageController.setGetHabitEntryFunction(getHabitEntryFunction);
+
+        // Retrieve HabitTrackerEntry
+        Function<LocalDate, HabitTracker> getHabitTrackerEntryFunction = (date) -> {
+            model.changeTargetTable(new HabitTrackerTableState());
+            ResultSet rs = model.getEntry(date.toString());
+            try {
+                if (rs.isBeforeFirst()) {
+                    rs.next();
+                    HabitTracker ht = new HabitTracker();
+                    ht.setPrimaryKey(rs.getString(1));
+                    ht.setTarget(rs.getInt(2));
+                    ht.setCompleted(rs.getString(3));
+                    return ht;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        };
+        HabitPageController.setGetHabitTrackerEntryFunction(getHabitTrackerEntryFunction);
 
         // Retrieve Habit Data as ObservableList
         Supplier<ObservableList<Habit>> habitDataSupplier = () -> {
