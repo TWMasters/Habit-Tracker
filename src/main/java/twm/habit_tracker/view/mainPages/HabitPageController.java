@@ -15,9 +15,13 @@ import twm.habit_tracker.view.Habit;
 import twm.habit_tracker.view.editPages.EditPage;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class HabitPageController implements Initializable {
 
@@ -81,6 +85,21 @@ public class HabitPageController implements Initializable {
             row_count ++;
         }
 
+    }
+
+    /**
+     * Helper method to convert String into Map
+     * @param input Completed Attribute from Habit_Tracker
+     * @return Mapping of whether habits have been completed for the day
+     */
+    private Map<String,String> convertToMap(String input) {
+        Map<String,String> result = Arrays.stream(input.split(","))
+                .map(s -> s.split("="))
+                .collect(Collectors.toMap(
+                        a -> a[0],
+                        a -> a[1]
+                ));
+        return result;
     }
 
     public void getHabitData() {

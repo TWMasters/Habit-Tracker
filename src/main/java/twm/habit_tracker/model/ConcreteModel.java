@@ -28,8 +28,8 @@ public class ConcreteModel implements Model {
                     ");";
     private static final String HABIT_TRACKER_TABLE =
             "CREATE TABLE Habit_Tracker (\n" +
-                    "Date DATE PRIMARY KEY\n" +
-                    "Target INT DEFAULT 0 NOT NULL\n" +
+                    "Date DATE PRIMARY KEY,\n" +
+                    "Target INT DEFAULT 0 NOT NULL,\n" +
                     "Completed VARCHAR(255) DEFAULT 'empty' NOT NULL\n" +
                     ");";
 
@@ -94,6 +94,7 @@ public class ConcreteModel implements Model {
         }
         catch (SQLException e) {
             System.err.println("SQL Exception on Creating Tables");
+            e.printStackTrace();
         }
     }
 

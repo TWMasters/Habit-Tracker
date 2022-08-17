@@ -14,8 +14,6 @@ public class HabitTrackerTableStateTest {
     private static final String H2_URL = "jdbc:h2:./db/Habits";
     private static final String DATE_KEY = "\'3000-01-01\'";
     private static final String DATE_KEY_NO_APOS = "3000-01-01";
-    private static final String EDITED_DATE_KEY = "\'4000-01-01\'";
-    private static final String EDITED_DATE_KEY_NO_APOS = "4000-01-01";
 
     private static Connection connection;
     private static Model testModel;
@@ -61,11 +59,12 @@ public class HabitTrackerTableStateTest {
     void testGetRow() {
         try {
             stmt.execute("INSERT INTO Habit_Tracker " +
-                    "VALUES (" + DATE_KEY + ");");
+                    "VALUES (" + DATE_KEY + ", 3, '5=1');");
             ResultSet rs = testModel.getEntry(DATE_KEY_NO_APOS);
             if (rs != null) {
                 rs.next();
-                Assertions.assertEquals(DATE_KEY_NO_APOS, rs.getString(1));
+                Assertions.assertEquals("3", rs.getString(2));
+                Assertions.assertEquals("5=1", rs.getString(3));
             }
             Assertions.assertNotNull(rs);
 
@@ -98,7 +97,7 @@ public class HabitTrackerTableStateTest {
     void testDeleteRow() {
         try {
             stmt.execute("INSERT INTO Habit_Tracker" +
-                    " VALUES (" + DATE_KEY + ");");
+                    " VALUES (" + DATE_KEY + ", 3, '5=1');");
             testModel.deleteEntry(DATE_KEY_NO_APOS);
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habit_Tracker WHERE Date = " + DATE_KEY + ";");
             if (rs.isBeforeFirst()) {
@@ -117,14 +116,15 @@ public class HabitTrackerTableStateTest {
     void testEditEntry() {
         try {
             stmt.execute("INSERT INTO Habit_Tracker" +
-                    " VALUES (" + DATE_KEY + ");");
-            String[] newValues = {EDITED_DATE_KEY_NO_APOS};
+                    " VALUES (" + DATE_KEY + ", 3, '5=1');");
+            String[] newValues = {"4", "5=0"};
             testModel.editEntry(newValues, DATE_KEY_NO_APOS);
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Habit_Tracker WHERE Date = " + EDITED_DATE_KEY + ";");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Habit_Tracker WHERE Date = " + DATE_KEY + ";");
             if (rs.isBeforeFirst()) {
                 rs.next();
-                Assertions.assertEquals(EDITED_DATE_KEY_NO_APOS, rs.getString(1));
+                Assertions.assertEquals("4", rs.getString(2));
+                Assertions.assertEquals("5=0", rs.getString(3));
             }
             else
                 Assertions.fail("Edited Row couldn't be found!");
