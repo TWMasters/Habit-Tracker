@@ -56,9 +56,25 @@ public class ConcreteController implements Controller {
         };
         HabitInputFieldsController.setTargetHabitTable(habitRunnable);
 
-        // AddHabit
+        // Add Habit or Goal
         Consumer<String[]> addEntryConsumer = (s) -> {
-            model.addEntry(s);
+            String primaryKey = model.addEntry(s);
+            if (model.getTableState().equals("Habit Table State")) {
+                model.changeTargetTable(new HabitTrackerTableState());
+                ResultSet rs = model.getEntry(LocalDate.now().toString());
+                try {
+                    if (rs.isBeforeFirst()) {
+                        rs.next();
+                        String target = rs.getString(2);
+                        String oldCompleted = rs.getString(3);
+                        String[] input = {target, oldCompleted + primaryKey + "=0;"};
+                        model.editEntry(input, LocalDate.now().toString());
+                    }
+                }
+                catch (SQLException e) {
+                    System.err.println("Error on Adding Habit");
+                }
+            }
         };
         EditPage.setAddEntryConsumer(addEntryConsumer);
 
