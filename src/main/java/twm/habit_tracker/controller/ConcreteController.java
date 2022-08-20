@@ -65,7 +65,7 @@ public class ConcreteController implements Controller {
                 try {
                     if (rs.isBeforeFirst()) {
                         rs.next();
-                        String target = rs.getString(2);
+                        String target = String.valueOf(rs.getInt(2) + 1);
                         String oldCompleted = rs.getString(3);
                         String[] input = {target, oldCompleted + ";" + primaryKey + "=0"};
                         model.editEntry(input, LocalDate.now().toString());
@@ -87,7 +87,7 @@ public class ConcreteController implements Controller {
                 try {
                     if (rs.isBeforeFirst()) {
                         rs.next();
-                        String target = rs.getString(2);
+                        String target = String.valueOf(rs.getInt(2) - 1);
                         String oldCompleted = rs.getString(3);
                         int index = oldCompleted.indexOf(";" + s + "=");
                         String  newCompleted = oldCompleted.substring(0, index) + oldCompleted.substring(index + 4);

@@ -67,33 +67,10 @@ public class HabitPageController implements Initializable {
      * Helper method to build table
      */
     private void buildHabitsContainer() {
-        // habitCount = habitDataSet.size();
-        // System.out.println(habitCount);
-        // buildHabitTracker();
-        // HabitTracker ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
-        // Map<String,String> habitsCompletedMap = convertToMap(ht.getCompleted());
+        habitCount = habitDataSet.size();
 
-        // Prep Map
-        /*
-        if (!firstBuild) {
-            // Get Keys
-            Set<String> keySet = habitsCompletedMap.keySet();
-            for (Habit h : habitDataSet) {
-                // Add new habits
-                if (habitsCompletedMap.get(h.getPrimaryKey()) == null)
-                    habitsCompletedMap.put(h.getPrimaryKey(), "0");
-                else
-                    keySet.remove(h.getPrimaryKey());
-            }
-            // Remove deleted
-            for (String key : keySet)
-                habitsCompletedMap.remove(key);
-            String[] input = {String.valueOf(habitCount), convertToString(habitsCompletedMap)};
-            updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
-            ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
-        }
-
-         */
+        HabitTracker ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
+        Map<String,String> habitsCompletedMap = convertToMap(ht.getCompleted());
 
         // Build Container
         Habits_Container.getChildren().clear();
@@ -116,12 +93,11 @@ public class HabitPageController implements Initializable {
             checkBox.setId("checkBox" + h.getPrimaryKey());
 
             // Check if habit ticked
-            /*
             if (habitsCompletedMap.get(h.getPrimaryKey()) != null && habitsCompletedMap.get(h.getPrimaryKey()).equals("1")) {
                 checkBox.setSelected(true);
                 checkBox.setDisable(true);
             }
-
+            // Function to check box
             checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
                 String habitID = checkBox.getId().substring(8);
                 habitsCompletedMap.put(habitID, "1");
@@ -129,31 +105,13 @@ public class HabitPageController implements Initializable {
                 updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
                 checkBox.setDisable(true);
             });
-
-             */
             GridPane.setConstraints(checkBox, 3, row_count, 1,  1);
-
             Habits_Container.getChildren().addAll(button, label, checkBox);
+
             row_count ++;
         }
         firstBuild = false;
 
-    }
-
-    /**
-     * Helper method to build habit tracker
-     */
-    private void buildHabitTracker() {
-        LocalDate today = LocalDate.now();
-        HabitTracker ht = getHabitTrackerEntryFunction.apply(today);
-        if (ht.getCompleted() == null || ht.getCompleted().equals("")) {
-            String output = "";
-            for (Habit h : habitDataSet) {
-                String entry = String.format("%s=0;",h.getPrimaryKey());
-                output += entry;
-            }
-            updateHabitTrackerCompletedAttributeBiConsumer.accept(today, new String[] {String.valueOf(habitCount),output});
-        };
     }
 
     /**
@@ -166,6 +124,7 @@ public class HabitPageController implements Initializable {
         if (input.equals(""))
                 return result;
         result = Arrays.stream(input.split(";"))
+                .skip(0)
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(
                         a -> a[0],
