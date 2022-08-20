@@ -21,7 +21,7 @@ public class GoalTableState implements TableState {
     Connection context;
 
     @Override
-    public void addEntry(String[] values) {
+    public String addEntry(String[] values) {
         try {
             // Get Key
             Statement stmt = context.createStatement();
@@ -32,11 +32,13 @@ public class GoalTableState implements TableState {
             values[1] = editUnitIfNotNull(values[1]);
             values[2] = editUnitIfNotNull(values[2]);
             stmt.execute(String.format(ADD_ROW, newKey, values[0], values[1], values[2]));
+            return String.valueOf(newKey);
 
         } catch (SQLException e) {
             System.err.println("SQL Error on Add Method");
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override

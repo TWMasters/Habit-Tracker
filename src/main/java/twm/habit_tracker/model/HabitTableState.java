@@ -20,7 +20,7 @@ public class HabitTableState implements TableState {
     Connection context;
 
     @Override
-    public void addEntry(String[] values) {
+    public String addEntry(String[] values) {
         try {
             // Get Key
             Statement stmt = context.createStatement();
@@ -32,11 +32,13 @@ public class HabitTableState implements TableState {
             stmt.execute(String.format(ADD_ROW, newKey, values[0], values[1], values[2], values[3], values[4]));
             // Update Habit Tracker Table
             // HabitTrackerHelper.addColumn(values[0], stmt);
+            return String.valueOf(newKey);
 
         } catch (SQLException e) {
             System.err.println("SQL Error on Add Method");
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override

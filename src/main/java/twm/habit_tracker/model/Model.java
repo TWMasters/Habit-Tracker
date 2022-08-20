@@ -9,8 +9,9 @@ public interface Model {
     /**
      * Add row to Target Table
      * @param values Values to populate new Row
+     * @return Primary Key of entry just added
      */
-    void addEntry(String[] values);
+    String addEntry(String[] values);
 
     /**
      * Change target Table for Model methods to act upon

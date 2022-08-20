@@ -7,8 +7,9 @@ public interface TableState {
     /**
      * Add row to Table
      * @param values
+     * @return Primary Key of entry just added
      */
-    void addEntry(String[] values);
+    String addEntry(String[] values);
 
     /**
      * Delete specified row from Table

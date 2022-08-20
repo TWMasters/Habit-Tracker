@@ -67,13 +67,14 @@ public class HabitPageController implements Initializable {
      * Helper method to build table
      */
     private void buildHabitsContainer() {
-        habitCount = habitDataSet.size();
-        System.out.println(habitCount);
-        buildHabitTracker();
-        HabitTracker ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
-        Map<String,String> habitsCompletedMap = convertToMap(ht.getCompleted());
+        // habitCount = habitDataSet.size();
+        // System.out.println(habitCount);
+        // buildHabitTracker();
+        // HabitTracker ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
+        // Map<String,String> habitsCompletedMap = convertToMap(ht.getCompleted());
 
         // Prep Map
+        /*
         if (!firstBuild) {
             // Get Keys
             Set<String> keySet = habitsCompletedMap.keySet();
@@ -91,6 +92,8 @@ public class HabitPageController implements Initializable {
             updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
             ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
         }
+
+         */
 
         // Build Container
         Habits_Container.getChildren().clear();
@@ -113,6 +116,7 @@ public class HabitPageController implements Initializable {
             checkBox.setId("checkBox" + h.getPrimaryKey());
 
             // Check if habit ticked
+            /*
             if (habitsCompletedMap.get(h.getPrimaryKey()) != null && habitsCompletedMap.get(h.getPrimaryKey()).equals("1")) {
                 checkBox.setSelected(true);
                 checkBox.setDisable(true);
@@ -125,6 +129,8 @@ public class HabitPageController implements Initializable {
                 updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
                 checkBox.setDisable(true);
             });
+
+             */
             GridPane.setConstraints(checkBox, 3, row_count, 1,  1);
 
             Habits_Container.getChildren().addAll(button, label, checkBox);

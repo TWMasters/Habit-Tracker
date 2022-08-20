@@ -16,15 +16,17 @@ public class HabitTrackerTableState implements TableState{
     Statement stmt;
 
     @Override
-    public void addEntry(String[] values) {
+    public String addEntry(String[] values) {
         try {
             // Add Row -> All other columns aside from Date will be false by default initially
             stmt.execute(String.format(ADD_ROW, values[0]));
+            return values[0];
 
         } catch (SQLException e) {
             System.err.println("SQL Error on Add Method");
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override

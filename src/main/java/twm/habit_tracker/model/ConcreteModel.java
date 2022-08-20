@@ -125,8 +125,8 @@ public class ConcreteModel implements Model {
     }
 
     @Override
-    public void addEntry(String[] values) {
-        targetTable.addEntry(values);
+    public String addEntry(String[] values) {
+        return targetTable.addEntry(values);
     }
 
     @Override

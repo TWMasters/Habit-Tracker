@@ -34,7 +34,7 @@ public abstract class InputAbstractController implements Initializable {
      */
     public String getNullableValue(TextField inputField) {
         String output = inputField.getText();
-        if (output.equals(""))
+        if (output == null || output.equals(""))
             return "null";
         else
             return output;
