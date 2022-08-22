@@ -69,6 +69,7 @@ public class HabitPageController implements Initializable {
     private void buildHabitsContainer() {
         habitCount = habitDataSet.size();
 
+        // Habit Tracker
         buildHabitTracker(getHabitTrackerEntryFunction.apply(LocalDate.now()));
         HabitTracker ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
         Map<String,String> habitsCompletedMap = convertToMap(ht.getCompleted());
@@ -121,11 +122,12 @@ public class HabitPageController implements Initializable {
      */
     private void buildHabitTracker(HabitTracker ht) {
         if (ht.getCompleted().equals("")) {
-            String output = "";
+            String input = "";
             for (Habit h : habitDataSet)
-                output += ";" + h.getPrimaryKey() + "=0";
-            String[] input = {String.valueOf(habitDataSet.size()), output};
-            updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
+                input += ";" + h.getPrimaryKey() + "=0";
+            System.out.println(input);
+            String[] inputArray = {String.valueOf(habitDataSet.size()), input};
+            updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), inputArray);
         }
     }
 
@@ -136,10 +138,12 @@ public class HabitPageController implements Initializable {
      */
     private Map<String,String> convertToMap(String input) {
         Map<String,String> result = new HashMap<>();
-        if (input.equals(""))
-                return result;
+        if (input.equals("")) {
+            return result;
+        }
         result = Arrays.stream(input.split(";"))
-                .skip(0)
+                .skip(1)
+                .peek(s -> System.out.println())
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(
                         a -> a[0],
@@ -148,9 +152,14 @@ public class HabitPageController implements Initializable {
         return result;
     }
 
+    /**
+     * Helper method to convert Map into String for updating Habit Tracker Relation
+     * @param map of Goals and completed state
+     * @return String form of above map
+     */
     private String convertToString(Map<String,String> map) {
         String output = map.entrySet().stream()
-                .map(e -> new String(e.getKey() + "=" + e.getValue() + ";"))
+                .map(e -> new String(";" + e.getKey() + "=" + e.getValue()))
                 .reduce("", (substring, string) -> string + substring);
         return output;
     }
