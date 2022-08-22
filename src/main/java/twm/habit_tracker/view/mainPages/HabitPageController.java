@@ -69,6 +69,7 @@ public class HabitPageController implements Initializable {
     private void buildHabitsContainer() {
         habitCount = habitDataSet.size();
 
+        buildHabitTracker(getHabitTrackerEntryFunction.apply(LocalDate.now()));
         HabitTracker ht = getHabitTrackerEntryFunction.apply(LocalDate.now());
         Map<String,String> habitsCompletedMap = convertToMap(ht.getCompleted());
 
@@ -112,6 +113,20 @@ public class HabitPageController implements Initializable {
         }
         firstBuild = false;
 
+    }
+
+    /**
+     * Create empty completed field for Habit Tracking
+     * @param ht Today's Habit Tracking Information
+     */
+    private void buildHabitTracker(HabitTracker ht) {
+        if (ht.getCompleted().equals("")) {
+            String output = "";
+            for (Habit h : habitDataSet)
+                output += ";" + h.getPrimaryKey() + "=0";
+            String[] input = {String.valueOf(habitDataSet.size()), output};
+            updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
+        }
     }
 
     /**

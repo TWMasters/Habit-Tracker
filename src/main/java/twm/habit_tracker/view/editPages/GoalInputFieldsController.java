@@ -15,7 +15,8 @@ public class GoalInputFieldsController extends InputAbstractController{
         String[] output = {
                 goalInput.getText(),
                 getNullableValue(descriptionInput),
-                getNullableValue(deadlineInput)
+                getNullableValue(deadlineInput),
+                "false"
         };
         return output;
     }
