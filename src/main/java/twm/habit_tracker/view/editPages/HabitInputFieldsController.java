@@ -1,10 +1,15 @@
 package twm.habit_tracker.view.editPages;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class HabitInputFieldsController extends InputAbstractController {
     private static Runnable targetHabitTable;
@@ -21,6 +26,11 @@ public class HabitInputFieldsController extends InputAbstractController {
     @FXML private Label targetLabel;
     @FXML private TextField targetInput;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
+        targetInput.textProperty().addListener(this::targetListener);
+    }
 
     @Override
     public String[] getFields() {
@@ -75,6 +85,12 @@ public class HabitInputFieldsController extends InputAbstractController {
 
     public static void setTargetHabitTable(Runnable r) {
         targetHabitTable = r;
+    }
+
+    public void targetListener(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        if (!newValue.matches("\\d*\\.\\d*")) {
+            targetInput.setText(newValue.replaceAll("[^\\d]", ""));
+        }
     }
 
     private void toggleVisibility(Boolean flag) {
