@@ -88,8 +88,9 @@ public class HabitInputFieldsController extends InputAbstractController {
     }
 
     public void targetListener(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        if (!newValue.matches("\\d*\\.\\d*")) {
-            targetInput.setText(newValue.replaceAll("[^\\d]", ""));
+        if (!newValue.matches("(\\d)*\\.?\\d?\\d?")) {
+            String amendedValue= newValue.substring(0, newValue.length() - 1);
+            targetInput.setText(amendedValue);
         }
     }
 
