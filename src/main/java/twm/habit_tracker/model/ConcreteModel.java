@@ -74,6 +74,8 @@ public class ConcreteModel implements Model {
         try {
             Statement stmt = connection.createStatement();
 
+            TrophyTable.createTrophyTable(connection);
+
             stmt.execute(HABIT_TABLE_SQL);
             stmt.execute(GOAL_TABLE_SQL);
 
