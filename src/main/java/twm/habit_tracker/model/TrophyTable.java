@@ -27,17 +27,23 @@ class TrophyTable {
                     "(\'TwentyDay\', \'You Completed your Daily Habits for Twenty Days this Month\')," +
                     "(\'FullMonth\', \'You Completed your Daily Habits for Thirty Days this Month\');";
 
+    
+
     public static void createTrophyTable(Connection connection)  {
         try {
             Statement stmt = connection.createStatement();
             stmt.execute(TROPHY_TABLE_SQL);
-            stmt.executeQuery(POPULATE_TROPHY_TABLE);
+            stmt.execute(POPULATE_TROPHY_TABLE);
 
 
         } catch (SQLException e) {
             System.err.println("Error on creating Trophy Table");
             e.printStackTrace();
         }
+    }
+
+    public static void getDates()  {
+
     }
 
 
