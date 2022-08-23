@@ -1,6 +1,7 @@
 package twm.habit_tracker.model;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.DayOfWeek;
@@ -30,16 +31,18 @@ class TrophyTable {
                     "(\'TwentyDay\', \'%s\', \'You Completed your Daily Habits for Twenty Days this Month\')," +
                     "(\'FullMonth\', \'%s\', \'You Completed your Daily Habits for Thirty Days this Month\');";
 
+    private static final String GET_ROW =
+            "SELECT * FROM Trophies WHERE Trophy_ID = \'%s\';";
 
+    private static final String RESET_ROW =
+            "";
 
     public static void createTrophyTable(Connection connection)  {
         try {
             Statement stmt = connection.createStatement();
             stmt.execute(TROPHY_TABLE_SQL);
-            String today = LocalDate.now().toString();
-            String firstOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).toString();
-            String firstOfMonth = LocalDate.now().withDayOfMonth(1).toString();
-            String populate = String.format(POPULATE_TROPHY_TABLE, today, today, firstOfWeek, firstOfWeek, firstOfWeek, firstOfMonth, firstOfMonth, firstOfMonth);
+            String[] dates = getDates();
+            String populate = String.format(POPULATE_TROPHY_TABLE, dates[0], dates[0], dates[1], dates[1], dates[1], dates[2], dates[2], dates[2]);
             stmt.execute(populate);
 
         } catch (SQLException e) {
@@ -48,10 +51,34 @@ class TrophyTable {
         }
     }
 
-    public static void getDates()  {
+    private static String[] getDates()  {
+        String today = LocalDate.now().toString();
+        String firstOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).toString();
+        String firstOfMonth = LocalDate.now().withDayOfMonth(1).toString();
+        return new String[] {today, firstOfWeek, firstOfMonth};
 
     }
 
+    public static void updateDates(Connection connection) {
+        String[] dates = getDates();
+        try {
+            Statement stmt = connection.createStatement();
+            // Update Day
+            ResultSet rs = stmt.executeQuery(String.format(GET_ROW, "FullDay"));
+            String date = rs.getString(2);
+            if (!date.equals(date)) {
 
+            }
+
+            // Update Week
+
+            // Update Month
+
+        }
+        catch (SQLException e) {
+
+        }
+
+    }
 
 }
