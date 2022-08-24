@@ -35,3 +35,49 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/tobym/D
 	... 17 more
 2022-08-24 18:39:15 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
+2022-08-24 18:50:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
+2022-08-24 18:50:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
+2022-08-24 18:51:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
+2022-08-24 18:52:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Method is only allowed for a query. Use execute or executeUpdate instead of executeQuery; SQL statement:
+UPDATE Trophies SET Trophy_Won = 0, Start_Date = '2022-08-24' WHERE Trophy_ID = 'HalfDay' [90002-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.command.Prepared.query(Prepared.java:256)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:251)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:99)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.model.TrophyTable.updateDates(TrophyTable.java:84)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.model.ConcreteModel.updateTables(ConcreteModel.java:153)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.model.ConcreteModel.<init>(ConcreteModel.java:49)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.model.ConcreteModel.getModel(ConcreteModel.java:112)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.user_agent.UserAgent.init(UserAgent.java:28)
+	at javafx.graphics@18-ea/com.sun.javafx.application.LauncherImpl.launchApplication1(LauncherImpl.java:825)
+	at javafx.graphics@18-ea/com.sun.javafx.application.LauncherImpl.lambda$launchApplication$2(LauncherImpl.java:196)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-08-24 18:53:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Method is only allowed for a query. Use execute or executeUpdate instead of executeQuery; SQL statement:
+UPDATE Trophies SET Trophy_Won = 0, Start_Date = '2022-08-24' WHERE Trophy_ID = 'HalfDay' [90002-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.command.Prepared.query(Prepared.java:256)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:251)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:99)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.model.TrophyTable.updateDates(TrophyTable.java:84)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.model.ConcreteModel.updateTables(ConcreteModel.java:153)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.model.ConcreteModel.<init>(ConcreteModel.java:49)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.model.ConcreteModel.getModel(ConcreteModel.java:112)
+	at twm.habit_tracker.habittracker/twm.habit_tracker.user_agent.UserAgent.init(UserAgent.java:28)
+	at javafx.graphics@18-ea/com.sun.javafx.application.LauncherImpl.launchApplication1(LauncherImpl.java:825)
+	at javafx.graphics@18-ea/com.sun.javafx.application.LauncherImpl.lambda$launchApplication$2(LauncherImpl.java:196)
+	at java.base/java.lang.Thread.run(Thread.java:833)

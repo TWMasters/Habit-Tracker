@@ -37,7 +37,13 @@ class TrophyTable {
     private static final String RESET_ROW =
             "UPDATE Trophies SET Trophy_Won = 0, Start_Date = \'%s\' WHERE Trophy_ID = \'%s\'";
 
-    public static void createTrophyTable(Connection connection)  {
+    private final Connection connection;
+
+    public TrophyTable(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void createTrophyTable()  {
         try {
             Statement stmt = connection.createStatement();
             stmt.execute(TROPHY_TABLE_SQL);
@@ -55,7 +61,7 @@ class TrophyTable {
      * Helper method to get dates used in Trophy Table
      * @return Array of relevant dates in String format
      */
-    private static String[] getDates()  {
+    private String[] getDates()  {
         String today = LocalDate.now().toString();
         String firstOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).toString();
         String firstOfMonth = LocalDate.now().withDayOfMonth(1).toString();
@@ -63,40 +69,42 @@ class TrophyTable {
 
     }
 
-    public static void updateDates(Connection connection) {
-        System.out.println("Running Update");
+    public void updateDates() {
+        System.out.println("Updating Trophy Table");
         String[] dates = getDates();
         try {
             Statement stmt = connection.createStatement();
             // Update Day
             ResultSet rs = stmt.executeQuery(String.format(GET_ROW, "FullDay"));
-            String oldDate = rs.getString(2);
-            System.out.println("Old date: " + oldDate);
-            System.out.println("New date: " + dates[0]);
+            rs.next();
+            String oldDate = rs.getString(3);
             if (!oldDate.equals(dates[0])) {
-                stmt.executeQuery(String.format(RESET_ROW, dates[0], "HalfDay" ));
-                stmt.executeQuery(String.format(RESET_ROW, dates[0], "FullDay" ));
+                stmt.executeUpdate(String.format(RESET_ROW, dates[0], "HalfDay" ));
+                stmt.executeUpdate(String.format(RESET_ROW, dates[0], "FullDay" ));
             }
             // Update Week
             rs = stmt.executeQuery(String.format(GET_ROW, "FullWeek"));
-            oldDate = rs.getString(2);
+            rs.next();
+            oldDate = rs.getString(3);
             if (!oldDate.equals(dates[1])) {
-                stmt.executeQuery(String.format(RESET_ROW, dates[1], "ThreeDay"));
-                stmt.executeQuery(String.format(RESET_ROW, dates[1], "FiveDay"));
-                stmt.executeQuery(String.format(RESET_ROW, dates[1], "FullWeek"));
+                stmt.executeUpdate(String.format(RESET_ROW, dates[1], "ThreeDay"));
+                stmt.executeUpdate(String.format(RESET_ROW, dates[1], "FiveDay"));
+                stmt.executeUpdate(String.format(RESET_ROW, dates[1], "FullWeek"));
             }
             // Update Month
             rs = stmt.executeQuery(String.format(GET_ROW, "FullMonth"));
-            oldDate = rs.getString(2);
+            rs.next();
+            oldDate = rs.getString(3);
             if (!oldDate.equals(dates[2])) {
-                stmt.executeQuery(String.format(RESET_ROW, dates[1], "TenDay"));
-                stmt.executeQuery(String.format(RESET_ROW, dates[1], "TwentyDay"));
-                stmt.executeQuery(String.format(RESET_ROW, dates[1], "FullMonth"));
+                stmt.executeUpdate(String.format(RESET_ROW, dates[2], "TenDay"));
+                stmt.executeUpdate(String.format(RESET_ROW, dates[2], "TwentyDay"));
+                stmt.executeUpdate(String.format(RESET_ROW, dates[2], "FullMonth"));
             }
 
         }
         catch (SQLException e) {
-
+            System.err.println("Error on Updating Trophy Table");
+            e.printStackTrace();
         }
 
     }

@@ -36,11 +36,13 @@ public class ConcreteModel implements Model {
     private Connection connection = null;
     private static Model model = null;
     private TableState targetTable;
+    private TrophyTable trophyTable;
 
     private ConcreteModel() {
         try {
             Boolean databaseExists = new File(DB_FILEPATH).exists();
             connection = DriverManager.getConnection(H2_URL);
+            trophyTable = new TrophyTable(connection);
             if (!databaseExists)
                 createTables();
             else
@@ -74,7 +76,7 @@ public class ConcreteModel implements Model {
         try {
             Statement stmt = connection.createStatement();
 
-            TrophyTable.createTrophyTable(connection);
+            trophyTable.createTrophyTable();
 
             stmt.execute(HABIT_TABLE_SQL);
             stmt.execute(GOAL_TABLE_SQL);
@@ -148,7 +150,7 @@ public class ConcreteModel implements Model {
         System.out.println("Updating Tables!");
 
         // Trophies
-        TrophyTable.updateDates(connection);
+        trophyTable.updateDates();
 
         // Dates
         changeTargetTable(new HabitTrackerTableState());
