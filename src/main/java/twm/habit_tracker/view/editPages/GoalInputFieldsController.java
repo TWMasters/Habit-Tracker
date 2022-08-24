@@ -2,6 +2,7 @@ package twm.habit_tracker.view.editPages;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -19,7 +20,6 @@ public class GoalInputFieldsController extends InputAbstractController{
     private static final int START_YEAR = 2022;
 
     private static Runnable targetGoalTable;
-
 
     @FXML ComboBox dayBox;
     @FXML ComboBox monthBox;
@@ -47,13 +47,10 @@ public class GoalInputFieldsController extends InputAbstractController{
         monthBox.setValue(LocalDate.now().getMonthValue());
 
         // Day
-        monthBox.setOnAction(e -> {
-            ArrayList<Integer> days = new ArrayList<>();
-            int endDay = YearMonth.of((int)yearBox.getValue(), (int)monthBox.getValue()).lengthOfMonth();
-            for (int i = 1; i <= endDay; i++ )
-                days.add(i);
-            dayBox.setItems(FXCollections.observableList(days));
-        });
+        monthBox.setOnAction(e -> refreshDates());
+        yearBox.setOnAction(e -> refreshDates());
+        refreshDates();
+        dayBox.setValue(LocalDate.now().getDayOfMonth());
 
     }
 
@@ -67,6 +64,14 @@ public class GoalInputFieldsController extends InputAbstractController{
                 "false"
         };
         return output;
+    }
+
+    private void refreshDates() {
+        ArrayList<Integer> days = new ArrayList<>();
+        int endDay = YearMonth.of((int)yearBox.getValue(), (int)monthBox.getValue()).lengthOfMonth();
+        for (int i = 1; i <= endDay; i++ )
+            days.add(i);
+        dayBox.setItems(FXCollections.observableList(days));
     }
 
     @Override
