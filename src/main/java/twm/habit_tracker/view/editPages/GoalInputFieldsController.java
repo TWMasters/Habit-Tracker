@@ -1,12 +1,15 @@
 package twm.habit_tracker.view.editPages;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -14,7 +17,6 @@ public class GoalInputFieldsController extends InputAbstractController{
 
     private static final int FIFTY_YEARS = 50;
     private static final int START_YEAR = 2022;
-
 
     private static Runnable targetGoalTable;
 
@@ -31,11 +33,28 @@ public class GoalInputFieldsController extends InputAbstractController{
         super.initialize(url, resourceBundle);
         // Year
         int endYear = LocalDate.now().getYear() + FIFTY_YEARS;
-        ArrayList<String> years = new ArrayList<>();
+        ArrayList<Integer> years = new ArrayList<>();
         for (int i = START_YEAR; i <= endYear; i++)
-            years.add(String.valueOf(i));
+            years.add(i);
         yearBox.setItems(FXCollections.observableList(years));
+        yearBox.setValue(LocalDate.now().getYear());
+
         // Month
+        ArrayList<Integer> months = new ArrayList<>();
+        for (int i = Month.JANUARY.getValue(); i <= Month.DECEMBER.getValue(); i++)
+            months.add(i);
+        monthBox.setItems(FXCollections.observableList(months));
+        monthBox.setValue(LocalDate.now().getMonthValue());
+
+        // Day
+        monthBox.setOnAction(e -> {
+            ArrayList<Integer> days = new ArrayList<>();
+            int endDay = YearMonth.of((int)yearBox.getValue(), (int)monthBox.getValue()).lengthOfMonth();
+            for (int i = 1; i <= endDay; i++ )
+                days.add(i);
+            dayBox.setItems(FXCollections.observableList(days));
+        });
+
     }
 
 
