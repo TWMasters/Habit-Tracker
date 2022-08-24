@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -14,10 +15,13 @@
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="326.0" minWidth="10.0" prefWidth="319.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="476.0" minWidth="10.0" prefWidth="281.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="476.0" minWidth="10.0" prefWidth="300.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="476.0" minWidth="10.0" prefWidth="300.0" />
 </columnConstraints>
 <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 </rowConstraints>
 <children>
@@ -31,14 +35,37 @@
             <Font size="18.0" />
         </font>
     </Label>
-    <TextField fx:id="goalInput" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-    <TextField fx:id="descriptionInput" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+    <TextField fx:id="goalInput" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+    <TextField fx:id="descriptionInput" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
       <Label text="Goal Deadline (Format YYYY-MM-DD)" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="deadlineInput" prefHeight="25.0" prefWidth="557.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+      <TextField fx:id="deadlineInput" prefHeight="25.0" prefWidth="557.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+      <Label alignment="CENTER" text="Day" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" text="Month" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" text="Year" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label text="Goal Deadline" GridPane.rowIndex="4">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ChoiceBox id="dayBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <ChoiceBox id="monthBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <ChoiceBox id="yearBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
 </children>
 <padding>
     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
