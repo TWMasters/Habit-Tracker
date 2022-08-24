@@ -20,6 +20,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class HabitPageController implements Initializable {
     private EditPage editPage;
     private EventHandler<ActionEvent> editButtonPush;
 
-    private static BiConsumer<LocalDate, String[]> updateHabitTrackerCompletedAttributeBiConsumer;
+    private static BiFunction<LocalDate, String[], String[]> updateHabitTrackerCompletedAttributeBiConsumer;
     private static Function<String, Habit> getHabitEntryFunction;
     private static Function<LocalDate, HabitTracker> getHabitTrackerEntryFunction;
     private static int habitCount;
@@ -104,7 +105,9 @@ public class HabitPageController implements Initializable {
                 String habitID = checkBox.getId().substring(8);
                 habitsCompletedMap.put(habitID, "1");
                 String[] input = {String.valueOf(habitCount), convertToString(habitsCompletedMap)};
-                updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), input);
+                String[] messages = updateHabitTrackerCompletedAttributeBiConsumer.apply(LocalDate.now(), input);
+                for (String s : messages)
+                    System.out.println(s);
                 checkBox.setDisable(true);
             });
             GridPane.setConstraints(checkBox, 3, row_count, 1,  1);
@@ -127,7 +130,7 @@ public class HabitPageController implements Initializable {
                 input += ";" + h.getPrimaryKey() + "=0";
             System.out.println(input);
             String[] inputArray = {String.valueOf(habitDataSet.size()), input};
-            updateHabitTrackerCompletedAttributeBiConsumer.accept(LocalDate.now(), inputArray);
+            updateHabitTrackerCompletedAttributeBiConsumer.apply(LocalDate.now(), inputArray);
         }
     }
 
@@ -187,8 +190,8 @@ public class HabitPageController implements Initializable {
         habitDataSupplier = supplier;
     }
 
-    public static void setUpdateHabitTrackerCompletedAttributeBiConsumer(BiConsumer<LocalDate, String[]> biConsumer) {
-        updateHabitTrackerCompletedAttributeBiConsumer = biConsumer;
+    public static void setUpdateHabitTrackerCompletedAttributeBiConsumer(BiFunction<LocalDate, String[], String[]> biFunction) {
+        updateHabitTrackerCompletedAttributeBiConsumer = biFunction;
     }
 
 

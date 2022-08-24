@@ -20,10 +20,8 @@ import twm.habit_tracker.view.mainPages.HabitPageController;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.ArrayList;
+import java.util.function.*;
 
 public class ConcreteController implements Controller {
     private final View view;
@@ -231,9 +229,11 @@ public class ConcreteController implements Controller {
         HabitPageController.setHabitDataSupplier(habitDataSupplier);
 
         //Update HabitTracker Completed
-        BiConsumer<LocalDate, String[]> updateHabitTrackerCompleted = (date,values) -> {
+        BiFunction<LocalDate, String[], String[]> updateHabitTrackerCompleted = (date, values) -> {
             model.changeTargetTable(new HabitTrackerTableState());
             model.editEntry(values, date.toString());
+            ArrayList<String> output = model.checkAwards();
+            return output.toArray(new String[output.size()]);
         };
         HabitPageController.setUpdateHabitTrackerCompletedAttributeBiConsumer(updateHabitTrackerCompleted);
     }

@@ -43,7 +43,7 @@ class TrophyTable {
             "UPDATE Trophies SET Trophy_Won = 0, Start_Date = \'%s\' WHERE Trophy_ID = \'%s\';";
 
     private static final String WIN_TROPHY =
-            "UPDATE Trophies SET Trophy_Won = 1, WHERE Trophy_ID = \'%s\';";
+            "UPDATE Trophies SET Trophy_Won = 1 WHERE Trophy_ID = \'%s\';";
 
     private final Connection connection;
 
@@ -51,14 +51,33 @@ class TrophyTable {
         this.connection = connection;
     }
 
-    // TODO: 24/08/2022 Split into daily, weekly, and monthly checks! 
+    // TODO: 24/08/2022 Split into daily, weekly, and monthly checks!
     public ArrayList<String> checkAwards() {
         ArrayList<String> output = new ArrayList<>();
         String[] dates = getDates();
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[0], dates[0]));
+            // Date Info
+            ResultSet rsToday = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[0], dates[0]));
+            rsToday.next();
+            int target = rsToday.getInt(2);
+            int achieved = rsToday.getString(3).length() / 4;
 
+            // Half Day
+            ResultSet rsHalfDay = stmt.executeQuery(String.format(GET_ROW, "HalfDay"));
+            rsHalfDay.next();
+            if ( target >= 4 && !rsHalfDay.getBoolean(2) && achieved >= (target / 2) ) {
+                output.add(rsHalfDay.getString(4));
+                stmt.executeUpdate(String.format(WIN_TROPHY, "HalfDay"));
+            }
+
+            // Full Day
+            ResultSet rsFullDay = stmt.executeQuery(String.format(GET_ROW, "FullDay"));
+            rsFullDay.next();
+            if ( target >= 4 && !rsFullDay.getBoolean(2) && achieved == (target) ) {
+                output.add(rsFullDay.getString(4));
+                stmt.executeUpdate(String.format(WIN_TROPHY, "FullDay"));
+            }
         }
         catch (SQLException e) {
             System.out.println("Error on checking for awards");

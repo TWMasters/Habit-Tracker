@@ -3,6 +3,7 @@ package twm.habit_tracker.model;
 import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ConcreteModel implements Model {
 
@@ -56,6 +57,11 @@ public class ConcreteModel implements Model {
     public void changeTargetTable(TableState newTargetTable) {
         this.targetTable = newTargetTable;
         targetTable.setContext(connection);
+    }
+
+    @Override
+    public ArrayList<String> checkAwards() {
+        return trophyTable.checkAwards();
     }
 
     @Override

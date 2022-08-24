@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 /**
  * @author tobym
  */
-public interface Model {
+public interface Model extends TrophyModel {
     /**
      * Add row to Target Table
      * @param values Values to populate new Row
