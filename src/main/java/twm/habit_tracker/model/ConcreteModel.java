@@ -145,6 +145,12 @@ public class ConcreteModel implements Model {
      * Helper method to update tables on booting up application
      */
     private void updateTables() {
+        System.out.println("Updating Tables!");
+
+        // Trophies
+        TrophyTable.updateDates(connection);
+
+        // Dates
         changeTargetTable(new HabitTrackerTableState());
         LocalDate checkDate = LocalDate.now().withDayOfMonth(1).plusMonths(1);
         ResultSet rs = getEntry(checkDate.toString());
@@ -160,5 +166,6 @@ public class ConcreteModel implements Model {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 }
