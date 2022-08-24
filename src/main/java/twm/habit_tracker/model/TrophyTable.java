@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
+// TODO: 24/08/2022 Create tests!
 /**
  * Helper Class for Concrete Model to create static Trophy Table
  */
@@ -31,11 +33,17 @@ class TrophyTable {
                     "(\'TwentyDay\', \'%s\', \'You Completed your Daily Habits for Twenty Days this Month\')," +
                     "(\'FullMonth\', \'%s\', \'You Completed your Daily Habits for Thirty Days this Month\');";
 
+    private static final String GET_DATE_RANGE =
+            "SELECT * FROM Habit_Tracker WHERE Date >= \'%s\' AND DATE <= \'%s\';";
+
     private static final String GET_ROW =
             "SELECT * FROM Trophies WHERE Trophy_ID = \'%s\';";
 
     private static final String RESET_ROW =
-            "UPDATE Trophies SET Trophy_Won = 0, Start_Date = \'%s\' WHERE Trophy_ID = \'%s\'";
+            "UPDATE Trophies SET Trophy_Won = 0, Start_Date = \'%s\' WHERE Trophy_ID = \'%s\';";
+
+    private static final String WIN_TROPHY =
+            "UPDATE Trophies SET Trophy_Won = 1, WHERE Trophy_ID = \'%s\';";
 
     private final Connection connection;
 
@@ -43,6 +51,25 @@ class TrophyTable {
         this.connection = connection;
     }
 
+    // TODO: 24/08/2022 Split into daily, weekly, and monthly checks! 
+    public ArrayList<String> checkAwards() {
+        ArrayList<String> output = new ArrayList<>();
+        String[] dates = getDates();
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[0], dates[0]));
+
+        }
+        catch (SQLException e) {
+            System.out.println("Error on checking for awards");
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    /**
+     * Run SQL Command to create Trophy Table
+     */
     public void createTrophyTable()  {
         try {
             Statement stmt = connection.createStatement();
@@ -69,6 +96,11 @@ class TrophyTable {
 
     }
 
+    // TODO: 24/08/2022 Reduce Repetition
+    /**
+     * Update and reset rows in Trophy Table where necessary
+     * when program is run
+     */
     public void updateDates() {
         System.out.println("Updating Trophy Table");
         String[] dates = getDates();

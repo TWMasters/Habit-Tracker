@@ -81,3 +81,6 @@ UPDATE Trophies SET Trophy_Won = 0, Start_Date = '2022-08-24' WHERE Trophy_ID = 
 	at javafx.graphics@18-ea/com.sun.javafx.application.LauncherImpl.launchApplication1(LauncherImpl.java:825)
 	at javafx.graphics@18-ea/com.sun.javafx.application.LauncherImpl.lambda$launchApplication$2(LauncherImpl.java:196)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-08-24 19:08:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HABITTRACKER" not found; SQL statement:
+SELECT * FROM HabitTracker WHERE Date >= '2022-08-05' AND DATE <= '2022-08-15' [42102-214]
