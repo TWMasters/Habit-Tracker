@@ -33,8 +33,8 @@ public class EditPage {
 
     /**
      * Constructor for Adding data to Model
-     * @param buttonBarLocation
-     * @param inputFieldsLocation
+     * @param buttonBarLocation Edit or Add Button
+     * @param inputFieldsLocation Habit or Goal Button
      */
     public EditPage(String buttonBarLocation, String inputFieldsLocation) {
         buildEditPage(buttonBarLocation, inputFieldsLocation);
@@ -48,7 +48,7 @@ public class EditPage {
      * @param inputData
      */
     public EditPage(String buttonBarLocation, String inputFieldsLocation, ModelData inputData) {
-        HabitInputFieldsController.setInputData(inputData);
+        InputAbstractController.setInputData(inputData);
         buildEditPage(buttonBarLocation, inputFieldsLocation);
     }
 

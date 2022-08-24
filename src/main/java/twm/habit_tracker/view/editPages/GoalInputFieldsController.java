@@ -1,8 +1,6 @@
 package twm.habit_tracker.view.editPages;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -37,20 +35,16 @@ public class GoalInputFieldsController extends InputAbstractController{
         for (int i = START_YEAR; i <= endYear; i++)
             years.add(i);
         yearBox.setItems(FXCollections.observableList(years));
-        yearBox.setValue(LocalDate.now().getYear());
 
         // Month
         ArrayList<Integer> months = new ArrayList<>();
         for (int i = Month.JANUARY.getValue(); i <= Month.DECEMBER.getValue(); i++)
             months.add(i);
         monthBox.setItems(FXCollections.observableList(months));
-        monthBox.setValue(LocalDate.now().getMonthValue());
 
         // Day
         monthBox.setOnAction(e -> refreshDates());
         yearBox.setOnAction(e -> refreshDates());
-        refreshDates();
-        dayBox.setValue(LocalDate.now().getDayOfMonth());
 
     }
 
@@ -67,11 +61,14 @@ public class GoalInputFieldsController extends InputAbstractController{
     }
 
     private void refreshDates() {
-        ArrayList<Integer> days = new ArrayList<>();
-        int endDay = YearMonth.of((int)yearBox.getValue(), (int)monthBox.getValue()).lengthOfMonth();
-        for (int i = 1; i <= endDay; i++ )
-            days.add(i);
-        dayBox.setItems(FXCollections.observableList(days));
+        Boolean flag =  (monthBox.getValue() != null && yearBox.getValue() != null);
+        if (flag) {
+            ArrayList<Integer> days = new ArrayList<>();
+            int endDay = YearMonth.of((int)yearBox.getValue(), (int)monthBox.getValue()).lengthOfMonth();
+            for (int i = 1; i <= endDay; i++ )
+                days.add(i);
+            dayBox.setItems(FXCollections.observableList(days));
+        }
     }
 
     @Override
@@ -80,6 +77,13 @@ public class GoalInputFieldsController extends InputAbstractController{
         goalInput.setText(inputData[1]);
         descriptionInput.setText(inputData[2]);
         deadlineInput.setText(inputData[3]);
+        // Populate dates
+        if (!inputData[3].equals("")) {
+            LocalDate date = LocalDate.parse(inputData[3]);
+            dayBox.setValue(date.getDayOfMonth());
+            monthBox.setValue(date.getMonthValue());
+            yearBox.setValue(date.getYear());
+        }
     }
 
     @Override
