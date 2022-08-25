@@ -1,4 +1,4 @@
-package twm.habit_tracker.view;
+package twm.habit_tracker.view.data;
 
 import javafx.beans.property.*;
 

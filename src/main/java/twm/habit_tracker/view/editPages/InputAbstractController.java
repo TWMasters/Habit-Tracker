@@ -2,7 +2,7 @@ package twm.habit_tracker.view.editPages;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import twm.habit_tracker.view.ModelData;
+import twm.habit_tracker.view.data.ModelData;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -12,14 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import twm.habit_tracker.view.Habit;
-import twm.habit_tracker.view.HabitTracker;
+import twm.habit_tracker.view.data.Habit;
+import twm.habit_tracker.view.data.HabitTracker;
 import twm.habit_tracker.view.editPages.EditPage;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;

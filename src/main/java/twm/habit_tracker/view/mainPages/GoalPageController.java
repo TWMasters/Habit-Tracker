@@ -9,7 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import twm.habit_tracker.view.Goal;
+import twm.habit_tracker.view.data.Goal;
 import twm.habit_tracker.view.editPages.EditPage;
 
 import java.net.URL;

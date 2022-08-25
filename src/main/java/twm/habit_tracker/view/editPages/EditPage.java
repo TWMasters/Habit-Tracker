@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import twm.habit_tracker.view.ModelData;
+import twm.habit_tracker.view.data.ModelData;
 
 import java.io.IOException;
 import java.util.function.BiConsumer;
