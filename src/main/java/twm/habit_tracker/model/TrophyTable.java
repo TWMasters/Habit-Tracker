@@ -62,8 +62,6 @@ class TrophyTable {
             rsToday.next();
             int target = rsToday.getInt(2);
             int achieved = rsToday.getString(3).split("=1").length;
-            System.out.println(target);
-            System.out.println(achieved);
 
             // Half Day
             ResultSet rsHalfDay = stmt.executeQuery(String.format(GET_ROW, "HalfDay"));
