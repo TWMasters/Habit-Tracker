@@ -32,6 +32,7 @@ public class GUIView implements View {
         try {
             pages.put("Habit", FXMLLoader.load(GUIView.class.getResource("HabitPage.fxml")));
             pages.put("Goal", FXMLLoader.load(GUIView.class.getResource("GoalPage.fxml")));
+            pages.put("Trophy", FXMLLoader.load(GUIView.class.getResource("TrophyPage.fxml")));
 
             menu_page = FXMLLoader.load(GUIView.class.getResource("MenuPage.fxml"));
             // Can add other pages as needed!

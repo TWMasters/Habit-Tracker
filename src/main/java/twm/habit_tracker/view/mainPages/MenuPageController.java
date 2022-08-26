@@ -36,6 +36,13 @@ public class MenuPageController implements Initializable {
 
     }
 
+    public void trophyButtonPush() {
+        Node page = context.getPage("Trophy");
+        mainFrame.setCenter(page);
+        BorderPane.setAlignment(page, Pos.TOP_LEFT);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         habitButtonPush();
