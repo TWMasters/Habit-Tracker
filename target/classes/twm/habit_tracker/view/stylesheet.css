@@ -1,0 +1,7 @@
+.trophyText {
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 25px;
+    -fx-padding: 20px;
+}

@@ -11,6 +11,7 @@ import twm.habit_tracker.view.View;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+// TODO: 26/08/2022 Reusable object for buttons! 
 public class MenuPageController implements Initializable {
     private static View context;
 

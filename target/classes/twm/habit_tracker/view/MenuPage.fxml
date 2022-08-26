@@ -13,7 +13,7 @@
    <left>
       <VBox alignment="TOP_CENTER" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="HABIT&#10;TRACKER" textAlignment="CENTER">
+            <Label alignment="CENTER" text="HABIT&#10;TRACKER" textAlignment="CENTER">
                <font>
                   <Font size="48.0" />
                </font>

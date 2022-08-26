@@ -9,9 +9,12 @@ import javafx.stage.StageStyle;
 import twm.habit_tracker.view.mainPages.MenuPageController;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashMap;
 
 public class GUIView implements View {
+    private static String CSS = Path.of("src/main/resources/twm/habit_tracker/view/stylesheet.css").toUri().toString();
+
     private Parent menu_page;
     HashMap<String, Node> pages = new HashMap<>();
 
@@ -42,9 +45,10 @@ public class GUIView implements View {
         }
 
 
-        Scene scene = new Scene(menu_page, 1024, 768); // Width, then Height
-        primaryStage.setScene(scene);
+        Scene scene = new Scene(menu_page, 1200, 800); // Width, then Height
+        scene.getStylesheets().add(CSS);
 
+        primaryStage.setScene(scene);
         primaryStage.show();
 
     }
