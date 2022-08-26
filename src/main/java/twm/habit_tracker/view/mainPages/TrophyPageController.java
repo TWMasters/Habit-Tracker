@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ResourceBundle;
 
 public class TrophyPageController implements Initializable {
