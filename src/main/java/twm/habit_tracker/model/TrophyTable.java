@@ -59,7 +59,7 @@ class TrophyTable {
         Statement stmt = connection.createStatement();
         ResultSet rsTrophy = stmt.executeQuery(String.format(GET_ROW, trophy));
         rsTrophy.next();
-        if ( count >= 3 && !rsTrophy.getBoolean(2)) {
+        if ( count >= target && !rsTrophy.getBoolean(2)) {
             input.add(rsTrophy.getString(4));
             stmt.executeUpdate(String.format(WIN_TROPHY, trophy));
         }
@@ -99,7 +99,7 @@ class TrophyTable {
             int count = 0;
             while (rsWeek.next()) {
                 target = rsWeek.getInt(2);
-                achieved = rsToday.getString(3).split("=1").length;
+                achieved = rsWeek.getString(3).split("=1").length;
                 if ( target >= 4 && achieved == target)
                     count++;
             }
@@ -112,15 +112,15 @@ class TrophyTable {
             ResultSet rsMonth = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[2], dates[4]));
             count = 0;
             while (rsMonth.next()) {
-                target = rsWeek.getInt(2);
-                achieved = rsToday.getString(3).split("=1").length;
+                target = rsMonth.getInt(2);
+                achieved = rsMonth.getString(3).split("=1").length;
                 if ( target >= 4 && achieved == target)
                     count++;
             }
 
             checkWeekOrMonth(output, "TenDay", count, 10);
             checkWeekOrMonth(output, "TwentyDay", count, 20);
-            checkWeekOrMonth(output, "FullMMonth", count, LocalDate.now().lengthOfMonth());
+            checkWeekOrMonth(output, "FullMonth", count, LocalDate.now().lengthOfMonth());
 
         }
         catch (SQLException e) {
