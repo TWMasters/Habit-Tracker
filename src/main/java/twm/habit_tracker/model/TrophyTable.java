@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Helper Class for Concrete Model to create static Trophy Table
  */
-class TrophyTable implements TrophyModel {
+class TrophyTable {
     private static final String TROPHY_TABLE_SQL =
             "CREATE TABLE Trophies (\n" +
                     "Trophy_ID VARCHAR(255) PRIMARY KEY,\n" +
@@ -55,7 +55,6 @@ class TrophyTable implements TrophyModel {
     }
 
     // TODO: 24/08/2022 Split into daily, weekly, and monthly checks!
-    @Override
     public ArrayList<String> checkAwards() {
         ArrayList<String> output = new ArrayList<>();
         String[] dates = getDates();
@@ -119,7 +118,6 @@ class TrophyTable implements TrophyModel {
 
     }
 
-    @Override
     public ResultSet getTrophyTable() {
         try {
             Statement stmt = connection.createStatement();

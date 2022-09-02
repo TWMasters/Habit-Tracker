@@ -25,7 +25,7 @@
       </VBox>
    </top>
    <center>
-      <GridPane BorderPane.alignment="CENTER">
+      <GridPane BorderPane.alignment="CENTER" fx:id="trophyGrid">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -49,12 +49,12 @@
                   <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label styleClass="trophyText" text="HALF DAY" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Label fx:id="HalfDay" styleClass="trophyText" text="HALF DAY" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label styleClass="trophyText" text="FULL DAY" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Label fx:id="FullDay" styleClass="trophyText" text="FULL DAY" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
@@ -67,17 +67,17 @@
                   <Insets bottom="10.0" left="5.0" right="5.0" top="20.0" />
                </GridPane.margin>
             </Label>
-            <Label styleClass="trophyText" text="THREE DAYS" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <Label fx:id="ThreeDay" styleClass="trophyText" text="THREE DAYS" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label styleClass="trophyText" text="FIVE DAYS" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <Label fx:id="FiveDay" styleClass="trophyText" text="FIVE DAYS" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label styleClass="trophyText" text="FULL WEEK" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <Label fx:id="FullWeek" styleClass="trophyText" text="FULL WEEK" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
@@ -98,17 +98,17 @@
                   <Insets bottom="10.0" left="5.0" right="5.0" top="20.0" />
                </GridPane.margin>
             </Label>
-            <Label styleClass="trophyText" text="TEN DAYS" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+            <Label fx:id="TenDay" styleClass="trophyText" text="TEN DAYS" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label styleClass="trophyText" text="TWENTY DAYS" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+            <Label fx:id="TwentyDay" styleClass="trophyText" text="TWENTY DAYS" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label styleClass="trophyText" text="FULL MONTH" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+            <Label fx:id="FullMonth" styleClass="trophyText" text="FULL MONTH" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <font>
                   <Font size="18.0" />
                </font>

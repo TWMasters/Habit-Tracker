@@ -65,6 +65,11 @@ public class ConcreteModel implements Model {
     }
 
     @Override
+    public ResultSet getTrophyTable() {
+        return trophyTable.getTrophyTable();
+    }
+
+    @Override
     public void closeConnection() {
         try {
             connection.close();
