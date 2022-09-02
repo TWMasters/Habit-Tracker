@@ -54,6 +54,18 @@ class TrophyTable {
         this.connection = connection;
     }
 
+    private void checkWeekOrMonth(ArrayList<String> input, String trophy, int count, int target) throws
+            SQLException {
+        Statement stmt = connection.createStatement();
+        ResultSet rsTrophy = stmt.executeQuery(String.format(GET_ROW, trophy));
+        rsTrophy.next();
+        if ( count >= 3 && !rsTrophy.getBoolean(2)) {
+            input.add(rsTrophy.getString(4));
+            stmt.executeUpdate(String.format(WIN_TROPHY, trophy));
+        }
+
+    }
+
     // TODO: 24/08/2022 Split into daily, weekly, and monthly checks!
     public ArrayList<String> checkAwards() {
         ArrayList<String> output = new ArrayList<>();
@@ -81,6 +93,22 @@ class TrophyTable {
                 output.add(rsFullDay.getString(4));
                 stmt.executeUpdate(String.format(WIN_TROPHY, "FullDay"));
             }
+
+            // Week Info
+            LocalDate endOfWeek = LocalDate.parse(dates[1]).plusDays(6);
+            ResultSet rsWeek = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[1], endOfWeek));
+            int count = 0;
+            while (rsWeek.next()) {
+                target = rsWeek.getInt(2);
+                achieved = rsToday.getString(3).split("=1").length;
+                if ( target >= 4 && achieved == target)
+                    count++;
+            }
+
+            checkWeekOrMonth(output, "ThreeDay", count, 3);
+            checkWeekOrMonth(output, "FiveDay", count, 5);
+            checkWeekOrMonth(output, "FullWeek", count, 7);
+
         }
         catch (SQLException e) {
             System.out.println("Error on checking for awards");
