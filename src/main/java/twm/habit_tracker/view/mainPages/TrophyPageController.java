@@ -1,5 +1,7 @@
 package twm.habit_tracker.view.mainPages;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,8 +19,8 @@ import java.util.function.Supplier;
 
 public class TrophyPageController implements Initializable {
 
-    private static ObservableList<Trophy> trophyDataSet;
-    private static Supplier<ObservableList<Trophy>> trophyDataSupplier;
+    private static ObservableList<Trophy> trophyDataSet = FXCollections.observableArrayList();
+    private static Supplier<String> trophyDataSupplier;
 
     @FXML GridPane trophyGrid;
     @FXML Label dayLabel;
@@ -26,14 +28,17 @@ public class TrophyPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        getTrophyData();
+        setTrophyData();
+        ListChangeListener trophyListener = e -> setTrophies();
+        trophyDataSet.addListener(trophyListener);
         setDay();
         setTrophies();
 
-
     }
 
-    public void getTrophyData() { trophyDataSet = trophyDataSupplier.get(); }
+    public static ObservableList<Trophy> getTrophyDataSet() {
+        return trophyDataSet;
+    }
 
     /**
      * Helper Method to set date which appears on the Trophy Page
@@ -74,7 +79,9 @@ public class TrophyPageController implements Initializable {
 
     }
 
-    public static void setTrophyDataSupplier(Supplier<ObservableList<Trophy>> supplier) {
+    public static void setTrophyData() { trophyDataSupplier.get(); }
+
+    public static void setTrophyDataSupplier(Supplier<String> supplier) {
         trophyDataSupplier = supplier;
     }
 

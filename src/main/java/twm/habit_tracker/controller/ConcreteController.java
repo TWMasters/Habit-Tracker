@@ -235,6 +235,8 @@ public class ConcreteController implements Controller {
         BiFunction<LocalDate, String[], String[]> updateHabitTrackerCompleted = (date, values) -> {
             model.changeTargetTable(new HabitTrackerTableState());
             model.editEntry(values, date.toString());
+
+            // Trophy
             ArrayList<String> output = model.checkAwards();
             return output.toArray(new String[output.size()]);
         };
@@ -243,16 +245,16 @@ public class ConcreteController implements Controller {
 
     @Override
     public void setTrophyPageMethods() throws SQLException {
-        Supplier<ObservableList<Trophy>> trophyDataSupplier = () -> {
+        Supplier<String> trophyDataSupplier = () -> {
             ResultSet rs = model.getTrophyTable();
-            ObservableList<Trophy> trophyData = FXCollections.observableArrayList();
+            TrophyPageController.getTrophyDataSet().clear();
             try {
                 if (rs.isBeforeFirst()) {
                     while (rs.next()) {
                         Trophy t = new Trophy();
                         t.setPrimaryKey(rs.getString(1));
                         t.setTrophyWon(rs.getBoolean(2));
-                        trophyData.add(t);
+                        TrophyPageController.getTrophyDataSet().add(t);
                     }
                 }
                 else
@@ -261,7 +263,7 @@ public class ConcreteController implements Controller {
             catch(SQLException e) {
                 e.printStackTrace();
             }
-            return trophyData;
+            return "";
         };
         TrophyPageController.setTrophyDataSupplier(trophyDataSupplier);
     }
