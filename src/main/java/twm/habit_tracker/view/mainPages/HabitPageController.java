@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 
 public class HabitPageController implements Initializable {
 
-    private Boolean firstBuild = true;
     private EditPage editPage;
     private EventHandler<ActionEvent> editButtonPush;
 
@@ -114,7 +113,6 @@ public class HabitPageController implements Initializable {
 
             row_count ++;
         }
-        firstBuild = false;
 
     }
 

@@ -1,16 +1,21 @@
 package twm.habit_tracker.view.mainPages;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import twm.habit_tracker.view.data.Trophy;
 
 import java.net.URL;
 import java.time.LocalDate;
 
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
 
 public class TrophyPageController implements Initializable {
 
+    private static ObservableList<Trophy> trophyDataSet;
+    private static Supplier<ObservableList<Trophy>> trophyDataSupplier;
 
     @FXML Label dayLabel;
     @FXML Label monthLabel;
@@ -21,6 +26,8 @@ public class TrophyPageController implements Initializable {
 
 
     }
+
+    public void getTrophyData() { trophyDataSet = trophyDataSupplier.get(); }
 
     /**
      * Helper Method to set date which appears on the Trophy Page
@@ -45,6 +52,10 @@ public class TrophyPageController implements Initializable {
         }
         dayLabel.setText(String.format("%s %s %s", day, month, year));
 
+    }
+
+    public static void setTrophyDataSupplier(Supplier<ObservableList<Trophy>> supplier) {
+        trophyDataSupplier = supplier;
     }
 
 }

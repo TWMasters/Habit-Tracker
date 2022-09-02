@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Helper Class for Concrete Model to create static Trophy Table
  */
-class TrophyTable {
+class TrophyTable implements TrophyModel {
     private static final String TROPHY_TABLE_SQL =
             "CREATE TABLE Trophies (\n" +
                     "Trophy_ID VARCHAR(255) PRIMARY KEY,\n" +
@@ -39,6 +39,9 @@ class TrophyTable {
     private static final String GET_ROW =
             "SELECT * FROM Trophies WHERE Trophy_ID = \'%s\';";
 
+    private static final String GET_TABLE =
+            "SELECT * FROM Trophies;";
+
     private static final String RESET_ROW =
             "UPDATE Trophies SET Trophy_Won = 0, Start_Date = \'%s\' WHERE Trophy_ID = \'%s\';";
 
@@ -52,6 +55,7 @@ class TrophyTable {
     }
 
     // TODO: 24/08/2022 Split into daily, weekly, and monthly checks!
+    @Override
     public ArrayList<String> checkAwards() {
         ArrayList<String> output = new ArrayList<>();
         String[] dates = getDates();
@@ -113,6 +117,18 @@ class TrophyTable {
         String firstOfMonth = LocalDate.now().withDayOfMonth(1).toString();
         return new String[] {today, firstOfWeek, firstOfMonth};
 
+    }
+
+    @Override
+    public ResultSet getTrophyTable() {
+        try {
+            Statement stmt = connection.createStatement();
+            return stmt.executeQuery(GET_TABLE);
+        } catch (SQLException e) {
+            System.err.println("Error when getting trophy table");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     // TODO: 24/08/2022 Reduce Repetition

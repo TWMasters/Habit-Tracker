@@ -11,11 +11,13 @@ import twm.habit_tracker.view.data.Goal;
 import twm.habit_tracker.view.data.Habit;
 import twm.habit_tracker.view.data.HabitTracker;
 import twm.habit_tracker.view.View;
+import twm.habit_tracker.view.data.Trophy;
 import twm.habit_tracker.view.editPages.EditPage;
 import twm.habit_tracker.view.editPages.GoalInputFieldsController;
 import twm.habit_tracker.view.editPages.HabitInputFieldsController;
 import twm.habit_tracker.view.mainPages.GoalPageController;
 import twm.habit_tracker.view.mainPages.HabitPageController;
+import twm.habit_tracker.view.mainPages.TrophyPageController;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,6 +36,7 @@ public class ConcreteController implements Controller {
         // Link View to Model
         setGoalPageMethods();
         setHabitPageMethods();
+        setTrophyPageMethods();
 
         setEditPageMethods();
 
@@ -238,4 +241,28 @@ public class ConcreteController implements Controller {
         HabitPageController.setUpdateHabitTrackerCompletedAttributeBiConsumer(updateHabitTrackerCompleted);
     }
 
+    @Override
+    public void setTrophyPageMethods() throws SQLException {
+        Supplier<ObservableList<Trophy>> trophyDataSupplier = () -> {
+            ResultSet rs = model.getTrophyTable();
+            ObservableList<Trophy> trophyData = FXCollections.observableArrayList();
+            try {
+                if (rs.isBeforeFirst()) {
+                    while (rs.next()) {
+                        Trophy t = new Trophy();
+                        t.setPrimaryKey(rs.getString(1));
+                        t.setTrophyWon(rs.getBoolean(2));
+                        trophyData.add(t);
+                    }
+                }
+                else
+                    System.out.println("Trophy Set is empty!");
+            }
+            catch(SQLException e) {
+                e.printStackTrace();
+            }
+            return trophyData;
+        };
+        TrophyPageController.setTrophyDataSupplier(trophyDataSupplier);
+    }
 }
