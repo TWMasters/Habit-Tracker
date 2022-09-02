@@ -95,8 +95,7 @@ class TrophyTable {
             }
 
             // Week Info
-            LocalDate endOfWeek = LocalDate.parse(dates[1]).plusDays(6);
-            ResultSet rsWeek = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[1], endOfWeek));
+            ResultSet rsWeek = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[1], dates[3]));
             int count = 0;
             while (rsWeek.next()) {
                 target = rsWeek.getInt(2);
@@ -108,6 +107,20 @@ class TrophyTable {
             checkWeekOrMonth(output, "ThreeDay", count, 3);
             checkWeekOrMonth(output, "FiveDay", count, 5);
             checkWeekOrMonth(output, "FullWeek", count, 7);
+
+            // Month Info
+            ResultSet rsMonth = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[2], dates[4]));
+            count = 0;
+            while (rsMonth.next()) {
+                target = rsWeek.getInt(2);
+                achieved = rsToday.getString(3).split("=1").length;
+                if ( target >= 4 && achieved == target)
+                    count++;
+            }
+
+            checkWeekOrMonth(output, "TenDay", count, 10);
+            checkWeekOrMonth(output, "TwentyDay", count, 20);
+            checkWeekOrMonth(output, "FullMMonth", count, LocalDate.now().lengthOfMonth());
 
         }
         catch (SQLException e) {
@@ -142,7 +155,10 @@ class TrophyTable {
         String today = LocalDate.now().toString();
         String firstOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).toString();
         String firstOfMonth = LocalDate.now().withDayOfMonth(1).toString();
-        return new String[] {today, firstOfWeek, firstOfMonth};
+        String endOfWeek = LocalDate.now().with(DayOfWeek.SUNDAY).toString();
+        int monthEnd = LocalDate.now().lengthOfMonth();
+        String endOfMonth = LocalDate.now().withDayOfMonth(monthEnd).toString();
+        return new String[] {today, firstOfWeek, firstOfMonth, endOfWeek,  endOfMonth};
 
     }
 
