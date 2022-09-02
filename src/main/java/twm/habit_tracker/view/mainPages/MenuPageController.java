@@ -38,6 +38,7 @@ public class MenuPageController implements Initializable {
     }
 
     public void trophyButtonPush() {
+        TrophyPageController.setTrophyData();
         Node page = context.getPage("Trophy");
         mainFrame.setCenter(page);
         BorderPane.setAlignment(page, Pos.TOP_LEFT);
