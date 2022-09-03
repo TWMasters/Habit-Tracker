@@ -18,20 +18,21 @@ class TrophyTable {
                     "Trophy_ID VARCHAR(255) PRIMARY KEY,\n" +
                     "Trophy_Won BOOLEAN DEFAULT false NOT NULL,\n" +
                     "Start_Date DATE NOT NULL,\n" +
-                    "Trophy_Message VARCHAR(255) NOT NULL\n" +
+                    "Trophy_Message VARCHAR(255) NOT NULL,\n" +
+                    "Reward INT NOT NULL\n" +
                     ");";
 
     private static final String POPULATE_TROPHY_TABLE =
-            "INSERT INTO Trophies (Trophy_ID, Start_Date, Trophy_Message)\n" +
+            "INSERT INTO Trophies (Trophy_ID, Start_Date, Trophy_Message, Reward)\n" +
                     "VALUES\n" +
-                    "(\'HalfDay\', \'%s\', \'You Completed Half of your Daily Habits\')," +
-                    "(\'FullDay\', \'%s\', \'You Completed All of your Daily Habits\')," +
-                    "(\'ThreeDay\', \'%s\', \'You Completed your Daily Habits for Three Days this Week\')," +
-                    "(\'FiveDay\', \'%s\', \'You Completed your Daily Habits for Five Days this Week\')," +
-                    "(\'FullWeek\', \'%s\', \'You Completed your Daily Habits for the Week\')," +
-                    "(\'TenDay\', \'%s\', \'You Completed your Daily Habits for Ten Days this Month\')," +
-                    "(\'TwentyDay\', \'%s\', \'You Completed your Daily Habits for Twenty Days this Month\')," +
-                    "(\'FullMonth\', \'%s\', \'You Completed your Daily Habits for Thirty Days this Month\');";
+                    "(\'HalfDay\', \'%s\', \'You Completed Half of your Daily Habits\', 8)," +
+                    "(\'FullDay\', \'%s\', \'You Completed All of your Daily Habits\', 12)," +
+                    "(\'ThreeDay\', \'%s\', \'You Completed your Daily Habits for Three Days this Week\', 25)," +
+                    "(\'FiveDay\', \'%s\', \'You Completed your Daily Habits for Five Days this Week\', 60)," +
+                    "(\'FullWeek\', \'%s\', \'You Completed your Daily Habits for the Week\', 90)," +
+                    "(\'TenDay\', \'%s\', \'You Completed your Daily Habits for Ten Days this Month\', 100)," +
+                    "(\'TwentyDay\', \'%s\', \'You Completed your Daily Habits for Twenty Days this Month\', 250)," +
+                    "(\'FullMonth\', \'%s\', \'You Completed your Daily Habits for Thirty Days this Month\', 350);";
 
     private static final String GET_DATE_RANGE =
             "SELECT * FROM Habit_Tracker WHERE Date >= \'%s\' AND DATE <= \'%s\';";
@@ -54,6 +55,14 @@ class TrophyTable {
         this.connection = connection;
     }
 
+    /**
+     * Helper method for checking whether Weekly or Monthly trophies must be rewarded
+     * @param input String to be updated and returned to Client
+     * @param trophy Lookup Trophy in Database
+     * @param count Number of successful days to check against target
+     * @param target
+     * @throws SQLException
+     */
     private void checkWeekOrMonth(ArrayList<String> input, String trophy, int count, int target) throws
             SQLException {
         Statement stmt = connection.createStatement();
@@ -67,6 +76,11 @@ class TrophyTable {
     }
 
     // TODO: 24/08/2022 Split into daily, weekly, and monthly checks!
+
+    /**
+     * Check whether any trophies have been rewarded
+     * @return String of messages to show User
+     */
     public ArrayList<String> checkAwards() {
         ArrayList<String> output = new ArrayList<>();
         String[] dates = getDates();
@@ -162,6 +176,10 @@ class TrophyTable {
 
     }
 
+    /**
+     * Get Copy of trophy table
+     * @return result set of trophy table
+     */
     public ResultSet getTrophyTable() {
         try {
             Statement stmt = connection.createStatement();
