@@ -1,4 +1,4 @@
-package twm.habit_tracker.model;
+package twm.habit_tracker.model.reward;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

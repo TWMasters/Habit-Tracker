@@ -1,9 +1,11 @@
 package twm.habit_tracker.model;
 
+import twm.habit_tracker.model.reward.ConcreteRewardModel;
+import twm.habit_tracker.model.reward.RewardModel;
+
 import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class ConcreteModel implements Model {
 
@@ -37,13 +39,13 @@ public class ConcreteModel implements Model {
     private Connection connection = null;
     private static Model model = null;
     private TableState targetTable;
-    private TrophyTable trophyTable;
+    private RewardModel rewardModel;
 
     private ConcreteModel() {
         try {
             Boolean databaseExists = new File(DB_FILEPATH).exists();
             connection = DriverManager.getConnection(H2_URL);
-            trophyTable = new TrophyTable(connection);
+            rewardModel = new ConcreteRewardModel(connection);
             if (!databaseExists)
                 createTables();
             else
@@ -57,16 +59,6 @@ public class ConcreteModel implements Model {
     public void changeTargetTable(TableState newTargetTable) {
         this.targetTable = newTargetTable;
         targetTable.setContext(connection);
-    }
-
-    @Override
-    public ArrayList<String> checkAwards() {
-        return trophyTable.checkAwards();
-    }
-
-    @Override
-    public ResultSet getTrophyTable() {
-        return trophyTable.getTrophyTable();
     }
 
     @Override
@@ -87,7 +79,7 @@ public class ConcreteModel implements Model {
         try {
             Statement stmt = connection.createStatement();
 
-            trophyTable.createTrophyTable();
+            rewardModel.buildTables();
 
             stmt.execute(HABIT_TABLE_SQL);
             stmt.execute(GOAL_TABLE_SQL);
@@ -154,6 +146,11 @@ public class ConcreteModel implements Model {
         targetTable.editEntry(values, lookupValue);
     }
 
+    @Override
+    public RewardModel getRewardModel() {
+        return rewardModel;
+    }
+
     /**
      * Helper method to update tables on booting up application
      */
@@ -161,7 +158,7 @@ public class ConcreteModel implements Model {
         System.out.println("Updating Tables!");
 
         // Trophies
-        trophyTable.updateDates();
+        rewardModel.updateTables();
 
         // Dates
         changeTargetTable(new HabitTrackerTableState());

@@ -30,5 +30,6 @@ module twm.habit_tracker.habittracker {
     opens twm.habit_tracker.zexamples to javafx.fxml;
     exports twm.habit_tracker.view.data;
     opens twm.habit_tracker.view.data to javafx.fxml;
+    exports twm.habit_tracker.model.reward;
 
 }

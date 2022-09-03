@@ -1,11 +1,13 @@
 package twm.habit_tracker.model;
 
+import twm.habit_tracker.model.reward.RewardModel;
+
 import java.sql.ResultSet;
 
 /**
  * @author tobym
  */
-public interface Model extends TrophyModel {
+public interface Model {
     /**
      * Add row to Target Table
      * @param values Values to populate new Row
@@ -55,5 +57,11 @@ public interface Model extends TrophyModel {
      * @return name of Table State
      */
     String getTableState();
+
+    /**
+     * Get the reward model for this model
+     * @return instance of Reward Model
+     */
+    RewardModel getRewardModel();
 
 }
