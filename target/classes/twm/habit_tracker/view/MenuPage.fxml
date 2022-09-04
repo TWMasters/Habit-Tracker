@@ -41,7 +41,7 @@
             </Button>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="coinLabel">
+                  <Label fx:id="coinLabel" text="0">
                      <font>
                         <Font size="25.0" />
                      </font>

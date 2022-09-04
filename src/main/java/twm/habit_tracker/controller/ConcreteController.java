@@ -251,6 +251,7 @@ public class ConcreteController implements Controller {
                         TrophyPageController.getTrophyDataSet().replace(key, true);
                         output.add(message);
                     }
+                    MenuPageController.setCoins();
                 }
             }
             catch (SQLException e) {
