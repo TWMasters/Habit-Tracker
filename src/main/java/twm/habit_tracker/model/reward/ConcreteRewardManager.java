@@ -35,7 +35,7 @@ public class ConcreteRewardManager implements RewardManager {
                     coinsAwarded += workingRS.getInt(5);
                 }
                 // Change coins
-                System.out.println("Coins" + coinsAwarded);
+                userInfo.getBalance(coinsAwarded);
                 // Reset before returning!
                 workingRS.beforeFirst();
             }
@@ -54,13 +54,8 @@ public class ConcreteRewardManager implements RewardManager {
     }
 
     @Override
-    public void getCoins() {
-
-    }
-
-    @Override
-    public void changeBalance(int coins) {
-
+    public int getBalance() {
+        return userInfo.getBalance(0);
     }
 
     @Override

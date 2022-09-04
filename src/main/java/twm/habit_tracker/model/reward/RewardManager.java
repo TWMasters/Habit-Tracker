@@ -23,9 +23,10 @@ public interface RewardManager {
      */
     ResultSet getTrophies();
 
-    void getCoins();
-
-    void changeBalance(int coins);
+    /**
+     * Get balance of coins
+     */
+    int getBalance();
 
     void updateTables();
 
