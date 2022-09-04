@@ -73,8 +73,8 @@ class TrophyTable {
         ResultSet rsTrophy = stmt.executeQuery(String.format(GET_ROW, trophy));
         rsTrophy.next();
         if ( count >= target && !rsTrophy.getBoolean(2)) {
-            input.add(rsTrophy.getString(4));
-            stmt.executeUpdate(String.format(WIN_TROPHY, "\'" + trophy + "\'"));
+            input.add("\'" + rsTrophy.getString( 1)  + "\'");
+            stmt.executeUpdate(String.format(WIN_TROPHY, trophy ));
         }
 
     }
@@ -101,16 +101,16 @@ class TrophyTable {
             ResultSet rsHalfDay = stmt.executeQuery(String.format(GET_ROW, "HalfDay"));
             rsHalfDay.next();
             if ( target >= 4 && !rsHalfDay.getBoolean(2) && achieved >= (target / 2) ) {
-                output.add(rsHalfDay.getString(4));
-                stmt.executeUpdate(String.format(WIN_TROPHY, "\'HalfDay\'"));
+                output.add("\'" + rsHalfDay.getString( 1) + "\'");
+                stmt.executeUpdate(String.format(WIN_TROPHY, "HalfDay"));
             }
 
             // Full Day
             ResultSet rsFullDay = stmt.executeQuery(String.format(GET_ROW, "FullDay"));
             rsFullDay.next();
             if ( target >= 4 && !rsFullDay.getBoolean(2) && achieved == (target) ) {
-                output.add(rsFullDay.getString(4));
-                stmt.executeUpdate(String.format(WIN_TROPHY, "\'FullDay\'"));
+                output.add("\'" + rsFullDay.getString(1) + "\'");
+                stmt.executeUpdate(String.format(WIN_TROPHY, "FullDay"));
             }
 
             // Week Info
@@ -142,6 +142,7 @@ class TrophyTable {
             checkWeekOrMonth(output, "FullMonth", count, LocalDate.now().lengthOfMonth());
 
             // Generate ResultSet
+            stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rsOutput = Optional.of(stmt.executeQuery(String.format(GET_AWARDED_TROPHIES, String.join(", ", output))));
             return rsOutput;
 
