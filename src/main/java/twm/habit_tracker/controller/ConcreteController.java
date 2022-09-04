@@ -17,6 +17,7 @@ import twm.habit_tracker.view.editPages.GoalInputFieldsController;
 import twm.habit_tracker.view.editPages.HabitInputFieldsController;
 import twm.habit_tracker.view.mainPages.GoalPageController;
 import twm.habit_tracker.view.mainPages.HabitPageController;
+import twm.habit_tracker.view.mainPages.MenuPageController;
 import twm.habit_tracker.view.mainPages.TrophyPageController;
 
 import java.sql.ResultSet;
@@ -35,6 +36,8 @@ public class ConcreteController implements Controller {
         this.model = model;
 
         // Link View to Model
+        setMenuPageMethods();
+
         setGoalPageMethods();
         setHabitPageMethods();
         setTrophyPageMethods();
@@ -257,6 +260,13 @@ public class ConcreteController implements Controller {
             return output.toArray(new String[output.size()]);
         };
         HabitPageController.setUpdateHabitTrackerCompletedAttributeBiConsumer(updateHabitTrackerCompleted);
+    }
+
+    @Override
+    public void setMenuPageMethods() {
+        Supplier<Integer> coinSupplier = () -> model.getRewardManager().getBalance();
+        MenuPageController.setCoinSupplier(coinSupplier);
+
     }
 
     @Override

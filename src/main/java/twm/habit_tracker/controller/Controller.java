@@ -20,6 +20,11 @@ public interface Controller {
     void setHabitPageMethods() throws SQLException;
 
     /**
+     * Use to hold methods for setting Menu Page methods
+     */
+    void setMenuPageMethods() throws SQLException;
+
+    /**
      * Use to hold methods for setting Trophy Page methods
      */
     void setTrophyPageMethods() throws SQLException;

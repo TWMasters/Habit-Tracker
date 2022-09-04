@@ -1,19 +1,29 @@
 package twm.habit_tracker.view.mainPages;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import twm.habit_tracker.view.View;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
 
 // TODO: 26/08/2022 Reusable object for buttons! 
 public class MenuPageController implements Initializable {
+    private static IntegerProperty coins = new SimpleIntegerProperty();
+    private static Supplier<Integer> coinSupplier;
     private static View context;
+
+    @FXML Label coinLabel;
 
     @FXML
     private BorderPane mainFrame;
@@ -47,11 +57,23 @@ public class MenuPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        InvalidationListener coinListener = e -> {
+            coinLabel.setText(String.valueOf(coins.get()));
+        };
+        coins.addListener(coinListener);
+        setCoins();
         habitButtonPush();
 
     }
-
     public static void setContext(View v) {
         context = v;
+    }
+
+    public static void setCoins() {
+        coins.setValue(coinSupplier.get());
+    }
+
+    public static void setCoinSupplier(Supplier<Integer> supplier) {
+        coinSupplier = supplier;
     }
 }
