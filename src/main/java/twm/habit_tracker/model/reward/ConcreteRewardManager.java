@@ -2,6 +2,8 @@ package twm.habit_tracker.model.reward;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
 
 public class ConcreteRewardManager implements RewardManager {
     private final Connection connection;
@@ -19,8 +21,27 @@ public class ConcreteRewardManager implements RewardManager {
     }
 
     @Override
-    public ResultSet checkTrophies() {
-        return null;
+    public Optional<ResultSet> checkTrophies() throws SQLException {
+        // Get Trophies
+        Optional<ResultSet> trophyOutput = trophyTable.checkAwards();
+        if (trophyOutput.isPresent()) {
+            ResultSet workingRS = trophyOutput.get();
+            int coinsAwarded = 0;
+            while(workingRS.next()) {
+                coinsAwarded += workingRS.getInt(5);
+            }
+            // Change coins
+            System.out.println("Coins" + coinsAwarded);
+            // Reset before returning!
+            workingRS.beforeFirst();
+        }
+        return trophyOutput;
+    }
+
+
+    @Override
+    public ResultSet getTrophies() {
+        return trophyTable.getTrophyTable();
     }
 
     @Override

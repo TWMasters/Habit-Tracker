@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 // TODO: 24/08/2022 Create tests!
 /**
@@ -34,6 +35,9 @@ class TrophyTable {
                     "(\'TwentyDay\', \'%s\', \'You Completed your Daily Habits for Twenty Days this Month\', 250)," +
                     "(\'FullMonth\', \'%s\', \'You Completed your Daily Habits for Thirty Days this Month\', 350);";
 
+    private static final String GET_AWARDED_TROPHIES =
+            "SELECT * FROM Trophies WHERE Trophy_ID in (%s);";
+
     private static final String GET_DATE_RANGE =
             "SELECT * FROM Habit_Tracker WHERE Date >= \'%s\' AND DATE <= \'%s\';";
 
@@ -41,7 +45,7 @@ class TrophyTable {
             "SELECT * FROM Trophies WHERE Trophy_ID = \'%s\';";
 
     private static final String GET_TABLE =
-            "SELECT * FROM Trophies;";
+            "SELECT * FROM Trophies WHERE Trophy_won = 1;";
 
     private static final String RESET_ROW =
             "UPDATE Trophies SET Trophy_Won = 0, Start_Date = \'%s\' WHERE Trophy_ID = \'%s\';";
@@ -70,7 +74,7 @@ class TrophyTable {
         rsTrophy.next();
         if ( count >= target && !rsTrophy.getBoolean(2)) {
             input.add(rsTrophy.getString(4));
-            stmt.executeUpdate(String.format(WIN_TROPHY, trophy));
+            stmt.executeUpdate(String.format(WIN_TROPHY, "\'" + trophy + "\'"));
         }
 
     }
@@ -81,7 +85,8 @@ class TrophyTable {
      * Check whether any trophies have been rewarded
      * @return String of messages to show User
      */
-    public ArrayList<String> checkAwards() {
+    public Optional<ResultSet> checkAwards() {
+        Optional<ResultSet> rsOutput = Optional.empty();
         ArrayList<String> output = new ArrayList<>();
         String[] dates = getDates();
         try {
@@ -97,7 +102,7 @@ class TrophyTable {
             rsHalfDay.next();
             if ( target >= 4 && !rsHalfDay.getBoolean(2) && achieved >= (target / 2) ) {
                 output.add(rsHalfDay.getString(4));
-                stmt.executeUpdate(String.format(WIN_TROPHY, "HalfDay"));
+                stmt.executeUpdate(String.format(WIN_TROPHY, "\'HalfDay\'"));
             }
 
             // Full Day
@@ -105,7 +110,7 @@ class TrophyTable {
             rsFullDay.next();
             if ( target >= 4 && !rsFullDay.getBoolean(2) && achieved == (target) ) {
                 output.add(rsFullDay.getString(4));
-                stmt.executeUpdate(String.format(WIN_TROPHY, "FullDay"));
+                stmt.executeUpdate(String.format(WIN_TROPHY, "\'FullDay\'"));
             }
 
             // Week Info
@@ -136,12 +141,16 @@ class TrophyTable {
             checkWeekOrMonth(output, "TwentyDay", count, 20);
             checkWeekOrMonth(output, "FullMonth", count, LocalDate.now().lengthOfMonth());
 
+            // Generate ResultSet
+            rsOutput = Optional.of(stmt.executeQuery(String.join(", ", output)));
+            return rsOutput;
+
         }
         catch (SQLException e) {
             System.out.println("Error on checking for awards");
             e.printStackTrace();
         }
-        return output;
+        return rsOutput;
     }
 
     /**
