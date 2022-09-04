@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.function.*;
 
 public class ConcreteController implements Controller {
@@ -235,26 +236,39 @@ public class ConcreteController implements Controller {
         BiFunction<LocalDate, String[], String[]> updateHabitTrackerCompleted = (date, values) -> {
             model.changeTargetTable(new HabitTrackerTableState());
             model.editEntry(values, date.toString());
-
             // Trophy
-            ArrayList<String> output = model.checkAwards();
+            Optional<ResultSet> trophyOutput = model.getRewardManager().checkTrophies();
+            ArrayList<String> output = new ArrayList<>();
+            try {
+                if (trophyOutput.isPresent()) {
+                    ResultSet workingRS = trophyOutput.get();
+                    while (workingRS.next()) {
+                        String key = workingRS.getString(1);
+                        String message = workingRS.getString(4);
+                        TrophyPageController.getTrophyDataSet().replace(key, true);
+                        output.add(message);
+                    }
+                }
+            }
+            catch (SQLException e) {
+                System.err.println("Error while  updating trophy table");
+                e.printStackTrace();
+            }
             return output.toArray(new String[output.size()]);
         };
         HabitPageController.setUpdateHabitTrackerCompletedAttributeBiConsumer(updateHabitTrackerCompleted);
     }
 
     @Override
-    public void setTrophyPageMethods() throws SQLException {
-        Supplier<String> trophyDataSupplier = () -> {
-            ResultSet rs = model.getTrophyTable();
-            TrophyPageController.getTrophyDataSet().clear();
+    public void setTrophyPageMethods()  {
+        Runnable trophyDataRunnable = () -> {
+            ResultSet rs = model.getRewardManager().getTrophies();
             try {
                 if (rs.isBeforeFirst()) {
                     while (rs.next()) {
-                        Trophy t = new Trophy();
-                        t.setPrimaryKey(rs.getString(1));
-                        t.setTrophyWon(rs.getBoolean(2));
-                        TrophyPageController.getTrophyDataSet().add(t);
+                        String key = rs.getString(1);
+                        Boolean value = rs.getBoolean(2);
+                        TrophyPageController.getTrophyDataSet().put(key, value);
                     }
                 }
                 else
@@ -263,8 +277,8 @@ public class ConcreteController implements Controller {
             catch(SQLException e) {
                 e.printStackTrace();
             }
-            return "";
         };
-        TrophyPageController.setTrophyDataSupplier(trophyDataSupplier);
+        TrophyPageController.setTrophyDataRunnable(trophyDataRunnable);
+
     }
 }

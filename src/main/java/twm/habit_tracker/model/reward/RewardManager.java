@@ -14,7 +14,7 @@ public interface RewardManager {
      * Make change to coins file
      * @return ResultSet of awarded trophies for Controller to send messages
      */
-    Optional<ResultSet> checkTrophies() throws SQLException;
+    Optional<ResultSet> checkTrophies();
 
     /**
      * Use to retrieve information on how many trophies have been awarded

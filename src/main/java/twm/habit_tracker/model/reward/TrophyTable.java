@@ -45,7 +45,7 @@ class TrophyTable {
             "SELECT * FROM Trophies WHERE Trophy_ID = \'%s\';";
 
     private static final String GET_TABLE =
-            "SELECT * FROM Trophies WHERE Trophy_won = 1;";
+            "SELECT * FROM Trophies;";
 
     private static final String RESET_ROW =
             "UPDATE Trophies SET Trophy_Won = 0, Start_Date = \'%s\' WHERE Trophy_ID = \'%s\';";
@@ -142,7 +142,7 @@ class TrophyTable {
             checkWeekOrMonth(output, "FullMonth", count, LocalDate.now().lengthOfMonth());
 
             // Generate ResultSet
-            rsOutput = Optional.of(stmt.executeQuery(String.join(", ", output)));
+            rsOutput = Optional.of(stmt.executeQuery(String.format(GET_AWARDED_TROPHIES, String.join(", ", output))));
             return rsOutput;
 
         }

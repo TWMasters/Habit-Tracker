@@ -21,19 +21,25 @@ public class ConcreteRewardManager implements RewardManager {
     }
 
     @Override
-    public Optional<ResultSet> checkTrophies() throws SQLException {
+    public Optional<ResultSet> checkTrophies() {
         // Get Trophies
         Optional<ResultSet> trophyOutput = trophyTable.checkAwards();
-        if (trophyOutput.isPresent()) {
-            ResultSet workingRS = trophyOutput.get();
-            int coinsAwarded = 0;
-            while(workingRS.next()) {
-                coinsAwarded += workingRS.getInt(5);
+        try {
+            if (trophyOutput.isPresent()) {
+                ResultSet workingRS = trophyOutput.get();
+                int coinsAwarded = 0;
+                while (workingRS.next()) {
+                    coinsAwarded += workingRS.getInt(5);
+                }
+                // Change coins
+                System.out.println("Coins" + coinsAwarded);
+                // Reset before returning!
+                workingRS.beforeFirst();
             }
-            // Change coins
-            System.out.println("Coins" + coinsAwarded);
-            // Reset before returning!
-            workingRS.beforeFirst();
+        }
+        catch (SQLException e) {
+            System.err.println("Error on resetting trophy result set");
+            e.printStackTrace();
         }
         return trophyOutput;
     }

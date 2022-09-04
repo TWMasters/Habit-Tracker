@@ -1,42 +1,41 @@
 package twm.habit_tracker.view.mainPages;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import twm.habit_tracker.view.data.Trophy;
 
 import java.net.URL;
 import java.time.LocalDate;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Supplier;
 
 public class TrophyPageController implements Initializable {
 
-    private static ObservableList<Trophy> trophyDataSet = FXCollections.observableArrayList();
-    private static Supplier<String> trophyDataSupplier;
+    private static ObservableMap<String, Boolean> trophyDataSet = FXCollections.observableHashMap();
+    private static Runnable trophyDataRunnable;
 
     @FXML GridPane trophyGrid;
     @FXML Label dayLabel;
     @FXML Label monthLabel;
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setTrophyData();
-        ListChangeListener trophyListener = e -> setTrophies();
+        MapChangeListener trophyListener = e -> setTrophies();
         trophyDataSet.addListener(trophyListener);
         setDay();
         setTrophies();
 
     }
 
-    public static ObservableList<Trophy> getTrophyDataSet() {
+    public static ObservableMap<String, Boolean> getTrophyDataSet() {
         return trophyDataSet;
     }
 
@@ -69,20 +68,19 @@ public class TrophyPageController implements Initializable {
      * Help method which colours Trophies green if they have been earned!
      */
     private void setTrophies()  {
-        for (Trophy t : trophyDataSet)
-            if (t.isTrophyWon()) {
+        for (Map.Entry<String,Boolean> entry : trophyDataSet.entrySet())
+            if (entry.getValue()) {
                 Optional<Node> targetLabel = trophyGrid.getChildren().stream()
-                        .filter(n -> n.getId().equals(t.getPrimaryKey()))
+                        .filter(n -> n.getId().equals(entry.getKey()))
                         .findFirst();
                 targetLabel.get().setStyle("-fx-background-color: green;");
             }
-
     }
 
-    public static void setTrophyData() { trophyDataSupplier.get(); }
+    public static void setTrophyData() { trophyDataRunnable.run(); }
 
-    public static void setTrophyDataSupplier(Supplier<String> supplier) {
-        trophyDataSupplier = supplier;
+    public static void setTrophyDataRunnable(Runnable r) {
+        trophyDataRunnable = r;
     }
 
 }
