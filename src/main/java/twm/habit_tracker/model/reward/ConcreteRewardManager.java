@@ -8,16 +8,19 @@ import java.util.Optional;
 public class ConcreteRewardManager implements RewardManager {
     private final Connection connection;
     private TrophyTable trophyTable;
+    private UserInfo userInfo;
 
     public ConcreteRewardManager(Connection connection) {
         this.connection = connection;
         trophyTable = new TrophyTable(connection);
+        userInfo = new UserInfo();
     }
 
 
     @Override
     public void buildTables() {
         trophyTable.createTrophyTable();
+        userInfo.createUserInfoFile();
     }
 
     @Override
