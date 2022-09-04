@@ -1,6 +1,6 @@
 package twm.habit_tracker.model;
 
-import twm.habit_tracker.model.reward.RewardModel;
+import twm.habit_tracker.model.reward.RewardManager;
 
 import java.sql.ResultSet;
 
@@ -59,9 +59,9 @@ public interface Model {
     String getTableState();
 
     /**
-     * Get the reward model for this model
-     * @return instance of Reward Model
+     * Get the reward manager for this model so can call methods
+     * @return instance of Reward Manager
      */
-    RewardModel getRewardModel();
+    RewardManager getRewardManager();
 
 }

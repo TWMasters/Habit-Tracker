@@ -1,7 +1,7 @@
 package twm.habit_tracker.model;
 
-import twm.habit_tracker.model.reward.ConcreteRewardModel;
-import twm.habit_tracker.model.reward.RewardModel;
+import twm.habit_tracker.model.reward.ConcreteRewardManager;
+import twm.habit_tracker.model.reward.RewardManager;
 
 import java.io.File;
 import java.sql.*;
@@ -39,13 +39,13 @@ public class ConcreteModel implements Model {
     private Connection connection = null;
     private static Model model = null;
     private TableState targetTable;
-    private RewardModel rewardModel;
+    private RewardManager rewardModel;
 
     private ConcreteModel() {
         try {
             Boolean databaseExists = new File(DB_FILEPATH).exists();
             connection = DriverManager.getConnection(H2_URL);
-            rewardModel = new ConcreteRewardModel(connection);
+            rewardModel = new ConcreteRewardManager(connection);
             if (!databaseExists)
                 createTables();
             else
@@ -147,7 +147,7 @@ public class ConcreteModel implements Model {
     }
 
     @Override
-    public RewardModel getRewardModel() {
+    public RewardManager getRewardManager() {
         return rewardModel;
     }
 

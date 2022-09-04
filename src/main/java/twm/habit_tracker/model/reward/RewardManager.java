@@ -2,7 +2,7 @@ package twm.habit_tracker.model.reward;
 
 import java.sql.ResultSet;
 
-public interface RewardModel {
+public interface RewardManager {
 
 
     void buildTables();
