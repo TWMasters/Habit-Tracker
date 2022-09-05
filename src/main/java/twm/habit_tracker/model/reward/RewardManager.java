@@ -2,6 +2,7 @@ package twm.habit_tracker.model.reward;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Optional;
 
 public interface RewardManager {
@@ -27,6 +28,12 @@ public interface RewardManager {
      * Get balance of coins
      */
     int getBalance();
+
+    /**
+     * Return Level Data
+     * @return Map of Level Data
+     */
+    HashMap<String, Integer> getLevel();
 
     void updateTables();
 

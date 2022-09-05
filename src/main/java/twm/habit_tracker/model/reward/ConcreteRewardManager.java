@@ -3,11 +3,15 @@ package twm.habit_tracker.model.reward;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Optional;
 
 public class ConcreteRewardManager implements RewardManager {
+    private static final int COIN_REWARD_COLUMN_NUMBER = 5;
+    private static final int INCREMENT = 1;
     private static final int LEVEL = 2;
-    private static final int LEVEL_COLUMN_NUMBER = 2;
+    private static final int MAX_LEVEL = 9;
+    private static final int STARTING_BALANCE =  0;
 
     private final Connection connection;
     private LevelTable levelTable;
@@ -23,18 +27,10 @@ public class ConcreteRewardManager implements RewardManager {
 
     @Override
     public void buildTables() {
-        try {
             levelTable.createLevelTable();
             trophyTable.createTrophyTable();
-            ResultSet rsLevelCap = levelTable.getLevelTableEntry(LEVEL);
-            rsLevelCap.next();
-            int levelCap = rsLevelCap.getInt(LEVEL_COLUMN_NUMBER);
+            int levelCap = levelTable.getLevelCap(LEVEL);
             userInfo.createUserInfoFile(levelCap);
-        }
-        catch (SQLException e) {
-            System.err.println("Error on fetching Level Cap when Building User Info File");
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -44,9 +40,9 @@ public class ConcreteRewardManager implements RewardManager {
         try {
             if (trophyOutput.isPresent()) {
                 ResultSet workingRS = trophyOutput.get();
-                int coinsAwarded = 0;
+                int coinsAwarded = STARTING_BALANCE;
                 while (workingRS.next()) {
-                    coinsAwarded += workingRS.getInt(5);
+                    coinsAwarded += workingRS.getInt(COIN_REWARD_COLUMN_NUMBER);
                 }
                 // Change coins
                 userInfo.getBalance(coinsAwarded);
@@ -70,6 +66,18 @@ public class ConcreteRewardManager implements RewardManager {
     @Override
     public int getBalance() {
         return userInfo.getBalance(0);
+    }
+
+    @Override
+    public HashMap<String,Integer> getLevel() {
+        HashMap<String,Integer> levelMap = userInfo.getLevelData();
+        if ( levelMap.get("Level") != MAX_LEVEL &&  levelMap.get("CoinTotal") >= levelMap.get("LevelCap") ) {
+            int newLevel = levelMap.get("Level") + INCREMENT;
+            int newLevelCap = levelTable.getLevelCap(newLevel + INCREMENT);
+            userInfo.updateLevel(newLevel, newLevelCap);
+            levelMap = userInfo.getLevelData();
+        }
+        return levelMap;
     }
 
     @Override

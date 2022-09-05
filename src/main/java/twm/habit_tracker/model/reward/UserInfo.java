@@ -31,14 +31,35 @@ public class UserInfo {
         return workingMap.get("CoinBalance");
     }
 
-    public int[] getLevel() {
-        int[] output = new int[2];
-        return output;
+    /**
+     * Fetch current level and level cap
+     * Update if level cap has been breached!
+     * @return Array with Level and Level Cap
+     */
+    public HashMap<String,Integer> getLevelData() {
+        HashMap<String,Integer> levelMap = readFromFile();
+        levelMap.remove("CoinBalance");
+        return levelMap;
+
+        /*
+        int[] output = new int[3];
+        output[0] = readFromFile().get("Level");
+        output[1] = output[0] == MAX_LEVEL ? 1 : readFromFile().get("CoinTotal");
+        output[2] = readFromFile().get("LevelCap");
+
+         */
     }
 
-    public void updateLevel() {
-
+    /**
+     * Write new level and level cap to file
+     */
+    public void updateLevel(int newLvl, int newLvlCap) {
+        HashMap<String,Integer> userInfo = readFromFile();
+        userInfo.replace("Level", newLvl);
+        userInfo.replace("LevelCap", newLvlCap);
+        writeToFile(userInfo);
     }
+
 
     /**
      * Helper method to read file
