@@ -19,9 +19,11 @@ class UserInfo {
     public int getBalance(int change) {
         Boolean flag = change > 0;
         HashMap<String, String> workingMap = FileHelper.readFromFile(FILE_NAME);
-        workingMap.replace("CoinBalance", workingMap.get("CoinBalance") + change);
+        int newCoinBalance = Integer.valueOf(workingMap.get("CoinBalance")) + change;
+        workingMap.replace("CoinBalance", String.valueOf(newCoinBalance));
         if (flag) {
-            workingMap.replace("CoinTotal", workingMap.get("CoinTotal") + change);
+            int newCoinTotal = Integer.valueOf(workingMap.get("CoinTotal")) + change;
+            workingMap.replace("CoinTotal", String.valueOf(newCoinTotal));
         }
         FileHelper.writeToFile(workingMap, FILE_NAME);
         return Integer.parseInt(workingMap.get("CoinBalance"));
