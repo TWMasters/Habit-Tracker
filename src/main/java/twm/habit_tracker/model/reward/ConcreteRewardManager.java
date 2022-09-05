@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class ConcreteRewardManager implements RewardManager {
+    private static final int LEVEL = 2;
+    private static final int LEVEL_COLUMN_NUMBER = 2;
+
     private final Connection connection;
     private LevelTable levelTable;
     private TrophyTable trophyTable;
@@ -20,9 +23,18 @@ public class ConcreteRewardManager implements RewardManager {
 
     @Override
     public void buildTables() {
-        levelTable.createLevelTable();
-        trophyTable.createTrophyTable();
-        userInfo.createUserInfoFile();
+        try {
+            levelTable.createLevelTable();
+            trophyTable.createTrophyTable();
+            ResultSet rsLevelCap = levelTable.getLevelTableEntry(LEVEL);
+            rsLevelCap.next();
+            int levelCap = rsLevelCap.getInt(LEVEL_COLUMN_NUMBER);
+            userInfo.createUserInfoFile(levelCap);
+        }
+        catch (SQLException e) {
+            System.err.println("Error on fetching Level Cap when Building User Info File");
+            e.printStackTrace();
+        }
     }
 
     @Override

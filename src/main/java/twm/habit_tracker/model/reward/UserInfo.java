@@ -1,6 +1,7 @@
 package twm.habit_tracker.model.reward;
 
 import java.io.*;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,11 +11,12 @@ public class UserInfo {
     private static final String PATH = System.getProperty("user.dir") + "\\db";
 
 
-    public void createUserInfoFile() {
+    public void createUserInfoFile(int levelCap) {
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         map.put("CoinBalance", 0);
         map.put("CoinTotal", 0);
         map.put("Level", 1);
+        map.put("LevelCap", levelCap);
         writeToFile(map);
     }
 
@@ -29,8 +31,13 @@ public class UserInfo {
         return workingMap.get("CoinBalance");
     }
 
-    public int getLevel() {
-        return 0;
+    public int[] getLevel() {
+        int[] output = new int[2];
+        return output;
+    }
+
+    public void updateLevel() {
+
     }
 
     /**

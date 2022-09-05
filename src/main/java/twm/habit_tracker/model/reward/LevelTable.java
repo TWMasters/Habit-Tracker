@@ -10,13 +10,13 @@ import java.sql.Statement;
  */
 public class LevelTable {
     private static final String LEVEL_TABLE_SQL =
-            "CREATE TABLE Level (\n" +
+            "CREATE TABLE Levels (\n" +
                     "Level INT PRIMARY KEY,\n" +
                     "Total_Coins INT NOT NULL" +
                     ");";
 
     private static final String POPULATE_LEVEL_TABLE =
-            "INSERT INTO Level (Level, Total_Coins)\n" +
+            "INSERT INTO Levels (Level, Total_Coins)\n" +
                     "VALUES\n" +
                     "(1, 0)," +
                     "(2, 85)," +
@@ -29,7 +29,7 @@ public class LevelTable {
                     "(9, 24000);";
 
     private static final String GET_LEVEL_TABLE =
-            "SELECT * FROM Level;";
+            "SELECT * FROM Levels WHERE Level = %d;";
 
     private final Connection connection;
 
@@ -56,10 +56,10 @@ public class LevelTable {
      * Fetch Level Table for reference
      * @return a ResultSet of Level Table
      */
-    public ResultSet getLevelTable() {
+    public ResultSet getLevelTableEntry(int lvl) {
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(GET_LEVEL_TABLE);
+            ResultSet rs = stmt.executeQuery(String.format(GET_LEVEL_TABLE, lvl));
             return rs;
         }
         catch (SQLException e) {
