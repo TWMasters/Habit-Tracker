@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class AvatarTable {
@@ -13,7 +14,7 @@ public class AvatarTable {
                     "Reward_ID VARCHAR(255) PRIMARY KEY,\n" +
                     "Description VARCHAR(255) NOT NULL,\n" +
                     "Body VARCHAR(255) NOT NULL, \n" +
-                    "Level INT NOT NULL, \n" +
+                    "Level INT NOT NULL \n" +
                     ");";
 
     private static final String FILE_NAME = "AvatarRewardData.txt";
@@ -23,7 +24,7 @@ public class AvatarTable {
     private static final String POPULATE_AVATAR_TABLE_SQL =
             "INSERT INTO Avatar_Rewards\n" +
                     "VALUES\n" +
-                    "(%s, %s, %s, %d);";
+                    "(\'%s\', \'%s\', \'%s\', %d);";
 
     private final Connection connection;
 
@@ -32,6 +33,7 @@ public class AvatarTable {
     public void createAvatarTable() {
         try (Scanner sc = new Scanner(new File(PATH, FILE_NAME))) {
             Statement stmt = connection.createStatement();
+            stmt.execute(AVATAR_TABLE_SQL);
             while(sc.hasNextLine()) {
                 String[] values = sc.nextLine().split(":");
                 stmt.execute(String.format(POPULATE_AVATAR_TABLE_SQL, values[0], values[1], values[2], Integer.parseInt(values[3])));

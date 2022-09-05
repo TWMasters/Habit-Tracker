@@ -1,5 +1,5 @@
-CoinTotal:90
-OldLevelCap:85
-LevelCap:315
-Level:2
-CoinBalance:20
+CoinTotal:0
+OldLevelCap:0
+LevelCap:85
+Level:1
+CoinBalance:0
