@@ -1,4 +1,5 @@
-CoinTotal:8
+CoinTotal:20
+OldLevelCap:0
 LevelCap:85
 Level:1
-CoinBalance:8
+CoinBalance:20

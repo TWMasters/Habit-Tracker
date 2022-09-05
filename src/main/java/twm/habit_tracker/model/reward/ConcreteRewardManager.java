@@ -73,7 +73,7 @@ public class ConcreteRewardManager implements RewardManager {
     @Override
     public HashMap<String,Integer> getLevel() {
         HashMap<String,Integer> levelMap = userInfo.getLevelData();
-        if ( levelMap.get("Level") != MAX_LEVEL &&  levelMap.get("CoinTotal") >= levelMap.get("LevelCap") ) {
+        if ( levelMap.get("Level") != MAX_LEVEL && levelMap.get("CoinTotal") >= levelMap.get("LevelCap") ) {
             int newLevel = levelMap.get("Level") + INCREMENT;
             int oldLevelCap = levelMap.get("LevelCap");
             int newLevelCap = levelTable.getLevelCap(newLevel + INCREMENT);

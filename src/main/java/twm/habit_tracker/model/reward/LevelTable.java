@@ -28,8 +28,8 @@ public class LevelTable {
                     "(6, 4000)," +
                     "(7, 8000)," +
                     "(8, 14000)," +
-                    "(9, 24000);" +
-                    "(10, 1)";
+                    "(9, 24000)," +
+                    "(10, 1);";
 
     private static final String GET_LEVEL_TABLE =
             "SELECT * FROM Levels WHERE Level = %d;";

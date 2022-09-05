@@ -24,9 +24,10 @@ import java.util.function.Supplier;
 // TODO: 26/08/2022 Reusable object for buttons! 
 public class MenuPageController implements Initializable {
     private static IntegerProperty coins = new SimpleIntegerProperty();
+    private static IntegerProperty coinBalance = new SimpleIntegerProperty();
 
     private static ObservableMap<String,Integer> levelInfo = FXCollections.observableHashMap();
-    
+
     private static Supplier<Integer> coinSupplier;
     private static Supplier<HashMap<String,Integer>> levelInfoSupplier;
     private static View context;
@@ -75,18 +76,17 @@ public class MenuPageController implements Initializable {
         setCoins();
 
         // Set Level Info
-        setLevelInfo();
         InvalidationListener levelListener =  e -> {
             levelLabel.setText(String.valueOf(levelInfo.get("Level")));
             if (levelInfo.get("Level") == 9)
                 levelProgressBar.setProgress(1.0);
             else {
                 double total = levelInfo.get("LevelCap") - levelInfo.get("OldLevelCap");
-                double progress = levelInfo.get("CoinBalance") - levelInfo.get("OldLevelCap");
+                double progress = levelInfo.get("CoinTotal") - levelInfo.get("OldLevelCap");
                 levelProgressBar.setProgress(progress / total);
             }
         };
-        levelInfo.addListener(levelListener);
+        coinBalance.addListener(levelListener);
         setLevelInfo();
 
         // Navigate to Habit Page
@@ -110,10 +110,15 @@ public class MenuPageController implements Initializable {
      */
     public static void setLevelInfo() {
         HashMap<String,Integer> newLevelMap = levelInfoSupplier.get();
-        // levelInfo.clear();
+        levelInfo.clear();
         for (Map.Entry<String,Integer>  entry : newLevelMap.entrySet() ) {
             levelInfo.put(entry.getKey(), entry.getValue());
         }
+        coinBalance.setValue(levelInfo.get("CoinTotal"));
+        System.out.println(levelInfo.get("Level"));
+        System.out.println(levelInfo.get("LevelCap"));
+        System.out.println(levelInfo.get("OldLevelCap"));
+        System.out.println(levelInfo.get("CoinTotal"));
     }
 
     /**
