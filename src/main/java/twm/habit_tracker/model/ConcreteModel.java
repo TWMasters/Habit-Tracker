@@ -15,7 +15,7 @@ public class ConcreteModel implements Model {
     private static final String HABIT_TABLE_SQL =
             "CREATE TABLE Habits (\n" +
                     "  Habit_ID  INT PRIMARY KEY,\n" +
-                    "  Habit_Name VARCHAR(255) NOT NULL,\n" +
+                    "  Habit_Name VARCHAR(255) UNIQUE NOT NULL,\n" +
                     "  Binary_Habit BOOLEAN NOT NULL,\n" +
                     "  Habit_Question VARCHAR(255) NOT NULL,\n" +
                     "  Unit VARCHAR(255),\n" +
@@ -26,7 +26,7 @@ public class ConcreteModel implements Model {
                     "  Goal_ID INT PRIMARY KEY,\n" +
                     "  Goal_Name VARCHAR(255) NOT NULL,\n" +
                     "  Goal_Description VARCHAR(255),\n" +
-                    "  Deadline DATE,\n" +
+                    "  Deadline DATE NOT NULL,\n" +
                     "  Achieved BOOLEAN DEFAULT false NOT NULL\n" +
                     ");";
     private static final String HABIT_TRACKER_TABLE =

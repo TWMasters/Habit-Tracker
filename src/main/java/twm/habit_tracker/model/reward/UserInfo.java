@@ -29,6 +29,10 @@ public class UserInfo {
         return workingMap.get("CoinBalance");
     }
 
+    public int getLevel() {
+        return 0;
+    }
+
     /**
      * Helper method to read file
      * @return associative array currently stored in file
