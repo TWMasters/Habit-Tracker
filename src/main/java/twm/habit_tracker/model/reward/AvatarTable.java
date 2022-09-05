@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class AvatarTable {
@@ -14,7 +13,8 @@ public class AvatarTable {
                     "Reward_ID VARCHAR(255) PRIMARY KEY,\n" +
                     "Description VARCHAR(255) NOT NULL,\n" +
                     "Body VARCHAR(255) NOT NULL, \n" +
-                    "Level INT NOT NULL \n" +
+                    "Level INT NOT NULL, \n" +
+                    "Reward_WON BOOLEAN DEFAULT false NOT NULL" +
                     ");";
 
     private static final String FILE_NAME = "AvatarRewardData.txt";
@@ -22,7 +22,7 @@ public class AvatarTable {
     private static final String PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\twm";
 
     private static final String POPULATE_AVATAR_TABLE_SQL =
-            "INSERT INTO Avatar_Rewards\n" +
+            "INSERT INTO Avatar_Rewards (Reward_ID, Description, Body, Level)\n" +
                     "VALUES\n" +
                     "(\'%s\', \'%s\', \'%s\', %d);";
 

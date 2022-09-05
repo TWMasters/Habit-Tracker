@@ -28,4 +28,3 @@ navySJacket:Navy Suit Jacket:Outer-layer:9
 blackSTrousers:Black Suit Trousers:Bottoms:9
 greySTrousers:Grey Suit Trousers:Bottoms:9
 navySTrousers:Navy Suit Trousers:Bottoms:9
-
