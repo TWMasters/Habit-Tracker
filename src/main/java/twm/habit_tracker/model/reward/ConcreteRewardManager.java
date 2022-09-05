@@ -15,12 +15,14 @@ public class ConcreteRewardManager implements RewardManager {
     private static final int STARTING_BALANCE =  0;
 
     private final Connection connection;
+    private AvatarTable avatarTable;
     private LevelTable levelTable;
     private TrophyTable trophyTable;
     private UserInfo userInfo;
 
     public ConcreteRewardManager(Connection connection) {
         this.connection = connection;
+        avatarTable = new AvatarTable(connection);
         levelTable =  new LevelTable(connection);
         trophyTable = new TrophyTable(connection);
         userInfo = new UserInfo();
@@ -28,11 +30,12 @@ public class ConcreteRewardManager implements RewardManager {
 
     @Override
     public void buildTables() {
-            levelTable.createLevelTable();
-            trophyTable.createTrophyTable();
-            int levelOneCap = levelTable.getLevelCap(LEVEL_ONE);
-            int levelTwoCap = levelTable.getLevelCap(LEVEL_TWO);
-            userInfo.createUserInfoFile(levelOneCap, levelTwoCap);
+        avatarTable.createAvatarTable();
+        levelTable.createLevelTable();
+        trophyTable.createTrophyTable();
+        int levelOneCap = levelTable.getLevelCap(LEVEL_ONE);
+        int levelTwoCap = levelTable.getLevelCap(LEVEL_TWO);
+        userInfo.createUserInfoFile(levelOneCap, levelTwoCap);
     }
 
     @Override
