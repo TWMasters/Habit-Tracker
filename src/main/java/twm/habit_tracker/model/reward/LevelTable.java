@@ -1,10 +1,14 @@
 package twm.habit_tracker.model.reward;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Level {
+/**
+ * Class to construct, populate, and fetch Level reference table
+ */
+public class LevelTable {
     private static final String LEVEL_TABLE_SQL =
             "CREATE TABLE Level (\n" +
                     "Level INT PRIMARY KEY,\n" +
@@ -24,12 +28,18 @@ public class Level {
                     "(8, 14000)," +
                     "(9, 24000);";
 
+    private static final String GET_LEVEL_TABLE =
+            "SELECT * FROM Level;";
+
     private final Connection connection;
 
-    public Level(Connection connection) {
+    public LevelTable(Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     * Create and populate level table
+     */
     public void createLevelTable() {
         try {
             Statement stmt = connection.createStatement();
@@ -40,6 +50,23 @@ public class Level {
             System.err.println("Error on creating Level Table");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Fetch Level Table for reference
+     * @return a ResultSet of Level Table
+     */
+    public ResultSet getLevelTable() {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(GET_LEVEL_TABLE);
+            return rs;
+        }
+        catch (SQLException e) {
+            System.err.println("Error in fetching Level Table");
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
