@@ -3,6 +3,7 @@ package twm.habit_tracker.view.mainPages;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
@@ -24,7 +25,7 @@ import java.util.function.Supplier;
 // TODO: 26/08/2022 Reusable object for buttons! 
 public class MenuPageController implements Initializable {
     private static IntegerProperty coins = new SimpleIntegerProperty();
-    private static IntegerProperty coinBalance = new SimpleIntegerProperty();
+    private static IntegerProperty coinTotal = new SimpleIntegerProperty();
 
     private static ObservableMap<String,Integer> levelInfo = FXCollections.observableHashMap();
 
@@ -76,7 +77,10 @@ public class MenuPageController implements Initializable {
         setCoins();
 
         // Set Level Info
-        InvalidationListener levelListener =  e -> {
+        coinTotal.setValue(-1); // Reset to force change!
+        ChangeListener levelListener = (observableValue, oldValue, newValue) -> {
+            System.out.println("Level Listener!");
+            System.out.println("Level for Listener: " + levelInfo.get("Level"));
             levelLabel.setText(String.valueOf(levelInfo.get("Level")));
             if (levelInfo.get("Level") == 9)
                 levelProgressBar.setProgress(1.0);
@@ -86,7 +90,7 @@ public class MenuPageController implements Initializable {
                 levelProgressBar.setProgress(progress / total);
             }
         };
-        coinBalance.addListener(levelListener);
+        coinTotal.addListener(levelListener);
         setLevelInfo();
 
         // Navigate to Habit Page
@@ -110,15 +114,10 @@ public class MenuPageController implements Initializable {
      */
     public static void setLevelInfo() {
         HashMap<String,Integer> newLevelMap = levelInfoSupplier.get();
-        levelInfo.clear();
         for (Map.Entry<String,Integer>  entry : newLevelMap.entrySet() ) {
             levelInfo.put(entry.getKey(), entry.getValue());
         }
-        coinBalance.setValue(levelInfo.get("CoinTotal"));
-        System.out.println(levelInfo.get("Level"));
-        System.out.println(levelInfo.get("LevelCap"));
-        System.out.println(levelInfo.get("OldLevelCap"));
-        System.out.println(levelInfo.get("CoinTotal"));
+        coinTotal.setValue(levelInfo.get("CoinTotal"));
     }
 
     /**
