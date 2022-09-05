@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.*;
 
@@ -252,6 +253,7 @@ public class ConcreteController implements Controller {
                         output.add(message);
                     }
                     MenuPageController.setCoins();
+                    MenuPageController.setLevelInfo();
                 }
             }
             catch (SQLException e) {
@@ -267,6 +269,8 @@ public class ConcreteController implements Controller {
     public void setMenuPageMethods() {
         Supplier<Integer> coinSupplier = () -> model.getRewardManager().getBalance();
         MenuPageController.setCoinSupplier(coinSupplier);
+        Supplier<HashMap<String,Integer>> levelSupplier = () -> model.getRewardManager().getLevel();
+        MenuPageController.setLevelInfoSupplier(levelSupplier);
 
     }
 

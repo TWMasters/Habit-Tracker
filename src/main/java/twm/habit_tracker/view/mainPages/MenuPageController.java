@@ -3,27 +3,37 @@ package twm.habit_tracker.view.mainPages;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import twm.habit_tracker.view.View;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
 // TODO: 26/08/2022 Reusable object for buttons! 
 public class MenuPageController implements Initializable {
     private static IntegerProperty coins = new SimpleIntegerProperty();
-    private static IntegerProperty coinBalance = new SimpleIntegerProperty();
+
+    private static ObservableMap<String,Integer> levelInfo = FXCollections.observableHashMap();
+    
     private static Supplier<Integer> coinSupplier;
+    private static Supplier<HashMap<String,Integer>> levelInfoSupplier;
     private static View context;
 
     @FXML Label coinLabel;
+    @FXML Label levelLabel;
+    @FXML ProgressBar levelProgressBar;
 
     @FXML
     private BorderPane mainFrame;
@@ -57,11 +67,29 @@ public class MenuPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Set Coin Info
         InvalidationListener coinListener = e -> {
             coinLabel.setText(String.valueOf(coins.get()));
         };
         coins.addListener(coinListener);
         setCoins();
+
+        // Set Level Info
+        setLevelInfo();
+        InvalidationListener levelListener =  e -> {
+            levelLabel.setText(String.valueOf(levelInfo.get("Level")));
+            if (levelInfo.get("Level") == 9)
+                levelProgressBar.setProgress(1.0);
+            else {
+                double total = levelInfo.get("LevelCap") - levelInfo.get("OldLevelCap");
+                double progress = levelInfo.get("CoinBalance") - levelInfo.get("OldLevelCap");
+                levelProgressBar.setProgress(progress / total);
+            }
+        };
+        levelInfo.addListener(levelListener);
+        setLevelInfo();
+
+        // Navigate to Habit Page
         habitButtonPush();
 
     }
@@ -75,5 +103,24 @@ public class MenuPageController implements Initializable {
 
     public static void setCoinSupplier(Supplier<Integer> supplier) {
         coinSupplier = supplier;
+    }
+
+    /**
+     * Clear old level info map and provide new data
+     */
+    public static void setLevelInfo() {
+        HashMap<String,Integer> newLevelMap = levelInfoSupplier.get();
+        // levelInfo.clear();
+        for (Map.Entry<String,Integer>  entry : newLevelMap.entrySet() ) {
+            levelInfo.put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    /**
+     * Set supplier of level info in Controller
+     * @param supplier New supplier
+     */
+    public static void setLevelInfoSupplier(Supplier<HashMap<String,Integer>> supplier) {
+        levelInfoSupplier = supplier;
     }
 }
