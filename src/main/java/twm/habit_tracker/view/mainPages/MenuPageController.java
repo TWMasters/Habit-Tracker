@@ -26,6 +26,7 @@ import java.util.function.Supplier;
 public class MenuPageController implements Initializable {
     private static IntegerProperty coins = new SimpleIntegerProperty();
     private static IntegerProperty coinTotal = new SimpleIntegerProperty();
+    private static IntegerProperty level = new SimpleIntegerProperty();
 
     private static ObservableMap<String,Integer> levelInfo = FXCollections.observableHashMap();
 
@@ -80,7 +81,6 @@ public class MenuPageController implements Initializable {
         coinTotal.setValue(-1); // Reset to force change!
         ChangeListener levelListener = (observableValue, oldValue, newValue) -> {
             System.out.println("Level Listener!");
-            System.out.println("Level for Listener: " + levelInfo.get("Level"));
             levelLabel.setText(String.valueOf(levelInfo.get("Level")));
             if (levelInfo.get("Level") == 9)
                 levelProgressBar.setProgress(1.0);
@@ -92,6 +92,12 @@ public class MenuPageController implements Initializable {
         };
         coinTotal.addListener(levelListener);
         setLevelInfo();
+
+        // Level Messenger
+        ChangeListener levelMessageListener = (obs,  oldValue, newValue) -> {
+            TrophyMessage.display("You have reached level " + level.getValue());
+        };
+        level.addListener(levelMessageListener);
 
         // Navigate to Habit Page
         habitButtonPush();
@@ -118,6 +124,7 @@ public class MenuPageController implements Initializable {
             levelInfo.put(entry.getKey(), entry.getValue());
         }
         coinTotal.setValue(levelInfo.get("CoinTotal"));
+        level.setValue(levelInfo.get("Level"));
     }
 
     /**
