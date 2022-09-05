@@ -1,29 +1,30 @@
 package twm.habit_tracker.model.reward;
 
 import java.util.HashMap;
+import java.util.Map;
 
 class UserInfo {
     private static final String FILE_NAME = "UserInfo.txt";
 
     public void createUserInfoFile(int levelOneCap, int levelTwoCap) {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
-        map.put("CoinBalance", 0);
-        map.put("CoinTotal", 0);
-        map.put("Level", 1);
-        map.put("OldLevelCap", levelOneCap);
-        map.put("LevelCap", levelTwoCap);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("CoinBalance", "0");
+        map.put("CoinTotal", "0");
+        map.put("Level", "1");
+        map.put("OldLevelCap", String.valueOf(levelOneCap));
+        map.put("LevelCap", String.valueOf(levelTwoCap));
         FileHelper.writeToFile(map, FILE_NAME);
     }
 
     public int getBalance(int change) {
         Boolean flag = change > 0;
-        HashMap<String, Integer> workingMap = FileHelper.readFromFile(FILE_NAME);
+        HashMap<String, String> workingMap = FileHelper.readFromFile(FILE_NAME);
         workingMap.replace("CoinBalance", workingMap.get("CoinBalance") + change);
         if (flag) {
             workingMap.replace("CoinTotal", workingMap.get("CoinTotal") + change);
         }
         FileHelper.writeToFile(workingMap, FILE_NAME);
-        return workingMap.get("CoinBalance");
+        return Integer.parseInt(workingMap.get("CoinBalance"));
     }
 
     /**
@@ -31,20 +32,23 @@ class UserInfo {
      * @return Map of Level Data
      */
     public HashMap<String,Integer> getLevelData() {
-        HashMap<String,Integer> levelMap = FileHelper.readFromFile(FILE_NAME);
-        levelMap.remove("CoinBalance");
-        return levelMap;
-
+        HashMap<String,String> stringLevelMap = FileHelper.readFromFile(FILE_NAME);
+        HashMap<String,Integer> intLevelMap = new HashMap<>();
+        for (Map.Entry<String,String> entry : stringLevelMap.entrySet()) {
+            intLevelMap.put(entry.getKey(),Integer.valueOf(entry.getValue()));
+        }
+        intLevelMap.remove("CoinBalance");
+        return intLevelMap;
     }
 
     /**
      * Write new level and level cap to file
      */
     public void updateLevel(int newLvl, int oldLvlCap, int newLvlCap) {
-        HashMap<String,Integer> userInfo = FileHelper.readFromFile(FILE_NAME);
-        userInfo.replace("Level", newLvl);
-        userInfo.replace("OldLevelCap", oldLvlCap);
-        userInfo.replace("LevelCap", newLvlCap);
+        HashMap<String,String> userInfo = FileHelper.readFromFile(FILE_NAME);
+        userInfo.replace("Level", String.valueOf(newLvl));
+        userInfo.replace("OldLevelCap", String.valueOf(oldLvlCap));
+        userInfo.replace("LevelCap", String.valueOf(newLvlCap));
         FileHelper.writeToFile(userInfo, FILE_NAME);
     }
 

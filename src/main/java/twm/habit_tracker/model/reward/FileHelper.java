@@ -12,13 +12,13 @@ class FileHelper {
      * Helper method to read file
      * @return associative array currently stored in file
      */
-    public static HashMap<String, Integer> readFromFile(String fileName) {
-        HashMap<String, Integer> tempMap = new HashMap<>();
+    public static HashMap<String, String> readFromFile(String fileName) {
+        HashMap<String, String> tempMap = new HashMap<>();
         try {
             Scanner sc = new Scanner(new File(PATH, fileName));
             while(sc.hasNextLine()) {
                 String[] line = sc.nextLine().split(":");
-                tempMap.put(line[0], Integer.parseInt(line[1]));
+                tempMap.put(line[0], line[1]);
             }
         } catch (FileNotFoundException e) {
             System.err.println("Could not find file!");
@@ -31,13 +31,13 @@ class FileHelper {
     /**
      * Helper method to write map to file!
      */
-    public static void writeToFile(HashMap<String, Integer> map, String fileName) {
+    public static void writeToFile(HashMap<String, String> map, String fileName) {
         File file = new File(PATH, fileName);
         BufferedWriter bf = null;
 
         try {
             bf = new BufferedWriter(new FileWriter(file));
-            for (Map.Entry<String,Integer> entry : map.entrySet()) {
+            for (Map.Entry<String,String> entry : map.entrySet()) {
                 bf.write(entry.getKey() + ":" + entry.getValue());
                 bf.newLine();
             }
