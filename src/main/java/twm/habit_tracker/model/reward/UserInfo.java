@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class UserInfo {
+class UserInfo {
     private static final String FILE_NAME = "UserInfo.txt";
     private static final String PATH = System.getProperty("user.dir") + "\\db";
     public void createUserInfoFile(int levelOneCap, int levelTwoCap) {

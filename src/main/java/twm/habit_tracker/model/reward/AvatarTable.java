@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class AvatarTable {
+class AvatarTable {
     private static final String AVATAR_TABLE_SQL =
             "CREATE TABLE Avatar_Rewards (\n" +
                     "Reward_ID VARCHAR(255) PRIMARY KEY,\n" +

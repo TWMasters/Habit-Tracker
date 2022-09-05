@@ -8,7 +8,7 @@ import java.sql.Statement;
 /**
  * Class to construct, populate, and fetch Level reference table
  */
-public class LevelTable {
+class LevelTable {
     private static final int LEVEL_CAP_COLUMN_NO = 2;
 
     private static final String LEVEL_TABLE_SQL =
