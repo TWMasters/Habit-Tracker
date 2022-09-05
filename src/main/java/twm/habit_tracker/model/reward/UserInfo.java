@@ -1,7 +1,6 @@
 package twm.habit_tracker.model.reward;
 
 import java.io.*;
-import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -9,14 +8,13 @@ import java.util.Scanner;
 public class UserInfo {
     private static final String FILE_NAME = "UserInfo.txt";
     private static final String PATH = System.getProperty("user.dir") + "\\db";
-
-
-    public void createUserInfoFile(int levelCap) {
+    public void createUserInfoFile(int levelOneCap, int levelTwoCap) {
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         map.put("CoinBalance", 0);
         map.put("CoinTotal", 0);
         map.put("Level", 1);
-        map.put("LevelCap", levelCap);
+        map.put("OldLevelCap", levelOneCap);
+        map.put("LevelCap", levelTwoCap);
         writeToFile(map);
     }
 
@@ -33,29 +31,22 @@ public class UserInfo {
 
     /**
      * Fetch current level and level cap
-     * Update if level cap has been breached!
-     * @return Array with Level and Level Cap
+     * @return Map of Level Data
      */
     public HashMap<String,Integer> getLevelData() {
         HashMap<String,Integer> levelMap = readFromFile();
         levelMap.remove("CoinBalance");
         return levelMap;
 
-        /*
-        int[] output = new int[3];
-        output[0] = readFromFile().get("Level");
-        output[1] = output[0] == MAX_LEVEL ? 1 : readFromFile().get("CoinTotal");
-        output[2] = readFromFile().get("LevelCap");
-
-         */
     }
 
     /**
      * Write new level and level cap to file
      */
-    public void updateLevel(int newLvl, int newLvlCap) {
+    public void updateLevel(int newLvl, int oldLvlCap, int newLvlCap) {
         HashMap<String,Integer> userInfo = readFromFile();
         userInfo.replace("Level", newLvl);
+        userInfo.replace("OldLevelCap", oldLvlCap);
         userInfo.replace("LevelCap", newLvlCap);
         writeToFile(userInfo);
     }

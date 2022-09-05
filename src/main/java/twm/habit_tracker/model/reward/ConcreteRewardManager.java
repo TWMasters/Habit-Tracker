@@ -9,7 +9,8 @@ import java.util.Optional;
 public class ConcreteRewardManager implements RewardManager {
     private static final int COIN_REWARD_COLUMN_NUMBER = 5;
     private static final int INCREMENT = 1;
-    private static final int LEVEL = 2;
+    private static final int LEVEL_ONE = 1;
+    private static final int LEVEL_TWO = 2;
     private static final int MAX_LEVEL = 9;
     private static final int STARTING_BALANCE =  0;
 
@@ -29,8 +30,9 @@ public class ConcreteRewardManager implements RewardManager {
     public void buildTables() {
             levelTable.createLevelTable();
             trophyTable.createTrophyTable();
-            int levelCap = levelTable.getLevelCap(LEVEL);
-            userInfo.createUserInfoFile(levelCap);
+            int levelOneCap = levelTable.getLevelCap(LEVEL_ONE);
+            int levelTwoCap = levelTable.getLevelCap(LEVEL_TWO);
+            userInfo.createUserInfoFile(levelOneCap, levelTwoCap);
     }
 
     @Override
@@ -73,8 +75,9 @@ public class ConcreteRewardManager implements RewardManager {
         HashMap<String,Integer> levelMap = userInfo.getLevelData();
         if ( levelMap.get("Level") != MAX_LEVEL &&  levelMap.get("CoinTotal") >= levelMap.get("LevelCap") ) {
             int newLevel = levelMap.get("Level") + INCREMENT;
+            int oldLevelCap = levelMap.get("LevelCap");
             int newLevelCap = levelTable.getLevelCap(newLevel + INCREMENT);
-            userInfo.updateLevel(newLevel, newLevelCap);
+            userInfo.updateLevel(newLevel, oldLevelCap, newLevelCap);
             levelMap = userInfo.getLevelData();
         }
         return levelMap;
