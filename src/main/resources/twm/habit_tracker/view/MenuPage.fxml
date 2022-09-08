@@ -14,7 +14,7 @@
 
 <!-- prefHeight="545.0" prefWidth="141.0" -->
 
-<BorderPane fx:id="mainFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="568.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twm.habit_tracker.view.mainPages.MenuPageController">
+<BorderPane fx:id="mainFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="748.0" prefWidth="568.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twm.habit_tracker.view.mainPages.MenuPageController">
    <left>
       <HBox prefHeight="706.0" prefWidth="240.0" BorderPane.alignment="CENTER">
          <children>
@@ -66,6 +66,11 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#avatarButtonPush" prefHeight="60.0" prefWidth="144.0" text="AVATAR">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
                   <HBox alignment="TOP_CENTER" prefHeight="59.0" prefWidth="216.0">
                      <children>
                         <Label fx:id="coinLabel" text="0">
@@ -86,11 +91,14 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <Separator prefWidth="200.0" />
+                  <Separator prefHeight="8.0" prefWidth="228.0" />
                   <Button mnemonicParsing="false" onAction="#exitButtonPush" prefHeight="60.0" prefWidth="144.0" text="EXIT">
                      <font>
                         <Font size="24.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
                   </Button>
                </children>
             </VBox>

@@ -38,6 +38,7 @@ public class GUIView implements View {
             pages.put("Habit", FXMLLoader.load(GUIView.class.getResource("HabitPage.fxml")));
             pages.put("Goal", FXMLLoader.load(GUIView.class.getResource("GoalPage.fxml")));
             pages.put("Trophy", FXMLLoader.load(GUIView.class.getResource("TrophyPage.fxml")));
+            pages.put("Avatar", FXMLLoader.load(GUIView.class.getResource("AvatarPage.fxml")));
 
             menu_page = FXMLLoader.load(GUIView.class.getResource("MenuPage.fxml"));
 
@@ -46,7 +47,7 @@ public class GUIView implements View {
             e.printStackTrace();
         }
 
-        Scene scene = new Scene(menu_page, 1200, 800); // Width, then Height
+        Scene scene = new Scene(menu_page, 1000, 1200); // Width, then Height
         scene.getStylesheets().add(CSS);
 
         primaryStage.setScene(scene);

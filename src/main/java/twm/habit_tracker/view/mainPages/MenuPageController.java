@@ -41,6 +41,12 @@ public class MenuPageController implements Initializable {
     @FXML
     private BorderPane mainFrame;
 
+    public void avatarButtonPush() {
+        Node page = context.getPage("Avatar");
+        mainFrame.setCenter(page);
+        BorderPane.setAlignment(page, Pos.TOP_LEFT);
+    }
+
     public void exitButtonPush() {
         Stage currentWindow = (Stage) mainFrame.getScene().getWindow();
         currentWindow.close();
