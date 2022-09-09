@@ -29,6 +29,8 @@ class AvatarTable {
 
     private static final String GET_TABLE = "SELECT * FROM Avatar_Rewards WHERE Reward_Won = true;";
 
+    private static final String NO_REWARD = "No Rewards Available";
+
     private static final String PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\twm";
 
     private static final String POPULATE_AVATAR_TABLE_SQL =
@@ -60,7 +62,7 @@ class AvatarTable {
             return idList.get(index);
         }
         else
-            return "no rewards available";
+            return NO_REWARD;
     }
 
     /**
@@ -85,12 +87,37 @@ class AvatarTable {
     }
 
     /**
-     *
+     * Get a copy of all avatar rewards player has received
+     * @return Result Set of Reward Table containing all awarded rewards
+     */
+    public ResultSet getRewardTable() {
+        try {
+            Statement stmt = connection.createStatement();
+            return stmt.executeQuery(GET_TABLE);
+
+        }
+        catch (Exception e) {
+            System.err.println("Error on fetching reward table");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Update reward to mark it has having been awarded to the player
      * @param level Player current level
+     * @return whether a reward available to be earned!
      */
     public boolean updateRewardTable(int level) {
         try {
             String chosenRewardID = chooseReward(level);
+            if (chosenRewardID.equals(NO_REWARD))
+                return false;
+            else {
+                Statement stmt = connection.createStatement();
+                stmt.executeUpdate(String.format(UPDATE_REWARD, chosenRewardID));
+                return true;
+            }
         } catch (SQLException e) {
             System.err.println("Error while choosing a reward");
             e.printStackTrace();
