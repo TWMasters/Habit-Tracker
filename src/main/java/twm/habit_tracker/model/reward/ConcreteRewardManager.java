@@ -66,8 +66,8 @@ public class ConcreteRewardManager implements RewardManager {
     }
 
     @Override
-    public Optional<String> earnReward() {
-        return Optional.empty();
+    public Optional<String> earnReward(int level) {
+        return avatarTable.updateRewardTable(level);
     }
 
     @Override

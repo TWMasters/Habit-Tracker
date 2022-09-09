@@ -21,9 +21,10 @@ public interface RewardManager {
 
     /**
      * Earn 1 random award
+     * @param level Player level which caps reward
      * @return Name of new reward or null
      */
-    Optional<String> earnReward();
+    Optional<String> earnReward(int level);
 
     /**
      * Use to retrieve information on how many trophies have been awarded

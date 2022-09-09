@@ -115,9 +115,7 @@ class AvatarTable {
                 Statement stmt = connection.createStatement();
                 stmt.executeUpdate(String.format(UPDATE_REWARD, chosenRewardID[0]));
                 output = Optional.of(chosenRewardID[1]);
-
             }
-            return output;
         } catch (SQLException e) {
             System.err.println("Error while choosing a reward");
             e.printStackTrace();
