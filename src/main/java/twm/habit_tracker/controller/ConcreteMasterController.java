@@ -11,7 +11,6 @@ import twm.habit_tracker.view.data.Goal;
 import twm.habit_tracker.view.data.Habit;
 import twm.habit_tracker.view.data.HabitTracker;
 import twm.habit_tracker.view.View;
-import twm.habit_tracker.view.data.Trophy;
 import twm.habit_tracker.view.editPages.EditPage;
 import twm.habit_tracker.view.editPages.GoalInputFieldsController;
 import twm.habit_tracker.view.editPages.HabitInputFieldsController;
@@ -28,12 +27,10 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.*;
 
-public class ConcreteController implements Controller {
-    private final View view;
+public class ConcreteMasterController implements MasterController {
     private final Model model;
 
-    public ConcreteController(View view, Model model) throws SQLException {
-        this.view = view;
+    public ConcreteMasterController(Model model) throws SQLException {
         this.model = model;
 
         // Link View to Model

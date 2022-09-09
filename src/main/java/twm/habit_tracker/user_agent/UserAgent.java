@@ -2,8 +2,8 @@ package twm.habit_tracker.user_agent;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import twm.habit_tracker.controller.ConcreteController;
-import twm.habit_tracker.controller.Controller;
+import twm.habit_tracker.controller.ConcreteMasterController;
+import twm.habit_tracker.controller.MasterController;
 import twm.habit_tracker.model.ConcreteModel;
 import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.GUIView;
@@ -12,7 +12,7 @@ import twm.habit_tracker.view.View;
 public class UserAgent extends Application {
     View GUI;
     Model DB;
-    Controller controller;
+    MasterController masterController;
 
     public static void main(String[] args) {
         launch();
@@ -26,7 +26,7 @@ public class UserAgent extends Application {
     public void init() throws Exception {
         GUI = new GUIView();
         DB = ConcreteModel.getModel();
-        controller = new ConcreteController(GUI, DB);
+        masterController = new ConcreteMasterController(DB);
 
     }
 

@@ -2,7 +2,7 @@ package twm.habit_tracker.controller;
 
 import java.sql.SQLException;
 
-public interface Controller {
+public interface MasterController {
 
     /**
      * Use to hold methods for setting Edit Habit Page methods
