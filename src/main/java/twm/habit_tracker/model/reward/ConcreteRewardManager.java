@@ -62,6 +62,10 @@ public class ConcreteRewardManager implements RewardManager {
         return trophyOutput;
     }
 
+    @Override
+    public Optional<String> earnReward() {
+        return Optional.empty();
+    }
 
     @Override
     public ResultSet getTrophies() {
@@ -84,6 +88,11 @@ public class ConcreteRewardManager implements RewardManager {
             levelMap = userInfo.getLevelData();
         }
         return levelMap;
+    }
+
+    @Override
+    public ResultSet getRewards() {
+        return avatarTable.getRewardTable();
     }
 
     @Override

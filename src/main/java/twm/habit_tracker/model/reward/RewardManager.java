@@ -1,13 +1,15 @@
 package twm.habit_tracker.model.reward;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Optional;
 
 public interface RewardManager {
 
-
+    /**
+     * Use to build tables in database the first time the
+     * app is launched by the user
+     */
     void buildTables();
 
     /**
@@ -16,6 +18,12 @@ public interface RewardManager {
      * @return ResultSet of awarded trophies for Controller to send messages
      */
     Optional<ResultSet> checkTrophies();
+
+    /**
+     * Earn 1 random award
+     * @return Name of new reward or null
+     */
+    Optional<String> earnReward();
 
     /**
      * Use to retrieve information on how many trophies have been awarded
@@ -35,6 +43,16 @@ public interface RewardManager {
      */
     HashMap<String, Integer> getLevel();
 
+    /**
+     * Use to retrieve all avatar rewards which have been earned by the user
+     * @return ResultSet of current avatar rewards
+     */
+    ResultSet getRewards();
+
+    /**
+     * Use to update tables when first launching app for a given day
+     * Needed to change dates
+     */
     void updateTables();
 
 
