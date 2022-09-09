@@ -11,8 +11,9 @@ import java.util.*;
 
 public class AvatarPageController implements Initializable {
     private static String NO_REWARD = "None";
+    private static String[] REWARD_TYPES = {"Headwear, Eyewear, Outer-layer, Inner-layer, Bottoms, Footwear"};
 
-    private static HashMap<String, ObservableList<String>> rewardMap;
+    private static HashMap<String, ObservableList<String>> rewardMap = new HashMap<>();
     private static Runnable rewardMapRunnable;
 
     @FXML ChoiceBox headBox;
@@ -22,21 +23,23 @@ public class AvatarPageController implements Initializable {
     @FXML ChoiceBox bottomBox;
     @FXML ChoiceBox footBox;
 
-    {
-        rewardMap.put("Headwear", FXCollections.observableList(List.of(NO_REWARD)));
-        rewardMap.put("Eyewear", FXCollections.observableList(List.of(NO_REWARD)));
-        rewardMap.put("Outer-layer", FXCollections.observableList(List.of(NO_REWARD)));
-        rewardMap.put("Inner-layer", FXCollections.observableList(List.of(NO_REWARD)));
-        rewardMap.put("Bottoms", FXCollections.observableList(List.of(NO_REWARD)));
-        rewardMap.put("Footwear", FXCollections.observableList(List.of(NO_REWARD)));
+
+
+    private void buildMap() {
+        for (String rewardType : REWARD_TYPES) {
+            rewardMap.put("rewardType", FXCollections.observableList(List.of(NO_REWARD)));
+            setRewardMap();
+
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        buildMap();
+        setChoiceBoxes();
     }
 
-    public HashMap<String, ObservableList<String>> getRewardMap() {
+    public static HashMap<String, ObservableList<String>> getRewardMap() {
         return rewardMap;
     }
 
@@ -47,7 +50,10 @@ public class AvatarPageController implements Initializable {
         choiceBox.setValue(currentValue);
     }
 
-    public void setChoiceBoxes() {
+    /**
+     * Helper method to set all choice boxes at the start
+     */
+    private void setChoiceBoxes() {
         setChoiceBox(headBox, "Headwear");
         setChoiceBox(headBox, "Eyewear");
         setChoiceBox(headBox, "Outer-layer");
@@ -60,7 +66,7 @@ public class AvatarPageController implements Initializable {
         rewardMapRunnable.run();
     }
 
-    public void setRewardMapSupplier(Runnable r) {
+    public static void setRewardMapRunnable(Runnable r) {
         rewardMapRunnable = r;
     }
 }

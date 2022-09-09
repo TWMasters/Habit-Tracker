@@ -10,14 +10,10 @@ import twm.habit_tracker.model.Model;
 import twm.habit_tracker.view.data.Goal;
 import twm.habit_tracker.view.data.Habit;
 import twm.habit_tracker.view.data.HabitTracker;
-import twm.habit_tracker.view.View;
 import twm.habit_tracker.view.editPages.EditPage;
 import twm.habit_tracker.view.editPages.GoalInputFieldsController;
 import twm.habit_tracker.view.editPages.HabitInputFieldsController;
-import twm.habit_tracker.view.mainPages.GoalPageController;
-import twm.habit_tracker.view.mainPages.HabitPageController;
-import twm.habit_tracker.view.mainPages.MenuPageController;
-import twm.habit_tracker.view.mainPages.TrophyPageController;
+import twm.habit_tracker.view.mainPages.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +24,9 @@ import java.util.Optional;
 import java.util.function.*;
 
 public class ConcreteMasterController implements MasterController {
+    private final int REWARD_DESCRIPTION_COLUMN_NO = 2;
+    private final int REWARD_BODY_COLUMN_NO = 3;
+
     private final Model model;
 
     public ConcreteMasterController(Model model) throws SQLException {
@@ -36,11 +35,32 @@ public class ConcreteMasterController implements MasterController {
         // Link View to Model
         setMenuPageMethods();
 
+        setAvatarPageMethods();
         setGoalPageMethods();
         setHabitPageMethods();
         setTrophyPageMethods();
 
         setEditPageMethods();
+
+    }
+
+    @Override
+    public void setAvatarPageMethods() throws SQLException {
+        Runnable rewardMapRunnable = () -> {
+            try {
+                HashMap<String, ObservableList<String>> rewardMap = AvatarPageController.getRewardMap();
+                ResultSet rs = model.getRewardManager().getRewards();
+                if (rs.isBeforeFirst()) {
+                    while (rs.next()) {
+                        rewardMap.get(rs.getString(REWARD_BODY_COLUMN_NO)).add(rs.getString(REWARD_DESCRIPTION_COLUMN_NO));
+                    }
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        };
+        AvatarPageController.setRewardMapRunnable(rewardMapRunnable);
 
     }
 
