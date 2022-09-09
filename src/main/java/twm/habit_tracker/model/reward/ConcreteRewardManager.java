@@ -15,6 +15,7 @@ public class ConcreteRewardManager implements RewardManager {
     private static final int STARTING_BALANCE =  0;
 
     private final Connection connection;
+    private AvatarState avatarState;
     private AvatarTable avatarTable;
     private LevelTable levelTable;
     private TrophyTable trophyTable;
@@ -22,6 +23,7 @@ public class ConcreteRewardManager implements RewardManager {
 
     public ConcreteRewardManager(Connection connection) {
         this.connection = connection;
+        avatarState = new AvatarState();
         avatarTable = new AvatarTable(connection);
         levelTable =  new LevelTable(connection);
         trophyTable = new TrophyTable(connection);
@@ -30,6 +32,7 @@ public class ConcreteRewardManager implements RewardManager {
 
     @Override
     public void buildTables() {
+        avatarState.createAvatarStateFile();
         avatarTable.createAvatarTable();
         levelTable.createLevelTable();
         trophyTable.createTrophyTable();

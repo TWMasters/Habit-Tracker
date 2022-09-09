@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -25,11 +26,9 @@ class AvatarTable {
 
     private static final String FILE_NAME = "AvatarRewardData.txt";
 
-    private static final String GET_REWARD_IDS = "SELECT Reward_ID FROM Avatar_Rewards WHERE Reward_Won = false AND Level <= %d;";
+    private static final String GET_REWARD_IDS = "SELECT Reward_ID, Description FROM Avatar_Rewards WHERE Reward_Won = false AND Level <= %d;";
 
     private static final String GET_TABLE = "SELECT * FROM Avatar_Rewards WHERE Reward_Won = true;";
-
-    private static final String NO_REWARD = "No Rewards Available";
 
     private static final String PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\twm";
 
@@ -48,21 +47,21 @@ class AvatarTable {
     /**
      * Helper method used to select a random reward
      * @param level Player level cap
-     * @return chosen reward
+     * @return chosen reward and name
      */
-    private String chooseReward(int level) throws SQLException {
+    private String[] chooseReward(int level) throws SQLException {
         Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rsRewardIDs = stmt.executeQuery(String.format(GET_REWARD_IDS, level));
         if (rsRewardIDs.isBeforeFirst()) {
-            ArrayList<String> idList =  new ArrayList<>();
+            ArrayList<String[]> idList =  new ArrayList<>();
             while (rsRewardIDs.next())
-                idList.add(rsRewardIDs.getString(1));
+                idList.add(new String[] { rsRewardIDs.getString(1),rsRewardIDs.getString(2) } );
             Random random = new Random();
             int index = random.nextInt(0, idList.size());
             return idList.get(index);
         }
         else
-            return NO_REWARD;
+            return null;
     }
 
     /**
@@ -106,22 +105,23 @@ class AvatarTable {
     /**
      * Update reward to mark it has having been awarded to the player
      * @param level Player current level
-     * @return whether a reward available to be earned!
+     * @return Name of reward!
      */
-    public boolean updateRewardTable(int level) {
+    public Optional<String> updateRewardTable(int level) {
+        Optional<String> output = null;
         try {
-            String chosenRewardID = chooseReward(level);
-            if (chosenRewardID.equals(NO_REWARD))
-                return false;
-            else {
+            String[] chosenRewardID = chooseReward(level);
+            if (chosenRewardID != null) {
                 Statement stmt = connection.createStatement();
-                stmt.executeUpdate(String.format(UPDATE_REWARD, chosenRewardID));
-                return true;
+                stmt.executeUpdate(String.format(UPDATE_REWARD, chosenRewardID[0]));
+                output = Optional.of(chosenRewardID[1]);
+
             }
+            return output;
         } catch (SQLException e) {
             System.err.println("Error while choosing a reward");
             e.printStackTrace();
         }
-        return false;
+        return output;
     }
 }
