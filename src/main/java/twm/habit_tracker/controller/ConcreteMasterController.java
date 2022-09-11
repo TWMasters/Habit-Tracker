@@ -65,6 +65,11 @@ public class ConcreteMasterController implements MasterController {
         Supplier<HashMap<String,String>> avatarStateSupplier = model.getRewardManager()::getAvatarState;
         AvatarPageController.setAvatarStateMapSupplier(avatarStateSupplier);
 
+        Consumer<String> changeStateConsumer = (s) -> {
+
+        };
+        AvatarPageController.setChangeStateConsumer(changeStateConsumer);
+
     }
 
     @Override

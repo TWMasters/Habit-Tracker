@@ -16,8 +16,15 @@ class AvatarState {
         FileHelper.writeToFile(map, FILE_NAME);
     }
 
+    public void changeAvatarState(String key, String value) {
+        HashMap<String,String> oldState = FileHelper.readFromFile(FILE_NAME);
+        oldState.replace(key, value);
+        FileHelper.writeToFile(oldState, FILE_NAME);
+    }
+
     public HashMap<String,String> getAvatarState() {
         return FileHelper.readFromFile(FILE_NAME);
     }
+
 
 }
