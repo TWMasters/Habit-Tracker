@@ -16,7 +16,7 @@ public class TrophyMessage {
         alertWindow.initModality(Modality.APPLICATION_MODAL);
         alertWindow.setMinWidth(250);
 
-        Label label1 = new Label("CONGRATULATIONS!\n" + message);
+        Label label1 = new Label(message);
         Button closeButton = new Button("Close the window");
         closeButton.setOnAction(e -> alertWindow.close());
 

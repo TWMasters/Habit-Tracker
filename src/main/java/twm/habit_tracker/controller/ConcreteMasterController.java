@@ -275,7 +275,7 @@ public class ConcreteMasterController implements MasterController {
                         String key = workingRS.getString(1);
                         String message = workingRS.getString(4);
                         TrophyPageController.getTrophyDataSet().replace(key, true);
-                        output.add(message);
+                        output.add("CONGRATULATIONS!\n" + message);
                     }
                     MenuPageController.setCoins();
                     MenuPageController.setLevelInfo();

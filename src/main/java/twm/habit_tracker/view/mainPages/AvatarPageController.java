@@ -10,6 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import java.net.URL;
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class AvatarPageController implements Initializable {
@@ -18,10 +19,12 @@ public class AvatarPageController implements Initializable {
     private static final String[] REWARD_TYPES = {"Headwear", "Eyewear", "Over-layer", "Under-layer", "Bottoms", "Footwear"};
 
     private static BiConsumer<String,String> changeStateConsumer;
+    private static Function<Integer,String> purchaseTicketFunction;
     private HashMap<ChoiceBox<String>, String> choiceBoxMapping = new HashMap<>();
     private static HashMap<String, ObservableList<String>> rewardMap = new HashMap<>();
     private static Runnable rewardMapRunnable;
     private static Supplier<HashMap<String,String>> avatarStateMapSupplier;
+
 
     @FXML ChoiceBox headBox;
     @FXML ChoiceBox eyeBox;
@@ -101,6 +104,10 @@ public class AvatarPageController implements Initializable {
             entry.getKey().getSelectionModel().selectedItemProperty()
                     .addListener(choiceBoxListener);
         }
+    }
+
+    public static void setPurchaseTicketFunction(Function<Integer,String> function) {
+        purchaseTicketFunction = function;
     }
 
     /**
