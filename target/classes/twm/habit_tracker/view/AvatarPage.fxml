@@ -81,12 +81,12 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="144.0" text="1 Ticket">
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="144.0" text="1 Ticket&#xA;100 Coins">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="144.0" text="10 Tickets">
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="144.0" text="10 Tickets&#xA;850 Coins">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
