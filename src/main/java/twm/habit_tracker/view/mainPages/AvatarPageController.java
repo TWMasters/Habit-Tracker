@@ -11,7 +11,7 @@ import java.util.*;
 
 public class AvatarPageController implements Initializable {
     private static String NO_REWARD = "None";
-    private static String[] REWARD_TYPES = {"Headwear", "Eyewear", "Outer-layer", "Inner-layer", "Bottoms", "Footwear"};
+    private static String[] REWARD_TYPES = {"Headwear", "Eyewear", "Outer-layer", "Under-layer", "Bottoms", "Footwear"};
 
     private static HashMap<String, ObservableList<String>> rewardMap = new HashMap<>();
     private static Runnable rewardMapRunnable;
@@ -27,7 +27,9 @@ public class AvatarPageController implements Initializable {
 
     private void buildMap() {
         for (String rewardType : REWARD_TYPES) {
-            rewardMap.put(rewardType, FXCollections.observableList(List.of(NO_REWARD)));
+            ObservableList<String> list = FXCollections.observableArrayList();
+            list.add(NO_REWARD);
+            rewardMap.put(rewardType, list);
         }
         setRewardMap();
     }
@@ -35,9 +37,10 @@ public class AvatarPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buildMap();
-        setChoiceBoxes();
         for (Map.Entry<String, ObservableList<String>> e  : rewardMap.entrySet())
             System.out.println(e.getKey() + ": " + e.getValue());
+        setChoiceBoxes();
+
     }
 
     public static HashMap<String, ObservableList<String>> getRewardMap() {
@@ -58,7 +61,7 @@ public class AvatarPageController implements Initializable {
         setChoiceBox(headBox, "Headwear");
         setChoiceBox(eyeBox, "Eyewear");
         setChoiceBox(outerBox, "Outer-layer");
-        setChoiceBox(innerBox, "Inner-layer");
+        setChoiceBox(innerBox, "Under-layer");
         setChoiceBox(bottomBox, "Bottoms");
         setChoiceBox(footBox, "Footwear");
     }

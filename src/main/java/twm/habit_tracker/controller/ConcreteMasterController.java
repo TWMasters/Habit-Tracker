@@ -52,6 +52,9 @@ public class ConcreteMasterController implements MasterController {
                 ResultSet rs = model.getRewardManager().getRewards();
                 if (rs.isBeforeFirst()) {
                     while (rs.next()) {
+                        // ObservableList<String> list = rewardMap.get(rs.getString(REWARD_BODY_COLUMN_NO));
+                        // String newItem = rs.getString(REWARD_DESCRIPTION_COLUMN_NO);
+                        // list.add(newItem);
                         rewardMap.get(rs.getString(REWARD_BODY_COLUMN_NO)).add(rs.getString(REWARD_DESCRIPTION_COLUMN_NO));
                     }
                 }
