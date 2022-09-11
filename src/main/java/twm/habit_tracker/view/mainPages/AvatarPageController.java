@@ -8,22 +8,32 @@ import javafx.scene.control.ChoiceBox;
 
 import java.net.URL;
 import java.util.*;
+import java.util.function.Supplier;
 
 public class AvatarPageController implements Initializable {
     private static String NO_REWARD = "None";
-    private static String[] REWARD_TYPES = {"Headwear", "Eyewear", "Outer-layer", "Under-layer", "Bottoms", "Footwear"};
+    private static String[] REWARD_TYPES = {"Headwear", "Eyewear", "Over-layer", "Under-layer", "Bottoms", "Footwear"};
 
     private static HashMap<String, ObservableList<String>> rewardMap = new HashMap<>();
     private static Runnable rewardMapRunnable;
+    private static Supplier<HashMap<String,String>> avatarStateMapSupplier;
 
     @FXML ChoiceBox headBox;
     @FXML ChoiceBox eyeBox;
-    @FXML ChoiceBox outerBox;
-    @FXML ChoiceBox innerBox;
+    @FXML ChoiceBox overBox;
+    @FXML ChoiceBox underBox;
     @FXML ChoiceBox bottomBox;
     @FXML ChoiceBox footBox;
 
-
+    private void buildAvatarState() {
+        HashMap<String,String> currentState = avatarStateMapSupplier.get();
+        headBox.setValue(currentState.get("Headwear"));
+        eyeBox.setValue(currentState.get("Eyewear"));
+        overBox.setValue(currentState.get("Over-layer"));
+        underBox.setValue(currentState.get("Under-layer"));
+        bottomBox.setValue(currentState.get("Bottoms"));
+        footBox.setValue(currentState.get("Footwear"));
+    }
 
     private void buildMap() {
         for (String rewardType : REWARD_TYPES) {
@@ -40,11 +50,15 @@ public class AvatarPageController implements Initializable {
         for (Map.Entry<String, ObservableList<String>> e  : rewardMap.entrySet())
             System.out.println(e.getKey() + ": " + e.getValue());
         setChoiceBoxes();
-
+        buildAvatarState();
     }
 
     public static HashMap<String, ObservableList<String>> getRewardMap() {
         return rewardMap;
+    }
+
+    public static void setAvatarStateMapSupplier(Supplier<HashMap<String,String>> s) {
+        avatarStateMapSupplier = s;
     }
 
     public void setChoiceBox(ChoiceBox<String> choiceBox, String key) {
@@ -60,8 +74,8 @@ public class AvatarPageController implements Initializable {
     private void setChoiceBoxes() {
         setChoiceBox(headBox, "Headwear");
         setChoiceBox(eyeBox, "Eyewear");
-        setChoiceBox(outerBox, "Outer-layer");
-        setChoiceBox(innerBox, "Under-layer");
+        setChoiceBox(overBox, "Over-layer");
+        setChoiceBox(underBox, "Under-layer");
         setChoiceBox(bottomBox, "Bottoms");
         setChoiceBox(footBox, "Footwear");
     }

@@ -7,13 +7,17 @@ class AvatarState {
 
     public void createAvatarStateFile() {
         HashMap<String,String> map = new HashMap<>();
-        map.put("Under-layer", "none");
-        map.put("Over-layer", "none");
-        map.put("Bottoms", "none");
-        map.put("Footwear", "none");
-        map.put("Eyewear", "none");
-        map.put("Headwear", "none");
+        map.put("Under-layer", "None");
+        map.put("Over-layer", "None");
+        map.put("Bottoms", "None");
+        map.put("Footwear", "None");
+        map.put("Eyewear", "None");
+        map.put("Headwear", "None");
         FileHelper.writeToFile(map, FILE_NAME);
+    }
+
+    public HashMap<String,String> getAvatarState() {
+        return FileHelper.readFromFile(FILE_NAME);
     }
 
 }

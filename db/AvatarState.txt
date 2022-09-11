@@ -1,0 +1,6 @@
+Over-layer:none
+Bottoms:none
+Footwear:none
+Headwear:none
+Under-layer:none
+Eyewear:none

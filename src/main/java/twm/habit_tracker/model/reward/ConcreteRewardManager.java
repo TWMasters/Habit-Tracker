@@ -71,6 +71,11 @@ public class ConcreteRewardManager implements RewardManager {
     }
 
     @Override
+    public HashMap<String, String> getAvatarState() {
+        return avatarState.getAvatarState();
+    }
+
+    @Override
     public ResultSet getTrophies() {
         return trophyTable.getTrophyTable();
     }

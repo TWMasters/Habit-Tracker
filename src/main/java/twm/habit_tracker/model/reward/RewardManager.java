@@ -27,6 +27,12 @@ public interface RewardManager {
     Optional<String> earnReward(int level);
 
     /**
+     * Use to retrieve current state of user avatar
+     * @return Hashmap associative array of avatar section keys and assigned reward values
+     */
+    HashMap<String,String> getAvatarState();
+
+    /**
      * Use to retrieve information on how many trophies have been awarded
      * for initial setup when app is launched
      * @return ResultSet of all awarded trophies

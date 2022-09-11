@@ -13,18 +13,18 @@ blueChino:Blue Chinos:Bottoms:4
 trainers:Trainers:Footwear:5
 blackShoes:Black Shoes:Footwear:5
 brownShoes:Brown Shoes:Footwear:5
-whiteHood:White Hoodie:Outer-layer:6
-blackHood:Black Hoodie:Outer-layer:6
-greyHood:Grey Hoodie:Outer-layer:6
+whiteHood:White Hoodie:Over-layer:6
+blackHood:Black Hoodie:Over-layer:6
+greyHood:Grey Hoodie:Over-layer:6
 sqGlasses:Square-Framed Glasses:Eyewear:7
 rGlasses:Round-Framed Glasses:Eyewear:7
 shades:Shades:Eyewear:7
 blackCap:Black Baseball Cap:Headwear:8
 whiteCap:White Baseball Cap:Headwear:8
 redCap:Red Baseball Cap:Headwear:8
-blackSJacket:Black Suit Jacket:Outer-layer:9
-greySJacket:Grey Suit Jacket:Outer-layer:9
-navySJacket:Navy Suit Jacket:Outer-layer:9
+blackSJacket:Black Suit Jacket:Over-layer:9
+greySJacket:Grey Suit Jacket:Over-layer:9
+navySJacket:Navy Suit Jacket:Over-layer:9
 blackSTrousers:Black Suit Trousers:Bottoms:9
 greySTrousers:Grey Suit Trousers:Bottoms:9
 navySTrousers:Navy Suit Trousers:Bottoms:9
