@@ -2,9 +2,11 @@ package twm.habit_tracker.view.mainPages;
 
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 
 import java.net.URL;
@@ -19,13 +21,14 @@ public class AvatarPageController implements Initializable {
     private static final String[] REWARD_TYPES = {"Headwear", "Eyewear", "Over-layer", "Under-layer", "Bottoms", "Footwear"};
 
     private static BiConsumer<String,String> changeStateConsumer;
-    private static Function<Integer,String> purchaseTicketFunction;
+    private static Function<Integer,ArrayList<String>> purchaseTicketFunction;
     private HashMap<ChoiceBox<String>, String> choiceBoxMapping = new HashMap<>();
     private static HashMap<String, ObservableList<String>> rewardMap = new HashMap<>();
     private static Runnable rewardMapRunnable;
     private static Supplier<HashMap<String,String>> avatarStateMapSupplier;
 
-
+    @FXML Button ticketButton;
+    @FXML Button ticketBulkButton;
     @FXML ChoiceBox headBox;
     @FXML ChoiceBox eyeBox;
     @FXML ChoiceBox overBox;
@@ -66,6 +69,17 @@ public class AvatarPageController implements Initializable {
             System.out.println(e.getKey() + ": " + e.getValue());
         setChoiceBoxes();
         buildAvatarState();
+        ticketButton.setOnAction(e -> {
+            ArrayList<String> messages = purchaseTicketFunction.apply(1);
+            TrophyMessage.display(messages.get(0));
+            setRewardMap();
+        });
+        ticketBulkButton.setOnAction(e -> {
+            ArrayList<String> messages = purchaseTicketFunction.apply(10);
+            for (String m : messages)
+                TrophyMessage.display(m);
+            setRewardMap();
+        });
     }
 
     public static HashMap<String, ObservableList<String>> getRewardMap() {
@@ -92,12 +106,21 @@ public class AvatarPageController implements Initializable {
         choiceBox.setValue(currentValue);
     }
 
+    private void setChoiceBoxListener(ChoiceBox<String> choiceBox, String key) {
+        ObservableList<String> options = rewardMap.get(key);
+        ListChangeListener<String> itemListener = (list) -> {
+            setChoiceBox(choiceBox, key);
+        };
+        options.addListener(itemListener);
+    }
+
     /**
      * Helper method to set all choice boxes at the start
      */
     private void setChoiceBoxes() {
         for (Map.Entry<ChoiceBox<String>, String> entry : choiceBoxMapping.entrySet()) {
             setChoiceBox(entry.getKey(), entry.getValue());
+            setChoiceBoxListener(entry.getKey(), entry.getValue());
             ChangeListener<String> choiceBoxListener = (obs, oldValue, newValue) -> {
                 changeStateConsumer.accept(entry.getValue(), newValue);
             };
@@ -106,7 +129,7 @@ public class AvatarPageController implements Initializable {
         }
     }
 
-    public static void setPurchaseTicketFunction(Function<Integer,String> function) {
+    public static void setPurchaseTicketFunction(Function<Integer,ArrayList<String>> function) {
         purchaseTicketFunction = function;
     }
 

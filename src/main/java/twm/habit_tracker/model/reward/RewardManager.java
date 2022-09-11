@@ -1,6 +1,7 @@
 package twm.habit_tracker.model.reward;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -28,10 +29,10 @@ public interface RewardManager {
 
     /**
      * Earn 1 random award
-     * @param level Player level which caps reward
-     * @return Name of new reward or null
+     * @param noOfRewards How many rewards the player can earn
+     * @return Name of new reward or alternative message
      */
-    Optional<String> earnReward(int level);
+    ArrayList<String> earnReward(int noOfRewards);
 
     /**
      * Use to retrieve current state of user avatar

@@ -1,6 +1,6 @@
-Over-layer:Black Hoodie
-Bottoms:Pale Blue Jeans
-Footwear:Black Shoes
-Headwear:Black Baseball Cap
-Under-layer:Blue T-shirt
-Eyewear:Round-Framed Glasses
+Over-layer:None
+Bottoms:Blue Chinos
+Footwear:None
+Headwear:None
+Under-layer:White Dress Shirt
+Eyewear:None

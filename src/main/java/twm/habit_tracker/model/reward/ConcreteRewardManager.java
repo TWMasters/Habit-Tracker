@@ -3,6 +3,7 @@ package twm.habit_tracker.model.reward;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -12,6 +13,8 @@ public class ConcreteRewardManager implements RewardManager {
     private static final int LEVEL_ONE = 1;
     private static final int LEVEL_TWO = 2;
     private static final int MAX_LEVEL = 9;
+    private static final int REWARD_TICKET_COST = 100;
+    private static final int REWARD_TICKET_BULK_COST = 850;
     private static final int STARTING_BALANCE =  0;
 
     private final Connection connection;
@@ -47,6 +50,18 @@ public class ConcreteRewardManager implements RewardManager {
         avatarState.changeAvatarState(key, value);
     }
 
+    /**
+     * Helper method of earnReward to check if sufficient coins!
+     * @param cost
+     * @return
+     */
+    private boolean checkCost(int cost) {
+        if (userInfo.getBalance(0) < cost)
+            return false;
+        userInfo.getBalance(-cost);
+        return true;
+    }
+
     @Override
     public Optional<ResultSet> checkTrophies() {
         // Get Trophies
@@ -72,8 +87,23 @@ public class ConcreteRewardManager implements RewardManager {
     }
 
     @Override
-    public Optional<String> earnReward(int level) {
-        return avatarTable.updateRewardTable(level);
+    public ArrayList<String> earnReward(int noOfRewards) {
+        int cost = noOfRewards == 1 ?  REWARD_TICKET_COST : REWARD_TICKET_BULK_COST;
+        ArrayList<String> outputMessages = new ArrayList<>();
+        if (!checkCost(cost)) {
+            outputMessages.add("Not enough coins to buy ticket!");
+            return outputMessages;
+        }
+        int level = getLevel().get("Level");
+        for (int i = 0; i < noOfRewards; i ++) {
+            Optional<String> reward = avatarTable.updateRewardTable(level);
+            if (reward.isEmpty()) {
+                outputMessages.add("No rewards remaining!");
+                break;
+            }
+            outputMessages.add("Congratulations!\nYou have been awarded a " + reward.get());
+        }
+        return outputMessages;
     }
 
     @Override

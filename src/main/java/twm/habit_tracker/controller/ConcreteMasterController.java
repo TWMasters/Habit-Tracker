@@ -7,6 +7,7 @@ import twm.habit_tracker.model.GoalTableState;
 import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.HabitTrackerTableState;
 import twm.habit_tracker.model.Model;
+import twm.habit_tracker.model.reward.ConcreteRewardManager;
 import twm.habit_tracker.view.data.Goal;
 import twm.habit_tracker.view.data.Habit;
 import twm.habit_tracker.view.data.HabitTracker;
@@ -69,6 +70,13 @@ public class ConcreteMasterController implements MasterController {
             model.getRewardManager().changeAvatarState(s1,s2);
         };
         AvatarPageController.setChangeStateConsumer(changeStateConsumer);
+
+        Function<Integer,ArrayList<String>> purchaseFunction = (i) -> {
+            ArrayList<String>  outputMessages = model.getRewardManager().earnReward(i);
+            MenuPageController.setCoins();
+            return outputMessages;
+        };
+        AvatarPageController.setPurchaseTicketFunction(purchaseFunction);
 
     }
 
