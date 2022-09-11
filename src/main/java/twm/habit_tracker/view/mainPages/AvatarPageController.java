@@ -93,7 +93,6 @@ public class AvatarPageController implements Initializable {
      * Helper method to set all choice boxes at the start
      */
     private void setChoiceBoxes() {
-
         for (Map.Entry<ChoiceBox<String>, String> entry : choiceBoxMapping.entrySet()) {
             setChoiceBox(entry.getKey(), entry.getValue());
             ChangeListener<String> choiceBoxListener = (obs, oldValue, newValue) -> {

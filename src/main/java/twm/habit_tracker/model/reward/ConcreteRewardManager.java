@@ -41,6 +41,12 @@ public class ConcreteRewardManager implements RewardManager {
         userInfo.createUserInfoFile(levelOneCap, levelTwoCap);
     }
 
+
+    @Override
+    public void changeAvatarState(String key, String value) {
+        avatarState.changeAvatarState(key, value);
+    }
+
     @Override
     public Optional<ResultSet> checkTrophies() {
         // Get Trophies

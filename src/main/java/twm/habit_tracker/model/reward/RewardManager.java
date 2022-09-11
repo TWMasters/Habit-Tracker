@@ -13,6 +13,13 @@ public interface RewardManager {
     void buildTables();
 
     /**
+     * Change avatar state record
+     * @param key Avatar Component to be changed
+     * @param value New value of Avatar Component
+     */
+    void changeAvatarState(String key, String value);
+
+    /**
      * Determine how many coins are to be awarded
      * Make change to coins file
      * @return ResultSet of awarded trophies for Controller to send messages
