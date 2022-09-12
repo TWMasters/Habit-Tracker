@@ -40,9 +40,9 @@ class AvatarTable {
     private static final String UPDATE_REWARD =
             "UPDATE Avatar_Rewards SET Reward_Won = true WHERE Reward_ID = \'%s\'";;
 
-    private final Connection connection;
+    private final Connection context;
 
-    public AvatarTable(Connection connection) { this.connection = connection; }
+    public AvatarTable(Connection connection) { this.context = connection; }
 
     /**
      * Helper method used to select a random reward
@@ -50,7 +50,7 @@ class AvatarTable {
      * @return chosen reward and name
      */
     private String[] chooseReward(int level) throws SQLException {
-        Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        Statement stmt = context.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rsRewardIDs = stmt.executeQuery(String.format(GET_REWARD_IDS, level));
         if (rsRewardIDs.isBeforeFirst()) {
             ArrayList<String[]> idList =  new ArrayList<>();
@@ -69,7 +69,7 @@ class AvatarTable {
      */
     public void createAvatarTable() {
         try (Scanner sc = new Scanner(new File(PATH, FILE_NAME))) {
-            Statement stmt = connection.createStatement();
+            Statement stmt = context.createStatement();
             stmt.execute(AVATAR_TABLE_SQL);
             while(sc.hasNextLine()) {
                 String[] values = sc.nextLine().split(":");
@@ -86,12 +86,33 @@ class AvatarTable {
     }
 
     /**
+     * Update reward to mark it has having been awarded to the player
+     * @param level Player current level
+     * @return Name of reward!
+     */
+    public Optional<String> earnReward(int level) {
+        Optional<String> output = null;
+        try {
+            String[] chosenRewardID = chooseReward(level);
+            if (chosenRewardID != null) {
+                Statement stmt = context.createStatement();
+                stmt.executeUpdate(String.format(UPDATE_REWARD, chosenRewardID[0]));
+                output = Optional.of(chosenRewardID[1]);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error while choosing a reward");
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    /**
      * Get a copy of all avatar rewards player has received
      * @return Result Set of Reward Table containing all awarded rewards
      */
     public ResultSet getRewardTable() {
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = context.createStatement();
             return stmt.executeQuery(GET_TABLE);
 
         }
@@ -102,24 +123,4 @@ class AvatarTable {
         return null;
     }
 
-    /**
-     * Update reward to mark it has having been awarded to the player
-     * @param level Player current level
-     * @return Name of reward!
-     */
-    public Optional<String> updateRewardTable(int level) {
-        Optional<String> output = null;
-        try {
-            String[] chosenRewardID = chooseReward(level);
-            if (chosenRewardID != null) {
-                Statement stmt = connection.createStatement();
-                stmt.executeUpdate(String.format(UPDATE_REWARD, chosenRewardID[0]));
-                output = Optional.of(chosenRewardID[1]);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error while choosing a reward");
-            e.printStackTrace();
-        }
-        return output;
-    }
 }

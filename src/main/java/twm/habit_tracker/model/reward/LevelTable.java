@@ -34,10 +34,10 @@ class LevelTable {
     private static final String GET_LEVEL_TABLE =
             "SELECT * FROM Levels WHERE Level = %d;";
 
-    private final Connection connection;
+    private final Connection context;
 
-    public LevelTable(Connection connection) {
-        this.connection = connection;
+    public LevelTable(Connection context) {
+        this.context = context;
     }
 
     /**
@@ -45,7 +45,7 @@ class LevelTable {
      */
     public void createLevelTable() {
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = context.createStatement();
             stmt.execute(LEVEL_TABLE_SQL);
             stmt.execute(POPULATE_LEVEL_TABLE);
         }
@@ -61,7 +61,7 @@ class LevelTable {
      */
     public int getLevelCap(int lvl) {
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = context.createStatement();
             ResultSet rs = stmt.executeQuery(String.format(GET_LEVEL_TABLE, lvl));
             rs.next();
             return rs.getInt(LEVEL_CAP_COLUMN_NO);

@@ -53,15 +53,90 @@ class TrophyTable {
     private static final String WIN_TROPHY =
             "UPDATE Trophies SET Trophy_Won = 1 WHERE Trophy_ID = \'%s\';";
 
-    private final Connection connection;
+    private final Connection context;
 
-    public TrophyTable(Connection connection) {
-        this.connection = connection;
+    public TrophyTable(Connection context) {
+        this.context = context;
     }
 
     /**
-     * Helper method for checking whether Weekly or Monthly trophies must be rewarded
-     * @param input String to be updated and returned to Client
+     * Helper method to check if daily awards won
+     * @param input String to be updated and included in SQL update
+     * @param dates Relevant dates for a given day
+     * @throws SQLException
+     */ 
+    private void checkDay(ArrayList<String> input, String[] dates) throws SQLException {
+        Statement stmt = context.createStatement();
+        // Date Info
+        ResultSet rsToday = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[0], dates[0]));
+        rsToday.next();
+        int target = rsToday.getInt(2);
+        int achieved = rsToday.getString(3).split("=1").length;
+
+        // Half Day
+        ResultSet rsHalfDay = stmt.executeQuery(String.format(GET_ROW, "HalfDay"));
+        rsHalfDay.next();
+        if ( target >= 4 && !rsHalfDay.getBoolean(2) && achieved >= (target / 2) ) {
+            input.add("\'" + rsHalfDay.getString( 1) + "\'");
+            stmt.executeUpdate(String.format(WIN_TROPHY, "HalfDay"));
+        }
+
+        // Full Day
+        ResultSet rsFullDay = stmt.executeQuery(String.format(GET_ROW, "FullDay"));
+        rsFullDay.next();
+        if ( target >= 4 && !rsFullDay.getBoolean(2) && achieved == (target) ) {
+            input.add("\'" + rsFullDay.getString(1) + "\'");
+            stmt.executeUpdate(String.format(WIN_TROPHY, "FullDay"));
+        }
+    }
+
+    /**
+     * Helper method to check if monthly awards won
+     * @param input String to be updated and included in SQL update
+     * @param dates Relevant dates for a given day
+     * @throws SQLException
+     */
+    private void checkMonth(ArrayList<String> input, String[] dates) throws SQLException  {
+        Statement stmt = context.createStatement();
+        ResultSet rsMonth = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[2], dates[4]));
+        int count = 0;
+        while (rsMonth.next()) {
+            int target = rsMonth.getInt(2);
+            int achieved = rsMonth.getString(3).split("=1").length;
+            if ( target >= 4 && achieved == target)
+                count++;
+        }
+        checkWeekOrMonth(input, "TenDay", count, 10);
+        checkWeekOrMonth(input, "TwentyDay", count, 20);
+        checkWeekOrMonth(input, "FullMonth", count, LocalDate.now().lengthOfMonth());        
+    }
+    
+    /**
+     * Helper method to check if weekly awards won
+     * @param input String to be updated and included in SQL update
+     * @param dates Relevant dates for a given day
+     * @throws SQLException
+     */
+    private void checkWeek(ArrayList<String> input, String[] dates) throws SQLException {
+        Statement stmt = context.createStatement();
+        ResultSet rsWeek = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[1], dates[3]));
+        int count = 0;
+        while (rsWeek.next()) {
+            int target = rsWeek.getInt(2);
+            int achieved = rsWeek.getString(3).split("=1").length;
+            if ( target >= 4 && achieved == target)
+                count++;
+        }
+
+        checkWeekOrMonth(input, "ThreeDay", count, 3);
+        checkWeekOrMonth(input, "FiveDay", count, 5);
+        checkWeekOrMonth(input, "FullWeek", count, 7);
+    }
+    
+    /**
+     * Helper method for checkAwards
+     * Checks whether Weekly or Monthly trophies must be rewarded
+     * @param input String to be updated and included in SQL update
      * @param trophy Lookup Trophy in Database
      * @param count Number of successful days to check against target
      * @param target
@@ -69,7 +144,7 @@ class TrophyTable {
      */
     private void checkWeekOrMonth(ArrayList<String> input, String trophy, int count, int target) throws
             SQLException {
-        Statement stmt = connection.createStatement();
+        Statement stmt = context.createStatement();
         ResultSet rsTrophy = stmt.executeQuery(String.format(GET_ROW, trophy));
         rsTrophy.next();
         if ( count >= target && !rsTrophy.getBoolean(2)) {
@@ -83,66 +158,19 @@ class TrophyTable {
 
     /**
      * Check whether any trophies have been rewarded
-     * @return String of messages to show User
+     * @return ResultSet of awarded trophies
      */
     public Optional<ResultSet> checkAwards() {
         Optional<ResultSet> rsOutput = Optional.empty();
         ArrayList<String> output = new ArrayList<>();
         String[] dates = getDates();
         try {
-            Statement stmt = connection.createStatement();
-            // Date Info
-            ResultSet rsToday = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[0], dates[0]));
-            rsToday.next();
-            int target = rsToday.getInt(2);
-            int achieved = rsToday.getString(3).split("=1").length;
-
-            // Half Day
-            ResultSet rsHalfDay = stmt.executeQuery(String.format(GET_ROW, "HalfDay"));
-            rsHalfDay.next();
-            if ( target >= 4 && !rsHalfDay.getBoolean(2) && achieved >= (target / 2) ) {
-                output.add("\'" + rsHalfDay.getString( 1) + "\'");
-                stmt.executeUpdate(String.format(WIN_TROPHY, "HalfDay"));
-            }
-
-            // Full Day
-            ResultSet rsFullDay = stmt.executeQuery(String.format(GET_ROW, "FullDay"));
-            rsFullDay.next();
-            if ( target >= 4 && !rsFullDay.getBoolean(2) && achieved == (target) ) {
-                output.add("\'" + rsFullDay.getString(1) + "\'");
-                stmt.executeUpdate(String.format(WIN_TROPHY, "FullDay"));
-            }
-
-            // Week Info
-            ResultSet rsWeek = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[1], dates[3]));
-            int count = 0;
-            while (rsWeek.next()) {
-                target = rsWeek.getInt(2);
-                achieved = rsWeek.getString(3).split("=1").length;
-                if ( target >= 4 && achieved == target)
-                    count++;
-            }
-
-            checkWeekOrMonth(output, "ThreeDay", count, 3);
-            checkWeekOrMonth(output, "FiveDay", count, 5);
-            checkWeekOrMonth(output, "FullWeek", count, 7);
-
-            // Month Info
-            ResultSet rsMonth = stmt.executeQuery(String.format(GET_DATE_RANGE, dates[2], dates[4]));
-            count = 0;
-            while (rsMonth.next()) {
-                target = rsMonth.getInt(2);
-                achieved = rsMonth.getString(3).split("=1").length;
-                if ( target >= 4 && achieved == target)
-                    count++;
-            }
-
-            checkWeekOrMonth(output, "TenDay", count, 10);
-            checkWeekOrMonth(output, "TwentyDay", count, 20);
-            checkWeekOrMonth(output, "FullMonth", count, LocalDate.now().lengthOfMonth());
-
+            // Carry out checks
+            checkDay(output, dates);
+            checkWeek(output, dates);
+            checkMonth(output,dates);
             // Generate ResultSet
-            stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement stmt = context.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rsOutput = Optional.of(stmt.executeQuery(String.format(GET_AWARDED_TROPHIES, String.join(", ", output))));
             return rsOutput;
 
@@ -159,7 +187,7 @@ class TrophyTable {
      */
     public void createTrophyTable()  {
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = context.createStatement();
             stmt.execute(TROPHY_TABLE_SQL);
             String[] dates = getDates();
             String populate = String.format(POPULATE_TROPHY_TABLE, dates[0], dates[0], dates[1], dates[1], dates[1], dates[2], dates[2], dates[2]);
@@ -192,7 +220,7 @@ class TrophyTable {
      */
     public ResultSet getTrophyTable() {
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = context.createStatement();
             return stmt.executeQuery(GET_TABLE);
         } catch (SQLException e) {
             System.err.println("Error when getting trophy table");
@@ -210,7 +238,7 @@ class TrophyTable {
         System.out.println("Updating Trophy Table");
         String[] dates = getDates();
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = context.createStatement();
             // Update Day
             ResultSet rs = stmt.executeQuery(String.format(GET_ROW, "FullDay"));
             rs.next();

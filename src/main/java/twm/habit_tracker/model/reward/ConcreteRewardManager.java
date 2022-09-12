@@ -93,7 +93,7 @@ public class ConcreteRewardManager implements RewardManager {
         }
         int level = getLevel().get("Level");
         for (int i = 0; i < noOfRewards; i ++) {
-            Optional<String> reward = avatarTable.updateRewardTable(level);
+            Optional<String> reward = avatarTable.earnReward(level);
             if (reward.isEmpty()) {
                 outputMessages.add("No rewards remaining!");
                 break;
