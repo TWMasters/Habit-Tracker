@@ -39,13 +39,13 @@ public class ConcreteModel implements Model {
     private Connection connection = null;
     private static Model model = null;
     private TableState targetTable;
-    private RewardManager rewardModel;
+    private RewardManager rewardManager;
 
     private ConcreteModel() {
         try {
             Boolean databaseExists = new File(DB_FILEPATH).exists();
             connection = DriverManager.getConnection(H2_URL);
-            rewardModel = new ConcreteRewardManager(connection);
+            rewardManager = new ConcreteRewardManager(connection);
             if (!databaseExists)
                 createTables();
             else
@@ -72,32 +72,19 @@ public class ConcreteModel implements Model {
 
     /**
      * Helper method to populate a new Habits database with following Relations:
+     *  - Reward Tables
      *  - Habit
+     *  - Goals
      *  - HabitTracker
      */
     private void createTables() {
         try {
+            rewardManager.buildTables();
             Statement stmt = connection.createStatement();
-
-            rewardModel.buildTables();
-
             stmt.execute(HABIT_TABLE_SQL);
             stmt.execute(GOAL_TABLE_SQL);
-
             stmt.execute(HABIT_TRACKER_TABLE);
-
-            // TODO: 15/08/2022 Build date table -> Move to a different method?
-            changeTargetTable(new HabitTrackerTableState());
-            LocalDate dateToday = LocalDate.now();
-            LocalDate startOfMo = dateToday.withDayOfMonth(1);
-            LocalDate endOfMo = dateToday.withDayOfMonth(1).plusMonths(2);
-
-            startOfMo.datesUntil(endOfMo)
-                    .forEach(d -> {
-                        String[] input = {d.toString()};
-                        targetTable.addEntry(input);
-                    });
-
+            populateHabitTrackerTable();
         }
         catch (SQLException e) {
             System.err.println("SQL Exception on Creating Tables");
@@ -148,19 +135,33 @@ public class ConcreteModel implements Model {
 
     @Override
     public RewardManager getRewardManager() {
-        return rewardModel;
+        return rewardManager;
+    }
+
+
+    /**
+     * Helper method to populate Habit Tracker Table
+     * @throws SQLException
+     */
+    private void populateHabitTrackerTable() throws SQLException {
+        changeTargetTable(new HabitTrackerTableState());
+        LocalDate dateToday = LocalDate.now();
+        LocalDate startOfMo = dateToday.withDayOfMonth(1);
+        LocalDate endOfMo = dateToday.withDayOfMonth(1).plusMonths(2);
+        startOfMo.datesUntil(endOfMo)
+                .forEach(d -> {
+                    String[] input = {d.toString()};
+                    targetTable.addEntry(input);
+                });
     }
 
     /**
-     * Helper method to update tables on booting up application
+     * Helper method to update date-dependant tables
+     * - i.e. Trophy and HabitTracker tables -
+     * on booting up application
      */
     private void updateTables() {
-        System.out.println("Updating Tables!");
-
-        // Trophies
-        rewardModel.updateTables();
-
-        // Dates
+        rewardManager.updateTables();
         changeTargetTable(new HabitTrackerTableState());
         LocalDate checkDate = LocalDate.now().withDayOfMonth(1).plusMonths(1);
         ResultSet rs = getEntry(checkDate.toString());
