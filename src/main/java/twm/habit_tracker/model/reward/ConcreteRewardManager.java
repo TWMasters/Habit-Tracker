@@ -13,8 +13,7 @@ public class ConcreteRewardManager implements RewardManager {
     private static final int LEVEL_ONE = 1;
     private static final int LEVEL_TWO = 2;
     private static final int MAX_LEVEL = 9;
-    private static final int REWARD_TICKET_COST = 100;
-    private static final int REWARD_TICKET_BULK_COST = 850;
+
     private static final int STARTING_BALANCE =  0;
 
     private final Connection connection;
@@ -87,8 +86,7 @@ public class ConcreteRewardManager implements RewardManager {
     }
 
     @Override
-    public ArrayList<String> earnReward(int noOfRewards) {
-        int cost = noOfRewards == 1 ?  REWARD_TICKET_COST : REWARD_TICKET_BULK_COST;
+    public ArrayList<String> earnReward(int noOfRewards, int cost) {
         ArrayList<String> outputMessages = new ArrayList<>();
         if (!checkCost(cost)) {
             outputMessages.add("Not enough coins to buy ticket!");

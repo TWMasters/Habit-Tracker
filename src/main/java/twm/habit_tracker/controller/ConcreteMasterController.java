@@ -71,8 +71,8 @@ public class ConcreteMasterController implements MasterController {
         };
         AvatarPageController.setChangeStateConsumer(changeStateConsumer);
 
-        Function<Integer,ArrayList<String>> purchaseFunction = (i) -> {
-            ArrayList<String>  outputMessages = model.getRewardManager().earnReward(i);
+        BiFunction<Integer, Integer, ArrayList<String>> purchaseFunction = (i, j) -> {
+            ArrayList<String>  outputMessages = model.getRewardManager().earnReward(i, j);
             MenuPageController.setCoins();
             return outputMessages;
         };

@@ -12,16 +12,19 @@ import javafx.scene.control.ChoiceBox;
 import java.net.URL;
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class AvatarPageController implements Initializable {
 
     private static final String NO_REWARD = "None";
+    private static final int REWARD_TICKET_COST = 100;
+    private static final int REWARD_TICKET_BULK_COST = 850;
     private static final String[] REWARD_TYPES = {"Headwear", "Eyewear", "Over-layer", "Under-layer", "Bottoms", "Footwear"};
 
     private static BiConsumer<String,String> changeStateConsumer;
-    private static Function<Integer,ArrayList<String>> purchaseTicketFunction;
+    private static BiFunction<Integer, Integer,ArrayList<String>> purchaseTicketFunction;
     private HashMap<ChoiceBox<String>, String> choiceBoxMapping = new HashMap<>();
     private static HashMap<String, ObservableList<String>> rewardMap = new HashMap<>();
     private static Runnable rewardMapRunnable;
@@ -70,12 +73,12 @@ public class AvatarPageController implements Initializable {
         setChoiceBoxes();
         buildAvatarState();
         ticketButton.setOnAction(e -> {
-            ArrayList<String> messages = purchaseTicketFunction.apply(1);
+            ArrayList<String> messages = purchaseTicketFunction.apply(1, REWARD_TICKET_COST);
             TrophyMessage.display(messages.get(0));
             setRewardMap();
         });
         ticketBulkButton.setOnAction(e -> {
-            ArrayList<String> messages = purchaseTicketFunction.apply(10);
+            ArrayList<String> messages = purchaseTicketFunction.apply(10, REWARD_TICKET_BULK_COST);
             for (String m : messages)
                 TrophyMessage.display(m);
             setRewardMap();
@@ -129,7 +132,7 @@ public class AvatarPageController implements Initializable {
         }
     }
 
-    public static void setPurchaseTicketFunction(Function<Integer,ArrayList<String>> function) {
+    public static void setPurchaseTicketFunction(BiFunction<Integer, Integer, ArrayList<String>> function) {
         purchaseTicketFunction = function;
     }
 

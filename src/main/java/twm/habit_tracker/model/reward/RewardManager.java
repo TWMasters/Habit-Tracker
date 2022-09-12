@@ -32,20 +32,13 @@ public interface RewardManager {
      * @param noOfRewards How many rewards the player can earn
      * @return Name of new reward or alternative message
      */
-    ArrayList<String> earnReward(int noOfRewards);
+    ArrayList<String> earnReward(int noOfRewards, int cost);
 
     /**
      * Use to retrieve current state of user avatar
      * @return Hashmap associative array of avatar section keys and assigned reward values
      */
     HashMap<String,String> getAvatarState();
-
-    /**
-     * Use to retrieve information on how many trophies have been awarded
-     * for initial setup when app is launched
-     * @return ResultSet of all awarded trophies
-     */
-    ResultSet getTrophies();
 
     /**
      * Get balance of coins
@@ -63,6 +56,13 @@ public interface RewardManager {
      * @return ResultSet of current avatar rewards
      */
     ResultSet getRewards();
+
+    /**
+     * Use to retrieve information on how many trophies have been awarded
+     * for initial setup when app is launched
+     * @return ResultSet of all awarded trophies
+     */
+    ResultSet getTrophies();
 
     /**
      * Use to update tables when first launching app for a given day
