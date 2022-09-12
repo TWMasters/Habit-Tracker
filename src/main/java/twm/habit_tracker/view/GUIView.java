@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import twm.habit_tracker.controller.mainPages.MenuPageController;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -29,20 +28,12 @@ public class GUIView implements View {
         // primaryStage.setMaximized(true);
         primaryStage.initStyle(StageStyle.DECORATED);
 
-        // Set Context!
-        MenuPageController.setContext(this);
-
         // Load Pages!
         try {
-            pages.put("Habit", FXMLLoader.load(GUIView.class.getResource("HabitPage.fxml")));
-            pages.put("Goal", FXMLLoader.load(GUIView.class.getResource("GoalPage.fxml")));
-            pages.put("Trophy", FXMLLoader.load(GUIView.class.getResource("TrophyPage.fxml")));
-            pages.put("Avatar", FXMLLoader.load(GUIView.class.getResource("AvatarPage.fxml")));
-
             menu_page = FXMLLoader.load(GUIView.class.getResource("MenuPage.fxml"));
-
+            System.out.println("Success!");
         } catch (IOException e) {
-            System.out.println("Problems when loading FXML File");
+            System.out.println("Problems when loading Menu FXML File");
             e.printStackTrace();
         }
 
