@@ -13,22 +13,21 @@ public class ConcreteRewardManager implements RewardManager {
     private static final int LEVEL_ONE = 1;
     private static final int LEVEL_TWO = 2;
     private static final int MAX_LEVEL = 9;
-
     private static final int STARTING_BALANCE =  0;
 
-    private final Connection connection;
-    private AvatarState avatarState;
-    private AvatarTable avatarTable;
-    private LevelTable levelTable;
-    private TrophyTable trophyTable;
-    private UserInfo userInfo;
+    private final AvatarState avatarState;
+    private final AvatarTable avatarTable;
+    private final Connection context;
+    private final LevelTable levelTable;
+    private final TrophyTable trophyTable;
+    private final UserInfo userInfo;
 
-    public ConcreteRewardManager(Connection connection) {
-        this.connection = connection;
+    public ConcreteRewardManager(Connection conn) {
+        this.context = conn;
         avatarState = new AvatarState();
-        avatarTable = new AvatarTable(connection);
-        levelTable =  new LevelTable(connection);
-        trophyTable = new TrophyTable(connection);
+        avatarTable = new AvatarTable(context);
+        levelTable =  new LevelTable(context);
+        trophyTable = new TrophyTable(context);
         userInfo = new UserInfo();
     }
 
@@ -52,7 +51,7 @@ public class ConcreteRewardManager implements RewardManager {
     /**
      * Helper method of earnReward to check if sufficient coins!
      * @param cost
-     * @return
+     * @return True of False of whether user has sufficient coins
      */
     private boolean checkCost(int cost) {
         if (userInfo.getBalance(0) < cost)
