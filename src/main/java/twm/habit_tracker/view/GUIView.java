@@ -6,8 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import twm.habit_tracker.view.mainPages.MenuPageController;
-import twm.habit_tracker.view.mainPages.TrophyPageController;
+import twm.habit_tracker.controller.mainPages.MenuPageController;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -18,7 +17,7 @@ public class GUIView implements View {
 
     private Parent menu_page;
     private HashMap<String, Node> pages = new HashMap<>();
-    private TrophyPageController tc;
+
 
     @Override
     public Node getPage(String pageID) {

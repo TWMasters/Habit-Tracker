@@ -20,14 +20,14 @@ module twm.habit_tracker.habittracker {
     exports twm.habit_tracker.view;
     opens twm.habit_tracker.view to javafx.fxml;
 
-    exports twm.habit_tracker.view.mainPages;
-    opens twm.habit_tracker.view.mainPages to javafx.fxml;
+    exports twm.habit_tracker.controller.mainPages;
+    opens twm.habit_tracker.controller.mainPages to javafx.fxml;
 
-    exports twm.habit_tracker.view.editPages;
-    opens twm.habit_tracker.view.editPages to javafx.fxml;
+    exports twm.habit_tracker.controller.editPages;
+    opens twm.habit_tracker.controller.editPages to javafx.fxml;
 
-    exports twm.habit_tracker.view.data;
-    opens twm.habit_tracker.view.data to javafx.fxml;
+    exports twm.habit_tracker.controller.data;
+    opens twm.habit_tracker.controller.data to javafx.fxml;
     exports twm.habit_tracker.model.reward;
 
 }

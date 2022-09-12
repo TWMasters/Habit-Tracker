@@ -49,7 +49,7 @@ class AvatarTable {
      * @param level Player level cap
      * @return chosen reward and name
      */
-    private String[] chooseReward(int level) throws SQLException {
+    private String[] chooseRandomReward(int level) throws SQLException {
         Statement stmt = context.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rsRewardIDs = stmt.executeQuery(String.format(GET_REWARD_IDS, level));
         if (rsRewardIDs.isBeforeFirst()) {
@@ -93,7 +93,7 @@ class AvatarTable {
     public Optional<String> earnReward(int level) {
         Optional<String> output = null;
         try {
-            String[] chosenRewardID = chooseReward(level);
+            String[] chosenRewardID = chooseRandomReward(level);
             if (chosenRewardID != null) {
                 Statement stmt = context.createStatement();
                 stmt.executeUpdate(String.format(UPDATE_REWARD, chosenRewardID[0]));

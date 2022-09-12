@@ -3,18 +3,18 @@ package twm.habit_tracker.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import twm.habit_tracker.controller.mainPages.*;
 import twm.habit_tracker.model.GoalTableState;
 import twm.habit_tracker.model.HabitTableState;
 import twm.habit_tracker.model.HabitTrackerTableState;
 import twm.habit_tracker.model.Model;
-import twm.habit_tracker.model.reward.ConcreteRewardManager;
-import twm.habit_tracker.view.data.Goal;
-import twm.habit_tracker.view.data.Habit;
-import twm.habit_tracker.view.data.HabitTracker;
-import twm.habit_tracker.view.editPages.EditPage;
-import twm.habit_tracker.view.editPages.GoalInputFieldsController;
-import twm.habit_tracker.view.editPages.HabitInputFieldsController;
-import twm.habit_tracker.view.mainPages.*;
+import twm.habit_tracker.controller.data.Goal;
+import twm.habit_tracker.controller.data.Habit;
+import twm.habit_tracker.controller.data.HabitTracker;
+import twm.habit_tracker.controller.editPages.EditPage;
+import twm.habit_tracker.controller.editPages.GoalInputFieldsController;
+import twm.habit_tracker.controller.editPages.HabitInputFieldsController;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
