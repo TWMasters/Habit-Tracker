@@ -3,7 +3,7 @@ package twm.habit_tracker.view;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-public interface View {
+public interface ViewLauncher {
 
     /**
      * Return page based on ID

@@ -6,11 +6,13 @@ import twm.habit_tracker.controller.ConcreteMasterController;
 import twm.habit_tracker.controller.MasterController;
 import twm.habit_tracker.model.ConcreteModel;
 import twm.habit_tracker.model.Model;
-import twm.habit_tracker.view.GUIView;
-import twm.habit_tracker.view.View;
+import twm.habit_tracker.view.GUIViewLauncher;
+import twm.habit_tracker.view.ViewLauncher;
+
+import java.sql.SQLException;
 
 public class UserAgent extends Application {
-    View GUI;
+    ViewLauncher GUI;
     Model DB;
     MasterController masterController;
 
@@ -20,11 +22,11 @@ public class UserAgent extends Application {
 
     /**
      * Overridden init method to compose MVC prior to start()
-     * @throws Exception
+     * @throws SQLException on loading Concrete Master Controller
      */
     @Override
-    public void init() throws Exception {
-        GUI = new GUIView();
+    public void init() throws SQLException {
+        GUI = new GUIViewLauncher();
         DB = ConcreteModel.getModel();
         masterController = new ConcreteMasterController(DB);
 

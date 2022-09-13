@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 
-public class GUIView implements View {
+public class GUIViewLauncher implements ViewLauncher {
     private static String CSS = Path.of("src/main/resources/twm/habit_tracker/view/stylesheet.css").toUri().toString();
 
     private Parent menu_page;
@@ -30,7 +30,7 @@ public class GUIView implements View {
 
         // Load Pages!
         try {
-            menu_page = FXMLLoader.load(GUIView.class.getResource("MenuPage.fxml"));
+            menu_page = FXMLLoader.load(GUIViewLauncher.class.getResource("MenuPage.fxml"));
             System.out.println("Success!");
         } catch (IOException e) {
             System.out.println("Problems when loading Menu FXML File");
