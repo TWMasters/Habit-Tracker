@@ -2,7 +2,7 @@ package twm.habit_tracker.viewControllers.data;
 
 import javafx.beans.property.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Goal extends ModelData {
 

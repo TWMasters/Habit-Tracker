@@ -5,3 +5,15 @@
     -fx-background-radius: 25px;
     -fx-padding: 20px;
 }
+
+.missedDeadline {
+    -fx-background-color: red;
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+}
+
+.approachingDeadline {
+    -fx-background-color: orange;
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+}

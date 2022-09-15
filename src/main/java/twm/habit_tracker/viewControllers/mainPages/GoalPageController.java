@@ -16,6 +16,7 @@ import twm.habit_tracker.viewControllers.data.Goal;
 import twm.habit_tracker.viewControllers.editPages.EditPage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -67,6 +68,18 @@ public class GoalPageController implements Initializable {
         return rowCount + 1;
     }
 
+    private void buildGoalsContainerDeadlineHelper(Goal g, Button b) {
+        LocalDate today =  LocalDate.now();
+        LocalDate buttonDate = g.getDate().toLocalDate();
+        LocalDate buttonDateTwoWeeks = buttonDate.minusWeeks(2);
+        if (buttonDate.isBefore(today))
+            b.getStyleClass().add("missedDeadline");
+
+        else if (buttonDateTwoWeeks.isBefore(today))
+            b.getStyleClass().add("approachingDeadline");
+
+    }
+
     private void buildGoalContainer() {
         Goals_Container.getChildren().clear();
         Goals_Container_Fin.getChildren().clear();
@@ -103,8 +116,10 @@ public class GoalPageController implements Initializable {
             Node[] nodes = {button, checkBox};
             if (g.isAchieved())
                 row_count_completed = buildGoalsContainerHelper(row_count_completed, Goals_Container_Fin, nodes);
-            else
+            else {
+                buildGoalsContainerDeadlineHelper(g, button);
                 row_count_ongoing = buildGoalsContainerHelper(row_count_ongoing, Goals_Container, nodes);
+            }
         }
 
     }
