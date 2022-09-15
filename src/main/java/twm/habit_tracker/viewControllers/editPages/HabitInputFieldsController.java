@@ -37,8 +37,8 @@ public class HabitInputFieldsController extends InputAbstractController {
                 nameInput.getText(),
                 getHabitType(),
                 questionInput.getText(),
-                getNullableValue(unitInput),
-                getNullableValue(targetInput)
+                getNullableValue(unitInput.getText()),
+                getNullableValue(targetInput.getText())
         };
         return output;
     }

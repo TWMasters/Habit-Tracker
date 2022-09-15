@@ -32,8 +32,8 @@ public abstract class InputAbstractController implements Initializable {
      * @param inputField check whether empty
      * @return null if empty
      */
-    public String getNullableValue(TextField inputField) {
-        String output = inputField.getText();
+    public String getNullableValue(String inputField) {
+        String output = inputField;
         if (output == null || output.equals(""))
             return "null";
         else

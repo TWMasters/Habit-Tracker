@@ -3,6 +3,7 @@ package twm.habit_tracker.viewControllers.editPages;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -23,8 +24,7 @@ public class GoalInputFieldsController extends InputAbstractController{
     @FXML ComboBox monthBox;
     @FXML ComboBox yearBox;
     @FXML TextField goalInput;
-    @FXML TextField descriptionInput;
-    @FXML TextField deadlineInput;
+    @FXML TextArea descriptionInput;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,15 +46,30 @@ public class GoalInputFieldsController extends InputAbstractController{
         monthBox.setOnAction(e -> refreshDates());
         yearBox.setOnAction(e -> refreshDates());
 
+        //Set default Dates
+        if (getInputData().getAllFields()[3].equals("")) {
+            LocalDate date = LocalDate.now();
+            dayBox.setValue(date.getDayOfMonth());
+            monthBox.setValue(date.getMonthValue());
+            yearBox.setValue(date.getYear());
+            refreshDates();
+        }
+
+
     }
 
 
     @Override
     public String[] getFields() {
+        String date = String.format("%s-%s-%s"
+                , yearBox.getValue().toString()
+                , monthBox.getValue().toString()
+                , dayBox.getValue().toString());
+        System.out.println(date);
         String[] output = {
                 goalInput.getText(),
-                getNullableValue(descriptionInput),
-                getNullableValue(deadlineInput),
+                getNullableValue(descriptionInput.getText()),
+                date,
                 "false"
         };
         return output;
@@ -76,7 +91,6 @@ public class GoalInputFieldsController extends InputAbstractController{
         String[] inputData = this.getInputData().getAllFields();
         goalInput.setText(inputData[1]);
         descriptionInput.setText(inputData[2]);
-        deadlineInput.setText(inputData[3]);
         // Populate dates
         if (!inputData[3].equals("")) {
             LocalDate date = LocalDate.parse(inputData[3]);
