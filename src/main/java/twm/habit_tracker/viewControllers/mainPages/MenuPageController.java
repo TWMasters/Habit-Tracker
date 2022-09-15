@@ -107,7 +107,7 @@ public class MenuPageController implements Initializable {
 
         // Level Messenger
         ChangeListener levelMessageListener = (obs,  oldValue, newValue) -> {
-            TrophyMessage.display("CONGRATULATIONS!\nYou have reached level " + level.getValue());
+            Message.display("CONGRATULATIONS!\nYou have reached level " + level.getValue());
         };
         level.addListener(levelMessageListener);
 

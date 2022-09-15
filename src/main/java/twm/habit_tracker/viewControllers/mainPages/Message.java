@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class TrophyMessage {
+public class Message {
 
     public static void display(String message) {
         Stage alertWindow = new Stage();

@@ -105,7 +105,7 @@ public class HabitPageController implements Initializable {
                 String[] input = {String.valueOf(habitCount), convertToString(habitsCompletedMap)};
                 String[] messages = updateHabitTrackerCompletedAttributeBiConsumer.apply(LocalDate.now(), input);
                 for (String s : messages)
-                    TrophyMessage.display(s);
+                    Message.display(s);
                 checkBox.setDisable(true);
             });
             GridPane.setConstraints(checkBox, 3, row_count, 1,  1);

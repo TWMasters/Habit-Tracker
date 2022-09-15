@@ -73,13 +73,13 @@ public class AvatarPageController implements Initializable {
         buildAvatarState();
         ticketButton.setOnAction(e -> {
             ArrayList<String> messages = purchaseTicketFunction.apply(1, REWARD_TICKET_COST);
-            TrophyMessage.display(messages.get(0));
+            Message.display(messages.get(0));
             setRewardMap();
         });
         ticketBulkButton.setOnAction(e -> {
             ArrayList<String> messages = purchaseTicketFunction.apply(10, REWARD_TICKET_BULK_COST);
             for (String m : messages)
-                TrophyMessage.display(m);
+                Message.display(m);
             setRewardMap();
         });
     }
