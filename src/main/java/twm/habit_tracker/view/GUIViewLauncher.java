@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 
+/**
+ * Class for launching app window and setting window variables
+ */
 public class GUIViewLauncher implements ViewLauncher {
     private static String CSS = Path.of("src/main/resources/twm/habit_tracker/view/stylesheet.css").toUri().toString();
 
@@ -25,13 +28,11 @@ public class GUIViewLauncher implements ViewLauncher {
 
     @Override
     public void setUp(Stage primaryStage) {
-        // primaryStage.setMaximized(true);
         primaryStage.initStyle(StageStyle.DECORATED);
 
         // Load Pages!
         try {
             menu_page = FXMLLoader.load(GUIViewLauncher.class.getResource("MenuPage.fxml"));
-            System.out.println("Success!");
         } catch (IOException e) {
             System.out.println("Problems when loading Menu FXML File");
             e.printStackTrace();
