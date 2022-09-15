@@ -5,7 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-// TODO: 11/08/2022 Merge habit and goal table state using an abstract class! 
+// TODO: 11/08/2022 Merge habit and goal table state using an abstract class!
+
+/**
+ * Class for manipulating Goals Table
+ */
 public class GoalTableState implements TableState {
     private final int INCREMENT = 1;
     private final String ADD_ROW = "INSERT INTO Goals (Goal_ID, Goal_Name, Goal_Description, Deadline) VALUES(%d, \'%s\', %s, %s)";
@@ -15,7 +19,7 @@ public class GoalTableState implements TableState {
             "WHERE Goal_ID = %s;";
     private final String GET_KEY = "SELECT MAX(Goal_ID) FROM Goals;";
     private final String GET_ROW = "SELECT * FROM Goals where Goal_ID = %s;";
-    private final String GET_TABLE = "SELECT * FROM Goals;";
+    private final String GET_TABLE = "SELECT * FROM Goals ORDER BY Deadline;";
 
     Connection context;
 
