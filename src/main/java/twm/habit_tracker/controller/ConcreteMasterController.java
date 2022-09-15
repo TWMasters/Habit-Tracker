@@ -185,6 +185,9 @@ public class ConcreteMasterController implements MasterController {
                         Goal g = new Goal();
                         g.setPrimaryKey(rs.getString(1));
                         g.setGoal(rs.getString(2));
+                        g.setGoalDescription(rs.getString(3));
+                        g.setDate(rs.getDate(4));
+                        g.setAchieved(rs.getBoolean(5));
                         goalData.add(g);
                     }
                 }
@@ -207,9 +210,8 @@ public class ConcreteMasterController implements MasterController {
                 String goalName = rs.getString(2);
                 String goalDesc = rs.getString(3);
                 String goalDeadline = rs.getString(4);
-                String[] inputValues = { goalName, goalDesc, goalDeadline, "true" };
-                System.out.println(Arrays.asList(inputValues));
-                // model.editEntry(inputValues, s);
+                String[] inputValues = { goalName, goalDesc, goalDeadline, "TRUE" };
+                model.editEntry(inputValues, s);
             }
             catch (SQLException e) {
                 e.printStackTrace();

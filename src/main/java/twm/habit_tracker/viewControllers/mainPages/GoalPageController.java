@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
@@ -29,8 +30,8 @@ public class GoalPageController implements Initializable {
     private static ObservableList<Goal> goalDataSet;
     private static Supplier<ObservableList<Goal>> goalDataSupplier;
 
-    @FXML
-    private GridPane Goals_Container;
+    @FXML private GridPane Goals_Container;
+    @FXML private GridPane Goals_Container_Fin;
 
     {
         goalDataSet = FXCollections.observableArrayList();
@@ -56,9 +57,21 @@ public class GoalPageController implements Initializable {
         buildGoalContainer();
     }
 
+    /**
+     * Helper method to place goal in correct container
+     */
+    private int buildGoalsContainerHelper(int rowCount, GridPane gridPane, Node[] nodes) {
+        GridPane.setConstraints(nodes[0], 0, rowCount, 1, 1);
+        GridPane.setConstraints(nodes[1], 1, rowCount, 1,  1);
+        gridPane.getChildren().addAll(nodes);
+        return rowCount + 1;
+    }
+
     private void buildGoalContainer() {
         Goals_Container.getChildren().clear();
-        int row_count = 0;
+        Goals_Container_Fin.getChildren().clear();
+        int row_count_ongoing = 0;
+        int row_count_completed = 0;
         for (Goal g: goalDataSet) {
             Button button = new Button(g.getGoal());
             button.setAlignment(Pos.CENTER);
@@ -66,7 +79,7 @@ public class GoalPageController implements Initializable {
             button.setStyle("-fx-font-size: 18");
             button.setId("button" + g.getPrimaryKey());
             button.setOnAction(editButtonPush);
-            GridPane.setConstraints(button, 0, row_count, 1, 1);
+
 
             CheckBox checkBox = new CheckBox();
             checkBox.setPrefSize(72,  72);
@@ -82,11 +95,16 @@ public class GoalPageController implements Initializable {
                 String goalID = checkBox.getId().substring(8);
                 markGoalAsCompleteConsumer.accept(goalID);
                 checkBox.setDisable(true);
+                getGoalData();
+                buildGoalContainer();
             });
-            GridPane.setConstraints(checkBox, 1, row_count, 1,  1);
 
-            Goals_Container.getChildren().addAll(button, checkBox);
-            row_count++;
+            // Add to correct section
+            Node[] nodes = {button, checkBox};
+            if (g.isAchieved())
+                row_count_completed = buildGoalsContainerHelper(row_count_completed, Goals_Container_Fin, nodes);
+            else
+                row_count_ongoing = buildGoalsContainerHelper(row_count_ongoing, Goals_Container, nodes);
         }
 
     }
