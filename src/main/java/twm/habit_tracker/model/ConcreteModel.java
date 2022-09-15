@@ -15,17 +15,17 @@ public class ConcreteModel implements Model {
     private static final String HABIT_TABLE_SQL =
             "CREATE TABLE Habits (\n" +
                     "  Habit_ID  INT PRIMARY KEY,\n" +
-                    "  Habit_Name VARCHAR(255) UNIQUE NOT NULL,\n" +
+                    "  Habit_Name VARCHAR(165) UNIQUE NOT NULL,\n" +
                     "  Binary_Habit BOOLEAN NOT NULL,\n" +
-                    "  Habit_Question VARCHAR(255) NOT NULL,\n" +
-                    "  Unit VARCHAR(255),\n" +
+                    "  Habit_Question VARCHAR(165) NOT NULL,\n" +
+                    "  Unit VARCHAR(165),\n" +
                     "  Target NUMERIC(18,2)\n" +
                     ");";
     private static final String GOAL_TABLE_SQL = "" +
             "CREATE TABLE Goals (\n" +
                     "  Goal_ID INT PRIMARY KEY,\n" +
-                    "  Goal_Name VARCHAR(255) NOT NULL,\n" +
-                    "  Goal_Description VARCHAR(255),\n" +
+                    "  Goal_Name VARCHAR(165) NOT NULL,\n" +
+                    "  Goal_Description VARCHAR(1000),\n" +
                     "  Deadline DATE NOT NULL,\n" +
                     "  Achieved BOOLEAN DEFAULT false NOT NULL\n" +
                     ");";
@@ -33,7 +33,7 @@ public class ConcreteModel implements Model {
             "CREATE TABLE Habit_Tracker (\n" +
                     "Date DATE PRIMARY KEY,\n" +
                     "Target INT DEFAULT 0 NOT NULL,\n" +
-                    "Completed VARCHAR(255) DEFAULT '' NOT NULL\n" +
+                    "Completed VARCHAR(250) DEFAULT '' NOT NULL\n" +
                     ");";
 
     private Connection connection = null;
