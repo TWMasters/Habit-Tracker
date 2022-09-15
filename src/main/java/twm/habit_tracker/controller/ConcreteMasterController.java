@@ -197,6 +197,23 @@ public class ConcreteMasterController implements MasterController {
         };
         GoalPageController.setGoalDataSupplier(goalDataSupplier);
 
+        // Mark goal as complete
+        Consumer<String> markGoalAsComplete = (s) -> {
+            model.changeTargetTable(new GoalTableState());
+            ResultSet rs = model.getEntry(s);
+            try {
+                rs.next();
+                String goalName = rs.getString(2);
+                String goalDesc = rs.getString(3);
+                String[] inputValues = { goalName, goalDesc, "true" };
+                model.editEntry(inputValues, s);
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        };
+        GoalPageController.setMarkGoalAsCompleteConsumer(markGoalAsComplete);
+
     }
 
     @Override
