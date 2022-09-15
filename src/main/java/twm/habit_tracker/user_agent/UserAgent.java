@@ -11,6 +11,9 @@ import twm.habit_tracker.view.ViewLauncher;
 
 import java.sql.SQLException;
 
+/**
+ * Initialise MVC and JavaFX application
+ */
 public class UserAgent extends Application {
     ViewLauncher GUI;
     Model DB;
