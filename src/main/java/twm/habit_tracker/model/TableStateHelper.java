@@ -9,6 +9,8 @@ class TableStateHelper {
      * @return Formatted Unit Value
      */
     static String editUnitIfNotNull(String input) {
+        if (input == null)
+            input = "null";
         String output = input.equals(NULL_STRING) ? input : "\'" + input + "\'";
         return output;
     }

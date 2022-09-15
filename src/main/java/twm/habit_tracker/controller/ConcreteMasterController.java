@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.*;
@@ -205,8 +206,10 @@ public class ConcreteMasterController implements MasterController {
                 rs.next();
                 String goalName = rs.getString(2);
                 String goalDesc = rs.getString(3);
-                String[] inputValues = { goalName, goalDesc, "true" };
-                model.editEntry(inputValues, s);
+                String goalDeadline = rs.getString(4);
+                String[] inputValues = { goalName, goalDesc, goalDeadline, "true" };
+                System.out.println(Arrays.asList(inputValues));
+                // model.editEntry(inputValues, s);
             }
             catch (SQLException e) {
                 e.printStackTrace();
