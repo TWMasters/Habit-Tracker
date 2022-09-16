@@ -23,7 +23,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
-// TODO: 26/08/2022 Reusable object for buttons! 
+/**
+ * Handles Navigation and Displaying Key User Info on Menu Page
+ */
 public class MenuPageController implements Initializable {
     private static IntegerProperty coins = new SimpleIntegerProperty();
     private static IntegerProperty coinTotal = new SimpleIntegerProperty();
@@ -156,8 +158,10 @@ public class MenuPageController implements Initializable {
         levelInfoSupplier = supplier;
     }
 
+    /**
+     * Helper method to create page mapping
+     */
     private void setPages() {
-
         try {
             pages.put("Habit", FXMLLoader.load(MenuPageController.class.getResource("HabitPage.fxml")));
             pages.put("Goal", FXMLLoader.load(MenuPageController.class.getResource("GoalPage.fxml")));
@@ -169,8 +173,5 @@ public class MenuPageController implements Initializable {
             System.out.println("Problems when loading FXML File");
             e.printStackTrace();
         }
-
-
-
     }
 }
