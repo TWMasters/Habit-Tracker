@@ -143,7 +143,6 @@ public class HabitPageController implements Initializable {
         }
         result = Arrays.stream(input.split(";"))
                 .skip(1)
-                .peek(s -> System.out.println())
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(
                         a -> a[0],
@@ -164,6 +163,9 @@ public class HabitPageController implements Initializable {
         return output;
     }
 
+    /**
+     * Run Habit Supplier
+     */
     public void getHabitData() {
         habitDataSet = habitDataSupplier.get();
     }
@@ -175,18 +177,34 @@ public class HabitPageController implements Initializable {
 
     }
 
+    /**
+     *
+     * @param function
+     */
     public static void setGetHabitEntryFunction(Function<String, Habit> function) {
         HabitPageController.getHabitEntryFunction = function;
     }
 
+    /**
+     *
+     * @param function
+     */
     public static void setGetHabitTrackerEntryFunction(Function<LocalDate, HabitTracker> function) {
         HabitPageController.getHabitTrackerEntryFunction = function;
     }
 
+    /**
+     *
+     * @param supplier
+     */
     public static void setHabitDataSupplier(Supplier<ObservableList<Habit>> supplier) {
         habitDataSupplier = supplier;
     }
 
+    /**
+     *
+     * @param biFunction
+     */
     public static void setUpdateHabitTrackerCompletedAttributeBiConsumer(BiFunction<LocalDate, String[], String[]> biFunction) {
         updateHabitTrackerCompletedAttributeBiConsumer = biFunction;
     }

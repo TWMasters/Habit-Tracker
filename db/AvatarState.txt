@@ -2,5 +2,5 @@ Over-layer:None
 Bottoms:Blue Chinos
 Footwear:None
 Headwear:None
-Under-layer:Blue Dress Shirt
+Under-layer:Red T-shirt
 Eyewear:None
