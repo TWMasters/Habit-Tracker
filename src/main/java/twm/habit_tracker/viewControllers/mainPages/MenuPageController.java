@@ -42,39 +42,51 @@ public class MenuPageController implements Initializable {
     @FXML private BorderPane mainFrame;
 
 
+    /**
+     * Load Avatar Page
+     */
     public void avatarButtonPush() {
-        Node page = pages.get("Avatar");
-        mainFrame.setCenter(page);
-        BorderPane.setAlignment(page, Pos.TOP_LEFT);
-
+        buttonHelper("Avatar");
     }
 
+    /**
+     * Helper method to load a page
+     * @param pageName Page Key
+     */
+    private void buttonHelper(String pageName)  {
+        Node page = pages.get(pageName);
+        mainFrame.setCenter(page);
+        BorderPane.setAlignment(page, Pos.TOP_LEFT);
+    }
+
+    /**
+     * Exit Application
+     */
     public void exitButtonPush() {
         Stage currentWindow = (Stage) mainFrame.getScene().getWindow();
         currentWindow.close();
-
     }
 
+    /**
+     * Load Goal Page
+     */
     public void goalButtonPush() {
-        Node page = pages.get("Goal");
-        mainFrame.setCenter(page);
-        BorderPane.setAlignment(page, Pos.TOP_LEFT);
-
+        buttonHelper("Goal");
     }
 
+    /**
+     * Load Habit Page
+     */
     public void habitButtonPush() {
-        Node page = pages.get("Habit");
-        mainFrame.setCenter(page);
-        BorderPane.setAlignment(page, Pos.TOP_LEFT);
-
+        buttonHelper("Habit");
     }
 
+    /**
+     * Load Trophy Page
+     */
     public void trophyButtonPush() {
         TrophyPageController.setTrophyData();
-        Node page = pages.get("Trophy");
-        mainFrame.setCenter(page);
-        BorderPane.setAlignment(page, Pos.TOP_LEFT);
-
+        buttonHelper("Trophy");
     }
 
     @Override

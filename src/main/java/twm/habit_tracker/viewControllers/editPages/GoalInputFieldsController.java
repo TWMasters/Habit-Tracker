@@ -47,15 +47,13 @@ public class GoalInputFieldsController extends InputAbstractController{
         yearBox.setOnAction(e -> refreshDates());
 
         //Set default Dates
-        if (getInputData().getAllFields()[3].equals("")) {
+        if (getInputData() == null) {
             LocalDate date = LocalDate.now();
-            dayBox.setValue(date.getDayOfMonth());
             monthBox.setValue(date.getMonthValue());
             yearBox.setValue(date.getYear());
+            dayBox.setValue(date.getDayOfMonth());
             refreshDates();
         }
-
-
     }
 
 
@@ -94,9 +92,10 @@ public class GoalInputFieldsController extends InputAbstractController{
         // Populate dates
         if (!inputData[3].equals("")) {
             LocalDate date = LocalDate.parse(inputData[3]);
-            dayBox.setValue(date.getDayOfMonth());
             monthBox.setValue(date.getMonthValue());
             yearBox.setValue(date.getYear());
+            dayBox.setValue(date.getDayOfMonth());
+            refreshDates();
         }
     }
 
