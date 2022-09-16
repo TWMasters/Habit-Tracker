@@ -206,7 +206,6 @@ public class ConcreteMasterController implements MasterController {
             ResultSet rs = model.getEntry(s);
             try {
                 rs.next();
-                System.out.println("Mark Goal");
                 String goalName = rs.getString(2);
                 String goalDesc = rs.getString(3);
                 String goalDeadline = rs.getString(4);

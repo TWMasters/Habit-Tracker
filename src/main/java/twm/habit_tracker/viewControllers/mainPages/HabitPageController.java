@@ -24,6 +24,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for Habit Page
+ */
 public class HabitPageController implements Initializable {
 
     private EditPage editPage;
@@ -178,7 +181,7 @@ public class HabitPageController implements Initializable {
     }
 
     /**
-     *
+     * Set code to get a single Habit
      * @param function
      */
     public static void setGetHabitEntryFunction(Function<String, Habit> function) {
@@ -186,7 +189,7 @@ public class HabitPageController implements Initializable {
     }
 
     /**
-     *
+     * Set code to get Habit Tracking data for a given date
      * @param function
      */
     public static void setGetHabitTrackerEntryFunction(Function<LocalDate, HabitTracker> function) {
@@ -194,7 +197,7 @@ public class HabitPageController implements Initializable {
     }
 
     /**
-     *
+     * Set code to get Habit table
      * @param supplier
      */
     public static void setHabitDataSupplier(Supplier<ObservableList<Habit>> supplier) {
@@ -202,7 +205,7 @@ public class HabitPageController implements Initializable {
     }
 
     /**
-     *
+     * Set code to update Habit Tracking data for a given date
      * @param biFunction
      */
     public static void setUpdateHabitTrackerCompletedAttributeBiConsumer(BiFunction<LocalDate, String[], String[]> biFunction) {
