@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+/**
+ * Class for composing edit box
+ * and holding code for functions
+ */
 public class EditPage {
     private static final Integer HALF = 2;
 
@@ -38,7 +42,6 @@ public class EditPage {
      */
     public EditPage(String buttonBarLocation, String inputFieldsLocation) {
         buildEditPage(buttonBarLocation, inputFieldsLocation);
-
     }
 
     /**

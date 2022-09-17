@@ -128,8 +128,10 @@ public class ConcreteMasterController implements MasterController {
                         rs.next();
                         String target = String.valueOf(rs.getInt(2) - 1);
                         String oldCompleted = rs.getString(3);
-                        int index = oldCompleted.indexOf(";" + s + "=");
-                        String  newCompleted = oldCompleted.substring(0, index) + oldCompleted.substring(index + 4);
+                        String entryToBeDeleted = ";" + s + "=";
+                        int index = oldCompleted.indexOf(entryToBeDeleted);
+                        int offSet =  entryToBeDeleted.length() + 1;
+                        String  newCompleted = oldCompleted.substring(0, index) + oldCompleted.substring(index + offSet);
                         String[] input = {target, newCompleted};
                         model.editEntry(input, LocalDate.now().toString());
                     }
