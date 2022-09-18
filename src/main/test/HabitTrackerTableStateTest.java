@@ -111,7 +111,6 @@ public class HabitTrackerTableStateTest {
         }
     }
 
-    // TODO: 20/07/2022 Update test so add a column in Habit_Tracker 
     @Test
     void testEditEntry() {
         try {

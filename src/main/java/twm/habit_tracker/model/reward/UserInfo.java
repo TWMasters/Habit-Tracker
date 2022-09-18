@@ -8,7 +8,7 @@ class UserInfo {
 
     public void createUserInfoFile(int levelOneCap, int levelTwoCap) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("CoinBalance", "0");
+        map.put("CoinBalance", "100");
         map.put("CoinTotal", "0");
         map.put("Level", "1");
         map.put("OldLevelCap", String.valueOf(levelOneCap));
