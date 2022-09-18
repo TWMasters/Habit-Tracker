@@ -58,7 +58,7 @@ public class GoalTableState implements TableState {
     }
 
     @Override
-    public void editEntry(String[] values, String lookupValue) {
+    public String editEntry(String[] values, String lookupValue) {
         try {
             Statement stmt = context.createStatement();
             values[1] = TableStateHelper.editUnitIfNotNull(values[1]);
@@ -70,6 +70,7 @@ public class GoalTableState implements TableState {
             System.err.println("SQL Error on Edit Method");
             e.printStackTrace();
         }
+        return null;
 
     }
 

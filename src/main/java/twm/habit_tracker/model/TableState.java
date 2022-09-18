@@ -24,7 +24,7 @@ public interface TableState {
      * @param values
      * @param lookupValue
      */
-    void editEntry(String[] values, String lookupValue);
+    String editEntry(String[] values, String lookupValue);
 
     /**
      * Get specified row of Table

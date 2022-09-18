@@ -129,8 +129,8 @@ public class ConcreteModel implements Model {
     }
 
     @Override
-    public void editEntry(String[] values, String lookupValue) {
-        targetTable.editEntry(values, lookupValue);
+    public String editEntry(String[] values, String lookupValue) {
+        return targetTable.editEntry(values, lookupValue);
     }
 
     @Override

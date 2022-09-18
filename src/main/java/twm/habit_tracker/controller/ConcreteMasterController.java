@@ -147,10 +147,11 @@ public class ConcreteMasterController implements MasterController {
         EditPage.setDeleteEntryConsumer(deleteEntryConsumer);
 
         //SaveHabit
-        BiConsumer<String[], String> editEntryConsumer = (k, s) -> {
-            model.editEntry(k,s);
+        BiFunction<String[], String, String> editEntryFunction = (k, s) -> {
+            String message = model.editEntry(k,s);
+            return message;
         };
-        EditPage.setEditEntryConsumer(editEntryConsumer);
+        EditPage.setEditEntryFunction(editEntryFunction);
     }
 
 

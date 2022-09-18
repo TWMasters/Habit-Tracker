@@ -37,7 +37,7 @@ public interface Model {
      * @param values New Values to populate Target Row
      * @param lookupValue Primary Key Value of Target Row
      */
-    void editEntry(String[] values, String lookupValue);
+    String editEntry(String[] values, String lookupValue);
 
     /**
      * Get specified row of Target Table

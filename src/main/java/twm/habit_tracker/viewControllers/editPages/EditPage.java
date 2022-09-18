@@ -11,7 +11,7 @@ import twm.habit_tracker.viewControllers.data.ModelData;
 import twm.habit_tracker.viewControllers.mainPages.Message;
 
 import java.io.IOException;
-import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -23,7 +23,7 @@ public class EditPage {
     private static final Integer HALF = 2;
 
     private static Function<String[], String> addEntryFunction;
-    private static BiConsumer<String[], String> editEntryConsumer;
+    private static BiFunction<String[], String, String> editEntryFunction;
     private static Consumer<String> deleteEntryConsumer;
 
     private Parent container;
@@ -125,8 +125,11 @@ public class EditPage {
 
     public void save() {
         String key = inputFieldsController.getInputData().getPrimaryKey();
-        editEntryConsumer.accept(inputFieldsController.getFields(), key);
-        buttonController.backButtonPush();
+        String output = editEntryFunction.apply(inputFieldsController.getFields(), key);
+        if (output.charAt(0) == '!')
+            Message.display(output.substring(1));
+        else
+            buttonController.backButtonPush();
     }
 
     public static void setAddEntryFunction(Function<String [], String> addEntryFunctionInput ) {
@@ -137,8 +140,8 @@ public class EditPage {
         deleteEntryConsumer = deleteEntryConsumerInput;
     }
 
-    public static void setEditEntryConsumer(BiConsumer<String[], String> editEntryConsumerInput) {
-        editEntryConsumer = editEntryConsumerInput;
+    public static void setEditEntryFunction(BiFunction<String[], String, String> editEntryFunctionInput) {
+        editEntryFunction = editEntryFunctionInput;
     }
 
 }

@@ -40,7 +40,7 @@ public class HabitTrackerTableState implements TableState{
     }
 
     @Override
-    public void editEntry(String[] values, String lookupValue) {
+    public String editEntry(String[] values, String lookupValue) {
         try {
             Statement stmt = context.createStatement();
             stmt.execute(String.format(EDIT_ROW, values[0], values[1], lookupValue));
@@ -48,6 +48,7 @@ public class HabitTrackerTableState implements TableState{
             System.err.println("SQL Error on Edit Method");
             e.printStackTrace();
         }
+        return null;
 
     }
 
