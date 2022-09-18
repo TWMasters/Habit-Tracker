@@ -29,6 +29,9 @@ public class GoalInputFieldsController extends InputAbstractController{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
+        super.generateListener(goalInput, 165);
+        super.generateListener(descriptionInput, 1000);
+
         // Year
         int endYear = LocalDate.now().getYear() + FIFTY_YEARS;
         ArrayList<Integer> years = new ArrayList<>();
