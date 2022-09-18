@@ -47,7 +47,7 @@ public class GoalTableState implements TableState {
             if (values[GOAL_NAME].equals(""))
                 return "!Please enter a Goal Name";
             if (!uniqueNameValidation(values[GOAL_NAME]))
-                return "!Please choose a unique goal name";
+                return "!Please choose a unique Goal name";
             // Get Key
             Statement stmt = context.createStatement();
             ResultSet rs = stmt.executeQuery(GET_KEY);
@@ -89,11 +89,11 @@ public class GoalTableState implements TableState {
             rs.next();
             String oldName = rs.getString(2);
             if ( !oldName.equals(values[GOAL_NAME]) && !uniqueNameValidation(values[GOAL_NAME]))
-                return "!Please choose a unique goal name";
+                return "!Please choose a unique Goal name";
             Statement stmt = context.createStatement();
             values[1] = TableStateHelper.editUnitIfNotNull(values[1]);
             values[2] = TableStateHelper.editUnitIfNotNull(values[2]);
-            System.out.println(String.format(EDIT_ROW, values[0], values[1], values[2], values[3], lookupValue));
+            // System.out.println(String.format(EDIT_ROW, values[0], values[1], values[2], values[3], lookupValue));
             stmt.execute(String.format(EDIT_ROW, values[0], values[1], values[2], values[3], lookupValue));
         }
         catch (SQLException e) {
