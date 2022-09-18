@@ -25,10 +25,23 @@ public class HabitTableState implements TableState {
     private final String GET_KEY = "SELECT MAX(Habit_ID) FROM Habits;";
     private final String GET_ROW = "SELECT * FROM Habits WHERE Habit_ID = %s;";
     private final String GET_TABLE = "SELECT * FROM Habits;";
-    private final String GET_UNIQUE_NAME  = "SELECT * FROM Habits WHERE Habit_Name = %s;";
+    private final String GET_UNIQUE_NAME  = "SELECT * FROM Habits WHERE Habit_Name = \'%s\';";
 
     Connection context;
 
+
+    private Boolean inputFieldValidation(String unit, String target) {
+        Boolean flag =  true;
+        if (unit.equals("null") || target.equals("null"))
+            flag = false;
+        return flag;
+    }
+
+    /**
+     * Helper method for checking no habit name repetition
+     * @param s
+     * @return
+     */
     private Boolean uniqueNameValidation(String s) {
         Boolean flag;
         try {
@@ -49,6 +62,11 @@ public class HabitTableState implements TableState {
             // Validation Checks
             if (!uniqueNameValidation(values[HABIT_NAME]))
                 return "!Please choose a unique habit name";
+            System.out.println(values[BINARY_HABIT]);
+            System.out.println(values[UNIT]);
+            System.out.println(values[TARGET]);
+            if ( values[BINARY_HABIT].equals("false") && !inputFieldValidation(values[UNIT], values[TARGET]) )
+                return "!Unit and Target fields must be completed";
             // Get Key
             Statement stmt = context.createStatement();
             ResultSet rs = stmt.executeQuery(GET_KEY);
