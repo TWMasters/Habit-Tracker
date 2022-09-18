@@ -8,10 +8,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import twm.habit_tracker.viewControllers.data.ModelData;
+import twm.habit_tracker.viewControllers.mainPages.Message;
 
 import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Class for composing edit box
@@ -20,7 +22,7 @@ import java.util.function.Consumer;
 public class EditPage {
     private static final Integer HALF = 2;
 
-    private static Consumer<String[]> addEntryConsumer;
+    private static Function<String[], String> addEntryFunction;
     private static BiConsumer<String[], String> editEntryConsumer;
     private static Consumer<String> deleteEntryConsumer;
 
@@ -56,8 +58,11 @@ public class EditPage {
     }
 
     public void add() {
-        addEntryConsumer.accept(inputFieldsController.getFields());
-        buttonController.backButtonPush();
+        String output = addEntryFunction.apply(inputFieldsController.getFields());
+        if (output.charAt(0) == '!')
+            Message.display(output.substring(1));
+        else
+            buttonController.backButtonPush();
     }
 
     public void back() {
@@ -124,8 +129,8 @@ public class EditPage {
         buttonController.backButtonPush();
     }
 
-    public static void setAddEntryConsumer(Consumer<String []> addEntryConsumerInput ) {
-        addEntryConsumer = addEntryConsumerInput;
+    public static void setAddEntryFunction(Function<String [], String> addEntryFunctionInput ) {
+        addEntryFunction = addEntryFunctionInput;
     }
 
     public static void setDeleteEntryConsumer(Consumer<String> deleteEntryConsumerInput ) {

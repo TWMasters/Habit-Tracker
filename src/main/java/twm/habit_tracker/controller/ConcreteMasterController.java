@@ -96,8 +96,10 @@ public class ConcreteMasterController implements MasterController {
         HabitInputFieldsController.setTargetHabitTable(habitRunnable);
 
         // Add Habit or Goal
-        Consumer<String[]> addEntryConsumer = (s) -> {
+        Function<String[],String> addEntryFunction = (s) -> {
             String primaryKey = model.addEntry(s);
+            if (primaryKey.charAt(0) == '!')
+                return primaryKey;
             if (model.getTableState().equals("Habit Table State")) {
                 model.changeTargetTable(new HabitTrackerTableState());
                 ResultSet rs = model.getEntry(LocalDate.now().toString());
@@ -114,8 +116,9 @@ public class ConcreteMasterController implements MasterController {
                     System.err.println("Error on Adding Habit");
                 }
             }
+            return primaryKey;
         };
-        EditPage.setAddEntryConsumer(addEntryConsumer);
+        EditPage.setAddEntryFunction(addEntryFunction);
 
         //Delete Habit or Goal
         Consumer<String> deleteEntryConsumer = (s) -> {

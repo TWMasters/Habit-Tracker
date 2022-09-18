@@ -25,12 +25,30 @@ public class HabitTableState implements TableState {
     private final String GET_KEY = "SELECT MAX(Habit_ID) FROM Habits;";
     private final String GET_ROW = "SELECT * FROM Habits WHERE Habit_ID = %s;";
     private final String GET_TABLE = "SELECT * FROM Habits;";
+    private final String GET_UNIQUE_NAME  = "SELECT * FROM Habits WHERE Habit_Name = %s;";
 
     Connection context;
+
+    private Boolean uniqueNameValidation(String s) {
+        Boolean flag;
+        try {
+            Statement stmt = context.createStatement();
+            ResultSet rs = stmt.executeQuery(String.format(GET_UNIQUE_NAME, s));
+            flag = !rs.isBeforeFirst() ? true : false;
+            return flag;
+        }
+        catch (SQLException e) {
+            System.err.println("Error while checking for unique name");
+        }
+        return null;
+    };
 
     @Override
     public String addEntry(String[] values) {
         try {
+            // Validation Checks
+            if (!uniqueNameValidation(values[HABIT_NAME]))
+                return "!Please choose a unique habit name";
             // Get Key
             Statement stmt = context.createStatement();
             ResultSet rs = stmt.executeQuery(GET_KEY);
