@@ -107,7 +107,10 @@ public class HabitTableState implements TableState {
             // Validation Checks
             if (values[HABIT_NAME].equals(""))
                 return "!Please enter a Habit Name";
-            if (!uniqueNameValidation(values[HABIT_NAME]))
+            ResultSet rs = getEntry(lookupValue);
+            rs.next();
+            String oldName = rs.getString(2);
+            if ( !oldName.equals(values[HABIT_NAME]) && !uniqueNameValidation(values[HABIT_NAME]))
                 return "!Please choose a unique habit name";
             if ( values[BINARY_HABIT].equals("false") && !inputFieldValidation(values[UNIT], values[TARGET]) )
                 return "!Unit and Target fields must be completed";

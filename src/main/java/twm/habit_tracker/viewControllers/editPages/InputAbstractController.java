@@ -2,6 +2,7 @@ package twm.habit_tracker.viewControllers.editPages;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import twm.habit_tracker.viewControllers.data.ModelData;
 
 import java.net.URL;
@@ -15,6 +16,17 @@ public abstract class InputAbstractController implements Initializable {
         setTargetTable();
         if (data != null)
             setFields();
+    }
+
+
+    public void generateListener(TextInputControl txt, int maxLength) {
+        txt.textProperty().addListener( (observable, oldValue, newValue) -> {
+            if (newValue.length() > maxLength) {
+                String truncatedText = newValue.substring(0, maxLength);
+                txt.setText(truncatedText);
+                }
+            }
+        );
     }
 
     /**

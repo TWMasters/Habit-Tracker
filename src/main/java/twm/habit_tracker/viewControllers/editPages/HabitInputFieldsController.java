@@ -28,6 +28,9 @@ public class HabitInputFieldsController extends InputAbstractController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
+        super.generateListener(nameInput, 165);
+        super.generateListener(questionInput, 165);
+        super.generateListener(unitInput, 165);
         targetInput.textProperty().addListener(this::targetListener);
     }
 

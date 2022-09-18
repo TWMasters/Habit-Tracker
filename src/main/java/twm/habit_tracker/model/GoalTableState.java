@@ -85,7 +85,10 @@ public class GoalTableState implements TableState {
             // Validation Checks
             if (values[GOAL_NAME].equals(""))
                 return "!Please enter a Goal Name";
-            if (!uniqueNameValidation(values[GOAL_NAME]))
+            ResultSet rs = getEntry(lookupValue);
+            rs.next();
+            String oldName = rs.getString(2);
+            if ( !oldName.equals(values[GOAL_NAME]) && !uniqueNameValidation(values[GOAL_NAME]))
                 return "!Please choose a unique goal name";
             Statement stmt = context.createStatement();
             values[1] = TableStateHelper.editUnitIfNotNull(values[1]);

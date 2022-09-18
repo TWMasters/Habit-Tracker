@@ -181,3 +181,11 @@ SELECT * FROM Habits WHERE Habit_Name = Test1; [42122-214]
 	at javafx.graphics@18-ea/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
 	at javafx.graphics@18-ea/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-09-18 14:05:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
+2022-09-18 14:06:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
+2022-09-18 14:06:19 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
+2022-09-18 14:06:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-214]
