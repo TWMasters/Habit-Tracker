@@ -63,7 +63,7 @@ public class HabitTableState implements TableState {
             if (values[HABIT_NAME].equals(""))
                 return "!Please enter a Habit Name";
             if (!uniqueNameValidation(values[HABIT_NAME]))
-                return "!Please choose a unique habit name";
+                return "!Please choose a unique Habit name";
             if ( values[BINARY_HABIT].equals("false") && !inputFieldValidation(values[UNIT], values[TARGET]) )
                 return "!Unit and Target fields must be completed for Analogue Habits";
             // Get Key
@@ -111,9 +111,9 @@ public class HabitTableState implements TableState {
             rs.next();
             String oldName = rs.getString(2);
             if ( !oldName.equals(values[HABIT_NAME]) && !uniqueNameValidation(values[HABIT_NAME]))
-                return "!Please choose a unique habit name";
+                return "!Please choose a unique Habit name";
             if ( values[BINARY_HABIT].equals("false") && !inputFieldValidation(values[UNIT], values[TARGET]) )
-                return "!Unit and Target fields must be completed";
+                return "!Unit and Target fields must be completed for Analogue Habits";
             Statement stmt = context.createStatement();
             values[3] = TableStateHelper.editUnitIfNotNull(values[3]);
             stmt.execute(String.format(EDIT_ROW, values[0], values[1], values[2], values[3], values[4], lookupValue));

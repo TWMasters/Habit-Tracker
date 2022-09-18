@@ -96,12 +96,6 @@ public class HabitTableStateTest {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stmt.execute("ALTER TABLE Habit_Tracker DROP COLUMN TestHabit2");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -110,7 +104,6 @@ public class HabitTableStateTest {
         try {
             stmt.execute("INSERT INTO Habits" +
                     " VALUES (" + primaryKey + ",\'TestHabit4\', true, \'Have you done TestHabit4?\', null, null);");
-            stmt.execute("ALTER TABLE Habit_Tracker ADD TestHabit4 BOOLEAN DEFAULT false;");
             testModel.deleteEntry(String.valueOf(primaryKey));
             ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
             if (rs.isBeforeFirst()) {
@@ -135,6 +128,97 @@ public class HabitTableStateTest {
             rs.next();
             Assertions.assertEquals("TestHabit3Edited", rs.getString(2));
             Assertions.assertEquals("Have you done TestHabit3Edited?", rs.getString(4));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testEditEntryNameUnchanged() {
+        try {
+            stmt.execute("INSERT INTO Habits VALUES(" + primaryKey + ", \'TestHabit5\', true, \'Have you done TestHabit5?\', null, null)");
+            String[] newValues = {"TestHabit5", "true", "Have you done TestHabit3Edited?", "null", "null"};
+            testModel.editEntry(newValues, String.valueOf(primaryKey));
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
+            rs.next();
+            Assertions.assertEquals("Have you done TestHabit3Edited?", rs.getString(4));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testEditEntryIdenticalName() {
+        try {
+            stmt.execute("INSERT INTO Habits VALUES(" + primaryKey + ", \'TestHabit6\', true, \'Have you done TestHabit6?\', null, null)");
+            stmt.execute("INSERT INTO Habits VALUES(" + (primaryKey + 1) + ", \'TestHabit7\', true, \'Have you done TestHabit7?\', null, null)");
+            String[] newValues = {"TestHabit6", "true", "Have you done TestHabit7?", "null", "null"};
+            String errorMessage = testModel.editEntry(newValues, String.valueOf(primaryKey  + 1));
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_Name = \'TestHabit6\';");
+            int count = 0;
+            while (rs.next()) {
+                count ++;
+            }
+            Assertions.assertEquals("!Please choose a unique Habit name", errorMessage);
+            Assertions.assertEquals(count, 1);
+            testModel.deleteEntry(String.valueOf(primaryKey + 1));
+
+        }  catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testAddEntryIdenticalName() {
+        try {
+            stmt.execute("INSERT INTO Habits VALUES(" + primaryKey + ", \'TestHabit8\', true, \'Have you done TestHabit8?\', null, null)");
+            String[] newValues = {"TestHabit8", "true", "Have you done TestHabit9?", "null", "null"};
+            String errorMessage = testModel.addEntry(newValues);
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_Name = \'TestHabit8\';");
+            int count = 0;
+            while (rs.next()) {
+                count ++;
+            }
+            Assertions.assertEquals("!Please choose a unique Habit name", errorMessage);
+            Assertions.assertEquals(count, 1);
+            testModel.deleteEntry(String.valueOf(primaryKey + 1));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testAddEntryBlankName() {
+        try {
+            String[] newValues = {"", "true", "Have you done TestHabit10?", "null", "null"};
+            String errorMessage = testModel.addEntry(newValues);
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
+            Boolean flag = !rs.isBeforeFirst();
+            Assertions.assertEquals("!Please enter a Habit Name", errorMessage);
+            Assertions.assertEquals(flag, true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void testAddEntryAnalogueBlankUnit() {
+        try {
+            String[] newValues = {"Habit11", "false", "Have you done TestHabit10?", "null", "50.4"};
+            String errorMessage = testModel.addEntry(newValues);
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Habits WHERE Habit_ID = " + primaryKey + ";");
+            Boolean flag = !rs.isBeforeFirst();
+            Assertions.assertEquals("!Unit and Target fields must be completed for Analogue Habits", errorMessage);
+            Assertions.assertEquals(flag, true);
 
         } catch (SQLException e) {
             e.printStackTrace();
