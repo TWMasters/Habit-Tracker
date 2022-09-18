@@ -11,6 +11,8 @@ import java.sql.Statement;
  * Class for manipulating Goals Table
  */
 public class GoalTableState implements TableState {
+
+    private final int GOAL_NAME = 0;
     private final int INCREMENT = 1;
     private final String ADD_ROW = "INSERT INTO Goals (Goal_ID, Goal_Name, Goal_Description, Deadline) VALUES(%d, \'%s\', %s, %s)";
     private final String DELETE_ROW = "DELETE FROM Goals WHERE Goal_ID = %s;";
@@ -20,12 +22,32 @@ public class GoalTableState implements TableState {
     private final String GET_KEY = "SELECT MAX(Goal_ID) FROM Goals;";
     private final String GET_ROW = "SELECT * FROM Goals where Goal_ID = %s;";
     private final String GET_TABLE = "SELECT * FROM Goals ORDER BY Deadline;";
+    private final String GET_UNIQUE_NAME  = "SELECT * FROM Goals WHERE Goal_Name = \'%s\';";
 
     Connection context;
+
+    private Boolean uniqueNameValidation(String s) {
+        Boolean flag;
+        try {
+            Statement stmt = context.createStatement();
+            ResultSet rs = stmt.executeQuery(String.format(GET_UNIQUE_NAME, s));
+            flag = !rs.isBeforeFirst() ? true : false;
+            return flag;
+        }
+        catch (SQLException e) {
+            System.err.println("Error while checking for unique name");
+        }
+        return null;
+    };
 
     @Override
     public String addEntry(String[] values) {
         try {
+            // Validation Checks
+            if (values[GOAL_NAME].equals(""))
+                return "!Please enter a Goal Name";
+            if (!uniqueNameValidation(values[GOAL_NAME]))
+                return "!Please choose a unique goal name";
             // Get Key
             Statement stmt = context.createStatement();
             ResultSet rs = stmt.executeQuery(GET_KEY);
@@ -60,6 +82,11 @@ public class GoalTableState implements TableState {
     @Override
     public String editEntry(String[] values, String lookupValue) {
         try {
+            // Validation Checks
+            if (values[GOAL_NAME].equals(""))
+                return "!Please enter a Goal Name";
+            if (!uniqueNameValidation(values[GOAL_NAME]))
+                return "!Please choose a unique goal name";
             Statement stmt = context.createStatement();
             values[1] = TableStateHelper.editUnitIfNotNull(values[1]);
             values[2] = TableStateHelper.editUnitIfNotNull(values[2]);
