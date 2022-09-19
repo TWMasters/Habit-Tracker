@@ -100,7 +100,7 @@ public class GoalTableState implements TableState {
             System.err.println("SQL Error on Edit Method");
             e.printStackTrace();
         }
-        return null;
+        return lookupValue;
 
     }
 

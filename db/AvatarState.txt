@@ -1,6 +1,6 @@
 Over-layer:None
-Bottoms:Blue Chinos
+Bottoms:None
 Footwear:None
 Headwear:None
-Under-layer:Red T-shirt
+Under-layer:None
 Eyewear:None
