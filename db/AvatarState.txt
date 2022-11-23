@@ -1,0 +1,6 @@
+Over-layer:None
+Bottoms:None
+Footwear:None
+Headwear:None
+Under-layer:Blue T-shirt
+Eyewear:None
